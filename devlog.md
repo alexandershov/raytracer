@@ -55,7 +55,7 @@ Questions
 * ~~What is the math/terminology for sphere?~~
   x^2 + y^2 + z^2 = r^2
   (x - x0)^2 + (y - y0)^2 + (z - z0)^2 = r^2 
-  center (x0; y0; z0) & radius (r) are enough for the sphere
+  center (x0; y0; z0) & radius (r) are enough to represent sphere
 * What is the math/terminology for floor/wall?
 * What is the math for the intersection of ray and floor/wall?
 * What is the math for the intersection of ray and sphere?
