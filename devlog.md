@@ -29,8 +29,10 @@ Questions
   It was a close call between pipenv and poetry, but let's go with pipenv
   since it's recommended on packaging.python.org. But poetry looks good tool
   with the pyproject.toml support.
-* What to use for the visuals? Tkinter? BMP file? Pillow?
-  Some other interactive option?
+* ~~What to use for the visuals? Tkinter? BMP file? Pillow?
+  Some other interactive option?~~
+  Let's go with Pillow, tkinter looks strange, but anyway I'll hide drawing stuff
+  behind the abstraction so it doesn't matter. For now let it be Pillow.
 * ~~Is there any use of numpy here?~~
   Probably not, because I want to do the math by myself.
 * Should I use Entity-Component-System here (at least for the sake of learning)?
