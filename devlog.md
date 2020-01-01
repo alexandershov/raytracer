@@ -41,7 +41,6 @@ Questions
   Point, Ray, Sphere, Plane
 * ~~What are the primitive operations here?~~
   Intersections, mirror reflections, set_pixel
-* How to implement checkers on floor/walls?
 * ~~How to test it?~~
   Primitive math you can check with the unit tests.
   You can check scenes during development with your eyes.
@@ -58,3 +57,4 @@ Questions
 * What is the math for the intersection of ray and sphere?
 * What is the math for the floor/wall mirror?
 * What is the math for the sphere mirror?
+* How to implement checkers on floor/walls?
