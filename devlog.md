@@ -60,9 +60,15 @@ Questions
   x^2 + y^2 + z^2 = r^2
   (x - x0)^2 + (y - y0)^2 + (z - z0)^2 = r^2 
   center (x0; y0; z0) & radius (r) are enough to represent sphere
-* What is the math/terminology for floor/wall?
-* What is the math for the intersection of ray and floor/wall?
-* What is the math for the intersection of ray and sphere?
+* ~~What is the math/terminology for floor/wall?~~
+  Looks like a plane should be ax + by + cz = d
+  E.g y = 0 is a floor.
+* ~~What is the math for the intersection of ray and floor/wall?~~
+  Just put x = x0 + k(x1 - x0) into plane equation and you'll 
+  get linear equation with k 
+* ~~What is the math for the intersection of ray and sphere?~~
+  Just put x = x0 + k(x1 - x0) into sphere equation and you'll get 
+  quadratic equation with k 
 * What is the math for the floor/wall mirror?
 * What is the math for the sphere mirror?
 * How to implement checkers on floor/walls?
