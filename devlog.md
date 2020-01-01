@@ -47,11 +47,15 @@ Questions
   You can write etalon output to the file and compare outputs during
   refactorings.
   But unit tests and eye check seem enough here.
-* What is the math/terminology for ray?
+* ~~What is the math/terminology for ray?~~
   Looks like start & direction are enough to describe a ray.
   What's a direction? Basically it's either ordered pair of points, 
   or start & direction (delta). Difference is not clear it, so let's 
-  go with ordered pair of points as a simpler choice. 
+  go with ordered pair of points as a simpler choice.
+  It's a line, ray has extra condition k > 0
+  x = x0 + k(x1 - x0) 
+  y = y0 + k(y1 - y0) 
+  z = z0 + k(z1 - z0) 
 * ~~What is the math/terminology for sphere?~~
   x^2 + y^2 + z^2 = r^2
   (x - x0)^2 + (y - y0)^2 + (z - z0)^2 = r^2 
