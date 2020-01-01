@@ -37,8 +37,10 @@ Questions
   Probably not, because I want to do the math by myself.
 * ~~Should I use Entity-Component-System here (at least for the sake of learning)?~~
   Let's not use it, seems like overkill.
-* What are the primitive objects here?
-* What are the primitive operations here?
+* ~~What are the primitive objects here?~~
+  Point, Ray, Sphere, Plane
+* ~~What are the primitive operations here?~~
+  Intersections, mirror reflections, set_pixel
 * How to implement checkers on floor/walls?
 * ~~How to test it?~~
   Primitive math you can check with the unit tests.
