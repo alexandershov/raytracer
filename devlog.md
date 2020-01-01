@@ -35,7 +35,8 @@ Questions
   behind the abstraction so it doesn't matter. For now let it be Pillow.
 * ~~Is there any use of numpy here?~~
   Probably not, because I want to do the math by myself.
-* Should I use Entity-Component-System here (at least for the sake of learning)?
+* ~~Should I use Entity-Component-System here (at least for the sake of learning)?~~
+  Let's not use it, seems like overkill.
 * What are the primitive objects here?
 * What are the primitive operations here?
 * How to implement checkers on floor/walls?
