@@ -99,6 +99,14 @@ Questions
   Now we have projected point on axis, how to translate it to local coordinates?
   Actually when we projecting point we're finding k, that'll be the coordinate.
   We just need to do it for 2 axis.
+* ~~What is the math for the floor/wall mirror?~~
+  Let's say we can build a perpendicular vector at the given point of a plane.
+  And we can because we can project point to a plane, so reversal vector will be
+  perpendicular.
+  Then we project the start of our ray to this line. We already have the technology
+  for it. When we find projection we find k, we should just double the k and find
+  direction of the reflection.
+* ~~What is the math for the sphere mirror?~~
+  Same as for floor/wall mirror, start building the perpendicular from the center
+  to the intersection. The rest is the same.
 * Why we need self.height - 1 in set_pixel?
-* What is the math for the floor/wall mirror?
-* What is the math for the sphere mirror?
