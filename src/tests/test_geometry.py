@@ -1,4 +1,5 @@
 import math
+from typing import Optional
 
 import pytest
 from raytracer import geometry
@@ -44,9 +45,9 @@ def test_sphere():
     assert sphere.radius == 10
 
 
-@pytest.mark.parametrize('plane, expected', [
-    (geometry.Plane(1, 0, 0, 0), geometry.Point(0, 0, 0))
-])
+@pytest.mark.parametrize(
+    'plane, expected', [(geometry.Plane(1, 0, 0, 0), geometry.Point(0, 0, 0))],
+)
 def test_intersect_ray_with_plane(plane, expected):
     ray = geometry.Ray.from_points(
         geometry.Point(1, 0, 0), geometry.Point(0, 0, 0),
@@ -54,5 +55,9 @@ def test_intersect_ray_with_plane(plane, expected):
     assert are_close(ray.intersect(plane), expected)
 
 
-def are_close(a: geometry.Point, b: geometry.Point) -> bool:
+def are_close(
+        a: Optional[geometry.Point], b: Optional[geometry.Point],
+) -> bool:
+    if (a is None) and (b is None):
+        return True
     return abs(b - a) == pytest.approx(0)
