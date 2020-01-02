@@ -55,9 +55,10 @@ class Plane:
         dx = ray.direction.x
         dy = ray.direction.y
         dz = ray.direction.z
-        k = - (self.a * x0 + self.b * y0 + self.c * z0 + self.d) / (
-            self.a * dx + self.b * dy + self.c * dz
-        )
+        denominator = (self.a * dx + self.b * dy + self.c * dz)
+        if denominator == 0:
+            return None
+        k = - (self.a * x0 + self.b * y0 + self.c * z0 + self.d) / denominator
         if k < 0:
             return None
         return Point(

@@ -49,6 +49,7 @@ def test_sphere():
     'plane, expected', [
         (geometry.Plane(1, 0, 0, 0), geometry.Point(0, 0, 0)),
         (geometry.Plane(1, 0, 0, -2), None),
+        (geometry.Plane(0, 0, 1, -1), None),
     ],
 )
 def test_intersect_ray_with_plane(plane, expected):
