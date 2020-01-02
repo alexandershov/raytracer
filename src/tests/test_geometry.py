@@ -1,6 +1,12 @@
 from raytracer import geometry
 
 
+def test_point_sub():
+    a = geometry.Point(3, 2, 1)
+    b = geometry.Point(9, 6, 3)
+    assert (b - a) == geometry.Vector(6, 4, 2)
+
+
 def test_ray():
     start = geometry.Point(3, 2, 1)
     after_start = geometry.Point(9, 6, 3)
