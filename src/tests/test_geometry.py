@@ -19,3 +19,11 @@ def test_create_ray_from_points():
     ray = geometry.Ray.from_points(START, AFTER_START)
     assert ray.start == START
     assert ray.direction == DIRECTION
+
+
+def test_plane():
+    plane = geometry.Plane(1, 2, 3, 4)
+    assert plane.a == 1
+    assert plane.b == 2
+    assert plane.c == 3
+    assert plane.d == 4

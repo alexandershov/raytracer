@@ -31,3 +31,11 @@ class Ray:
     def from_points(start: Point, after_start: Point) -> Ray:
         assert start != after_start
         return Ray(start, after_start - start)
+
+
+@dataclasses.dataclass(frozen=True)
+class Plane:
+    a: float
+    b: float
+    c: float
+    d: float
