@@ -5,33 +5,16 @@ from typing import List
 
 from . import geometry
 
+from . import image
+
 
 class Material:
     pass
 
 
 @dataclasses.dataclass(frozen=True)
-class Color:
-    red: int
-    green: int
-    blue: int
-
-    @staticmethod
-    def black() -> Color:
-        return Color(0, 0, 0)
-
-    @staticmethod
-    def white() -> Color:
-        return Color(255, 255, 255)
-
-    @staticmethod
-    def grey() -> Color:
-        return Color(100, 100, 100)
-
-
-@dataclasses.dataclass(frozen=True)
 class Solid(Material):
-    color: Color
+    color: image.Color
 
 
 class Mirror(Material):
