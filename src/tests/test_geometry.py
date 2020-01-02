@@ -34,3 +34,9 @@ def test_sphere():
     sphere = geometry.Sphere(CENTER, 10)
     assert sphere.center == CENTER
     assert sphere.radius == 10
+
+
+def test_intersect_ray_with_plane():
+    ray = geometry.Ray(START, DIRECTION)
+    plane = geometry.Plane(1, 2, 3, 4)
+    assert isinstance(ray.intersect(plane), geometry.Point)

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+from typing import Optional
 
 
 @dataclasses.dataclass(frozen=True)
@@ -32,6 +33,9 @@ class Ray:
         assert start != after_start
         return Ray(start, after_start - start)
 
+    def intersect(self, plane: Plane) -> Optional[Point]:
+        return plane.intersect(self)
+
 
 @dataclasses.dataclass(frozen=True)
 class Plane:
@@ -39,6 +43,9 @@ class Plane:
     b: float
     c: float
     d: float
+
+    def intersect(self, ray: Ray) -> Optional[Point]:
+        return Point(0, 0, 0)
 
 
 @dataclasses.dataclass(frozen=True)
