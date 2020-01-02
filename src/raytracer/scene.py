@@ -56,18 +56,26 @@ class Scene:
                 p, thing = min(
                     intersections, key=lambda p_thing: abs(p_thing[0] - self.camera)
                 )
-                color = thing.material.get_color()
-                for light in self.lights:
-                    d = abs(light - p)
-                    cutoff = 800
-                    if d > cutoff:
-                        color *= cutoff / d
+                color = thing.material.get_color() * self._lightning_coeff(p)
             else:
                 color = image.Color(26, 108, 171)
             img.set_pixel(point.x, self.height - 1 - point.y, color)
         duration = time.time() - started_at
         print(f"render took {duration:.3f} seconds")
         img.show()
+
+    def _lightning_coeff(self, p: geometry.Point) -> float:
+        coeffs = []
+        for light in self.lights:
+            d = abs(light - p)
+            cutoff = 800
+            if d > cutoff:
+                coeffs.append(cutoff / d)
+            else:
+                coeffs.append(1)
+        if not coeffs:
+            return 1
+        return max(coeffs)
 
     def _iter_screen(self) -> Iterable[geometry.Point]:
         return (
