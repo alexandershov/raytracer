@@ -24,6 +24,16 @@ class Color:
     def grey() -> Color:
         return Color(100, 100, 100)
 
+    def __mul__(self, other):
+        if not isinstance(other, (int, float)):
+            return NotImplemented
+        assert other >= 0
+        return Color(
+            red=min(int(self.red * other), 255),
+            green=min(int(self.green * other), 255),
+            blue=min(int(self.blue * other), 255),
+        )
+
 
 class Image(metaclass=abc.ABCMeta):
     @abc.abstractmethod
