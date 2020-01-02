@@ -8,6 +8,7 @@ pytest = "*"
 raytracer = {editable = true,path = "."}
 
 [packages]
+pillow = "*"
 
 [requires]
 python_version = "3.7"
