@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import math
 from typing import Optional
 
 
@@ -21,6 +22,9 @@ class Vector:
     x: float
     y: float
     z: float
+
+    def __abs__(self):
+        return math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
 
 
 @dataclasses.dataclass(frozen=True)

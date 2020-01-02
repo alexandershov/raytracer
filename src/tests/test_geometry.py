@@ -1,3 +1,5 @@
+import math
+
 import pytest
 from raytracer import geometry
 
@@ -9,6 +11,11 @@ CENTER = geometry.Point(5, 10, 9)
 
 def test_sub_points():
     assert (AFTER_START - START) == DIRECTION
+
+
+def test_vector_length():
+    vector = geometry.Vector(3, 4, 5)
+    assert abs(vector) == pytest.approx(math.sqrt(50))
 
 
 def test_create_ray_from_start_and_direction():
