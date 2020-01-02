@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import abc
 import dataclasses
 import math
 from typing import List
@@ -37,12 +38,18 @@ class Ray:
         assert start != after_start
         return Ray(start, after_start - start)
 
-    def intersect(self, plane: Plane) -> List[Point]:
-        return plane.intersect(self)
+    def intersect(self, figure: Intersectable) -> List[Point]:
+        return figure.intersect(self)
+
+
+class Intersectable:
+    @abc.abstractmethod
+    def intersect(self, ray: Ray) -> List[Point]:
+        raise NotImplemented
 
 
 @dataclasses.dataclass(frozen=True)
-class Plane:
+class Plane(Intersectable):
     a: float
     b: float
     c: float
