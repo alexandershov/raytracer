@@ -94,7 +94,11 @@ Questions
   Also looks like there can be cases 3 equations and 2 unknowns. 
   We can special case it, if x/y/z is constant then solution is trivial.
   So we have a projection, but it's in global coordinates. This is the next question.
-* How to convert a point on a plane to local coordinates?
+* ~~How to convert a point on a plane to local coordinates?~~
+  Projection on axis is easy - it's an equation against k.
+  Now we have projected point on axis, how to translate it to local coordinates?
+  Actually when we projecting point we're finding k, that'll be the coordinate.
+  We just need to do it for 2 axis.
 * Why we need self.height - 1 in set_pixel?
 * What is the math for the floor/wall mirror?
 * What is the math for the sphere mirror?
