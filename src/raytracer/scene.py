@@ -37,6 +37,7 @@ class Scene:
     width: int
     height: int
     camera: geometry.Point
+    lights: List[geometry.Point]
     things: List[Thing]
 
     def __iter__(self):
