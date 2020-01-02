@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import time
 from typing import List, Iterable
 
 from . import geometry
@@ -42,13 +43,13 @@ class Scene:
         return iter(self.things)
 
     def render(self):
+        started_at = time.time()
         img = image.PillowImage(self.width, self.height)
         for point in self._iter_screen():
             ray = geometry.Ray.from_points(self.camera, point)
             intersections = []
             for thing in self:
-                cur_intersections = ray.intersect(thing.figure)
-                for p in cur_intersections:
+                for p in ray.intersect(thing.figure):
                     intersections.append((p, thing))
             if intersections:
                 _, thing = min(
@@ -57,6 +58,8 @@ class Scene:
                 img.set_pixel(point.x, point.y, thing.material.get_color())
             else:
                 img.set_pixel(point.x, point.y, image.Color(0, 0, 255))
+        duration = time.time() - started_at
+        print(f"render took {duration:.3f} seconds")
         img.show()
 
     def _iter_screen(self) -> Iterable[geometry.Point]:
