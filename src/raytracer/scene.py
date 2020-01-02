@@ -70,8 +70,8 @@ class Scene:
             in_the_shadow = False
             ray = geometry.Ray.from_points(p, light)
             for thing in self:
-                for intersect in ray.intersect(thing.figure):
-                    if abs(intersect - p) > 0.1:
+                for intersect in ray.intersect(thing.figure, max_k=1):
+                    if abs(intersect - p) > 1:
                         in_the_shadow = True
             if in_the_shadow:
                 coeffs.append(0.5)

@@ -40,13 +40,13 @@ class Ray:
         assert start != after_start
         return Ray(start, after_start - start)
 
-    def intersect(self, figure: Figure) -> List[Point]:
-        return figure.intersect(self)
+    def intersect(self, figure: Figure, max_k=None) -> List[Point]:
+        return figure.intersect(self, max_k=max_k)
 
 
 class Figure:
     @abc.abstractmethod
-    def intersect(self, ray: Ray) -> List[Point]:
+    def intersect(self, ray: Ray, max_k=None) -> List[Point]:
         raise NotImplemented
 
 
@@ -57,7 +57,7 @@ class Plane(Figure):
     c: float
     d: float
 
-    def intersect(self, ray: Ray) -> List[Point]:
+    def intersect(self, ray: Ray, max_k=None) -> List[Point]:
         x0 = ray.start.x
         y0 = ray.start.y
         z0 = ray.start.z
@@ -69,6 +69,8 @@ class Plane(Figure):
             return []
         k = -(self.a * x0 + self.b * y0 + self.c * z0 + self.d) / denominator
         if k < 0:
+            return []
+        if max_k is not None and k > max_k:
             return []
         return [
             Point(
@@ -84,7 +86,7 @@ class Sphere(Figure):
     center: Point
     radius: float
 
-    def intersect(self, ray: Ray) -> List[Point]:
+    def intersect(self, ray: Ray, max_k=None) -> List[Point]:
         x1 = ray.start.x - self.center.x
         y1 = ray.start.y - self.center.y
         z1 = ray.start.z - self.center.z
@@ -98,5 +100,5 @@ class Sphere(Figure):
                 ray.start.z + k * ray.direction.z,
             )
             for k in algebra.solve_quadratic(a, b, c)
-            if k >= 0
+            if k >= 0 and (max_k is None or k < max_k)
         ]
