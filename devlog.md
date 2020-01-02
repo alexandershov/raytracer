@@ -69,7 +69,8 @@ Questions
 * ~~What is the math for the intersection of ray and sphere?~~
   Just put x = x0 + k(x1 - x0) into sphere equation and you'll get 
   quadratic equation with k 
-* How to implement colors?
+* ~~How to implement colors?~~
+  Thing{figure, material}, thing can return Colorable which have get_color()
 * How to implement checkers on floor/walls?
 * What is the math for the floor/wall mirror?
 * What is the math for the sphere mirror?
