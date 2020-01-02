@@ -9,6 +9,13 @@ class Point:
 
 
 @dataclasses.dataclass(frozen=True)
+class Vector:
+    x: float
+    y: float
+    z: float
+
+
+@dataclasses.dataclass(frozen=True)
 class Ray:
     start: Point
-    direction: Point
+    direction: Vector
