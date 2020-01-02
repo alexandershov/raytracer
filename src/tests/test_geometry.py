@@ -37,6 +37,8 @@ def test_sphere():
 
 
 def test_intersect_ray_with_plane():
-    ray = geometry.Ray(START, DIRECTION)
-    plane = geometry.Plane(1, 2, 3, 4)
-    assert isinstance(ray.intersect(plane), geometry.Point)
+    ray = geometry.Ray.from_points(
+        geometry.Point(1, 0, 0), geometry.Point(0, 0, 0),
+    )
+    plane = geometry.Plane(1, 0, 0, 0)
+    assert ray.intersect(plane) == geometry.Point(0, 0, 0)

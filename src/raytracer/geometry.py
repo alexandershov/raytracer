@@ -45,7 +45,20 @@ class Plane:
     d: float
 
     def intersect(self, ray: Ray) -> Optional[Point]:
-        return Point(0, 0, 0)
+        x0 = ray.start.x
+        y0 = ray.start.y
+        z0 = ray.start.z
+        dx = ray.direction.x
+        dy = ray.direction.y
+        dz = ray.direction.z
+        k = - (self.a * x0 + self.b * y0 + self.c * z0 + self.d) / (
+            self.a * dx + self.b * dy + self.c * dz
+        )
+        return Point(
+            ray.start.x + k * ray.direction.x,
+            ray.start.y + k * ray.direction.y,
+            ray.start.z + k * ray.direction.z,
+        )
 
 
 @dataclasses.dataclass(frozen=True)
