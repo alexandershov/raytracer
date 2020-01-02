@@ -70,3 +70,7 @@ def are_close(a: Optional[geometry.Point], b: Optional[geometry.Point]) -> bool:
     if (a is None) and (b is None):
         return True
     return abs(b - a) == pytest.approx(0)
+
+
+def distance_to_origin(point: geometry.Point) -> float:
+    return abs(point - geometry.Point(0, 0, 0))
