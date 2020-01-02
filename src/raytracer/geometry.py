@@ -38,18 +38,18 @@ class Ray:
         assert start != after_start
         return Ray(start, after_start - start)
 
-    def intersect(self, figure: Intersectable) -> List[Point]:
+    def intersect(self, figure: Figure) -> List[Point]:
         return figure.intersect(self)
 
 
-class Intersectable:
+class Figure:
     @abc.abstractmethod
     def intersect(self, ray: Ray) -> List[Point]:
         raise NotImplemented
 
 
 @dataclasses.dataclass(frozen=True)
-class Plane(Intersectable):
+class Plane(Figure):
     a: float
     b: float
     c: float
