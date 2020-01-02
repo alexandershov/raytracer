@@ -67,6 +67,15 @@ class Scene:
     def _lightning_coeff(self, p: geometry.Point) -> float:
         coeffs = []
         for light in self.lights:
+            in_the_shadow = False
+            ray = geometry.Ray.from_points(p, light)
+            for thing in self:
+                for intersect in ray.intersect(thing.figure):
+                    if abs(intersect - p) > 0.1:
+                        in_the_shadow = True
+            if in_the_shadow:
+                coeffs.append(0.5)
+                continue
             d = abs(light - p)
             cutoff = 800
             if d > cutoff:
