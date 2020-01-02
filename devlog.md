@@ -71,6 +71,7 @@ Questions
   quadratic equation with k 
 * ~~How to implement colors?~~
   Thing{figure, material}, thing can return Colorable which have get_color()
+* Why we need self.height - 1 in set_pixel
 * How to implement checkers on floor/walls?
 * What is the math for the floor/wall mirror?
 * What is the math for the sphere mirror?
