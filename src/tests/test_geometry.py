@@ -1,3 +1,4 @@
+import pytest
 from raytracer import geometry
 
 START = geometry.Point(3, 2, 1)
@@ -36,9 +37,11 @@ def test_sphere():
     assert sphere.radius == 10
 
 
-def test_intersect_ray_with_plane():
+@pytest.mark.parametrize('plane, expected', [
+    (geometry.Plane(1, 0, 0, 0), geometry.Point(0, 0, 0))
+])
+def test_intersect_ray_with_plane(plane, expected):
     ray = geometry.Ray.from_points(
         geometry.Point(1, 0, 0), geometry.Point(0, 0, 0),
     )
-    plane = geometry.Plane(1, 0, 0, 0)
-    assert ray.intersect(plane) == geometry.Point(0, 0, 0)
+    assert ray.intersect(plane) == expected
