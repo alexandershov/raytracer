@@ -9,8 +9,10 @@ def test_scene():
     )
 
     sphere = scene.Thing(
-        geometry.Sphere(center=geometry.Point(150, -150, 0), radius=30),
+        geometry.Sphere(center=geometry.Point(150, -150, 150), radius=30),
         material=scene.Solid(image.Color.grey()),
     )
-    s = scene.Scene([floor, sphere])
-    assert len(list(s)) == 2
+    camera = geometry.Point(300, 200, -600)
+    s = scene.Scene(camera=camera, things=[floor, sphere])
+    assert s.camera == camera
+    assert list(s) == [floor, sphere]

@@ -27,9 +27,10 @@ class Thing:
     material: Material
 
 
+@dataclasses.dataclass(frozen=True)
 class Scene:
-    def __init__(self, things: List[Thing]):
-        self._things = things
+    camera: geometry.Point
+    things: List[Thing]
 
     def __iter__(self):
-        return iter(self._things)
+        return iter(self.things)
