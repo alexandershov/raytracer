@@ -71,7 +71,30 @@ Questions
   quadratic equation with k 
 * ~~How to implement colors?~~
   Thing{figure, material}, thing can return Colorable which have get_color()
-* Why we need self.height - 1 in set_pixel
-* How to implement checkers on floor/walls?
+* ~~How to implement checkers on floor/walls?~~
+  Idea 1: set local x & y for a plane and project point to local coordinates
+    I don't like it, but it seems like the most realistic solution to get without
+    google. And I don't want to google, I want to learn.
+  Idea 2: some wicked function of x, y, z
+  Idea 3: project Xs axis onto plane and build a perpendicular on plane - 
+    that's no good because you can't project Ox if plane contains Ox
+  Idea 4: just get two different points on a plane, that'll be your Ox, then build perpendicular
+  Idea 5: any plane can be made as the rotation + shift of Oxy we need to find this rotation
+* ~~How to project point to a plane?~~
+  On a plane y=ax + b projection of (x0; y0) will be intersection of
+  another line y=-x/a + b1 (b1 can be found easily), then you can find intersection 
+  of two lines
+  In 3d we can choose view where plane is a line and do it, but how to choose this view?
+  How to rotate? 
+  Maybe just multiplying all a, b, c leads to rotation?
+  No at least for by=3, if you change b then it doesn't rotate but just moves up/down
+  two vectors are perpendicular if they x1*x2 + y1*y2 + z1*z2 = 0.
+  We have 3 points on a plane. And we have a point outside of it.
+  We can get system of 3 equations with 3 unknowns. Looks inspiring.
+  Also looks like there can be cases 3 equations and 2 unknowns. 
+  We can special case it, if x/y/z is constant then solution is trivial.
+  So we have a projection, but it's in global coordinates. This is the next question.
+* How to convert a point on a plane to local coordinates?
+* Why we need self.height - 1 in set_pixel?
 * What is the math for the floor/wall mirror?
 * What is the math for the sphere mirror?
