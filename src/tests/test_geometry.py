@@ -47,15 +47,15 @@ def test_sphere():
 
 
 @pytest.mark.parametrize(
-    'plane, expected', [
-        (geometry.Plane(1, 0, 0, 0), geometry.Point(0, 0, 0)),
-        (geometry.Plane(1, 0, 0, -2), None),
-        (geometry.Plane(0, 0, 1, -1), None),
-        (geometry.Plane(0, 0, 1, 0), None),
+    'ray, plane, expected', [
+        (RAY, geometry.Plane(1, 0, 0, 0), geometry.Point(0, 0, 0)),
+        (RAY, geometry.Plane(1, 0, 0, -2), None),
+        (RAY, geometry.Plane(0, 0, 1, -1), None),
+        (RAY, geometry.Plane(0, 0, 1, 0), None),
     ],
 )
-def test_intersect_ray_with_plane(plane, expected):
-    assert are_close(RAY.intersect(plane), expected)
+def test_intersect_ray_with_plane(ray, plane, expected):
+    assert are_close(ray.intersect(plane), expected)
 
 
 def are_close(
