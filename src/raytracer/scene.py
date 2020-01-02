@@ -55,9 +55,13 @@ class Scene:
                 _, thing = min(
                     intersections, key=lambda p_thing: abs(p_thing[0] - self.camera)
                 )
-                img.set_pixel(point.x, point.y, thing.material.get_color())
+                img.set_pixel(
+                    point.x, self.height - 1 - point.y, thing.material.get_color()
+                )
             else:
-                img.set_pixel(point.x, point.y, image.Color(0, 0, 255))
+                img.set_pixel(
+                    point.x, self.height - 1 - point.y, image.Color(0, 0, 255)
+                )
         duration = time.time() - started_at
         print(f"render took {duration:.3f} seconds")
         img.show()
