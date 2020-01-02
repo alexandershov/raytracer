@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import math
-from typing import Optional
+from typing import List
 
 
 @dataclasses.dataclass(frozen=True)
@@ -37,7 +37,7 @@ class Ray:
         assert start != after_start
         return Ray(start, after_start - start)
 
-    def intersect(self, plane: Plane) -> Optional[Point]:
+    def intersect(self, plane: Plane) -> List[Point]:
         return plane.intersect(self)
 
 
@@ -48,7 +48,7 @@ class Plane:
     c: float
     d: float
 
-    def intersect(self, ray: Ray) -> Optional[Point]:
+    def intersect(self, ray: Ray) -> List[Point]:
         x0 = ray.start.x
         y0 = ray.start.y
         z0 = ray.start.z
@@ -57,15 +57,17 @@ class Plane:
         dz = ray.direction.z
         denominator = self.a * dx + self.b * dy + self.c * dz
         if denominator == 0:
-            return None
+            return []
         k = -(self.a * x0 + self.b * y0 + self.c * z0 + self.d) / denominator
         if k < 0:
-            return None
-        return Point(
-            ray.start.x + k * ray.direction.x,
-            ray.start.y + k * ray.direction.y,
-            ray.start.z + k * ray.direction.z,
-        )
+            return []
+        return [
+            Point(
+                ray.start.x + k * ray.direction.x,
+                ray.start.y + k * ray.direction.y,
+                ray.start.z + k * ray.direction.z,
+            )
+        ]
 
 
 @dataclasses.dataclass(frozen=True)

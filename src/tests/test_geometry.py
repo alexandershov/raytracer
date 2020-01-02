@@ -1,5 +1,5 @@
 import math
-from typing import Optional
+from typing import List
 
 import pytest
 from raytracer import geometry
@@ -49,27 +49,39 @@ def test_sphere():
 @pytest.mark.parametrize(
     "ray, plane, expected",
     [
-        (RAY, geometry.Plane(1, 0, 0, 0), geometry.Point(0, 0, 0)),
+        (RAY, geometry.Plane(1, 0, 0, 0), [geometry.Point(0, 0, 0)]),
         (
             geometry.Ray(geometry.Point(8, 9, 10), geometry.Vector(-5, -6, -7)),
             geometry.Plane(1, 2, 3, 4),
-            geometry.Point(
-                0.10526315789473628, -0.47368421052631504, -1.0526315789473681
-            ),
+            [
+                geometry.Point(
+                    0.10526315789473628, -0.47368421052631504, -1.0526315789473681
+                )
+            ],
         ),
-        (RAY, geometry.Plane(1, 0, 0, -2), None),
-        (RAY, geometry.Plane(0, 0, 1, -1), None),
-        (RAY, geometry.Plane(0, 0, 1, 0), None),
+        (RAY, geometry.Plane(1, 0, 0, -2), []),
+        (RAY, geometry.Plane(0, 0, 1, -1), []),
+        (RAY, geometry.Plane(0, 0, 1, 0), []),
     ],
 )
 def test_intersect_ray_with_plane(ray, plane, expected):
-    assert are_close(ray.intersect(plane), expected)
+    assert same_points(ray.intersect(plane), expected)
 
 
-def are_close(a: Optional[geometry.Point], b: Optional[geometry.Point]) -> bool:
-    if (a is None) and (b is None):
-        return True
+def same_points(xs: List[geometry.Point], ys: List[geometry.Point]) -> bool:
+    if len(xs) != len(ys):
+        return False
+    xs_sorted = sort_by_distance_to_origin(xs)
+    ys_sorted = sort_by_distance_to_origin(ys)
+    return all(are_close(a, b) for a, b in zip(xs_sorted, ys_sorted))
+
+
+def are_close(a: geometry.Point, b: geometry.Point) -> bool:
     return abs(b - a) == pytest.approx(0)
+
+
+def sort_by_distance_to_origin(points: List[geometry.Point]) -> List[geometry.Point]:
+    return sorted(points, key=distance_to_origin)
 
 
 def distance_to_origin(point: geometry.Point) -> float:
