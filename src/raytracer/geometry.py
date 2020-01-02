@@ -39,3 +39,9 @@ class Plane:
     b: float
     c: float
     d: float
+
+
+@dataclasses.dataclass(frozen=True)
+class Sphere:
+    center: Point
+    radius: float

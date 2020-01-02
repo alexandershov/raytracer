@@ -3,6 +3,7 @@ from raytracer import geometry
 START = geometry.Point(3, 2, 1)
 AFTER_START = geometry.Point(9, 6, 3)
 DIRECTION = geometry.Vector(6, 4, 2)
+CENTER = geometry.Point(5, 10, 9)
 
 
 def test_sub_points():
@@ -27,3 +28,9 @@ def test_plane():
     assert plane.b == 2
     assert plane.c == 3
     assert plane.d == 4
+
+
+def test_sphere():
+    sphere = geometry.Sphere(CENTER, 10)
+    assert sphere.center == CENTER
+    assert sphere.radius == 10
