@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import List
+from typing import List, Iterable
 
 from . import geometry
 
@@ -36,3 +36,16 @@ class Scene:
 
     def __iter__(self):
         return iter(self.things)
+
+    def render(self):
+        img = image.PillowImage(self.width, self.height)
+        for point in self._iter_screen():
+            ray = geometry.Ray.from_points(self.camera, point)
+        img.show()
+
+    def _iter_screen(self) -> Iterable[geometry.Point]:
+        return (
+            geometry.Point(x, y, 0)
+            for x in range(0, self.width)
+            for y in range(0, self.height)
+        )
