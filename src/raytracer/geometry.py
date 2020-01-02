@@ -58,6 +58,8 @@ class Plane:
         k = - (self.a * x0 + self.b * y0 + self.c * z0 + self.d) / (
             self.a * dx + self.b * dy + self.c * dz
         )
+        if k < 0:
+            return None
         return Point(
             ray.start.x + k * ray.direction.x,
             ray.start.y + k * ray.direction.y,

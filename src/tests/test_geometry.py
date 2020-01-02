@@ -46,7 +46,10 @@ def test_sphere():
 
 
 @pytest.mark.parametrize(
-    'plane, expected', [(geometry.Plane(1, 0, 0, 0), geometry.Point(0, 0, 0))],
+    'plane, expected', [
+        (geometry.Plane(1, 0, 0, 0), geometry.Point(0, 0, 0)),
+        (geometry.Plane(1, 0, 0, -2), None),
+    ],
 )
 def test_intersect_ray_with_plane(plane, expected):
     ray = geometry.Ray.from_points(
