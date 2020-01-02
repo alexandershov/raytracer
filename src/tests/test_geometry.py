@@ -47,8 +47,16 @@ def test_sphere():
 
 
 @pytest.mark.parametrize(
-    'ray, plane, expected', [
+    "ray, plane, expected",
+    [
         (RAY, geometry.Plane(1, 0, 0, 0), geometry.Point(0, 0, 0)),
+        (
+            geometry.Ray(geometry.Point(8, 9, 10), geometry.Vector(-5, -6, -7)),
+            geometry.Plane(1, 2, 3, 4),
+            geometry.Point(
+                0.10526315789473628, -0.47368421052631504, -1.0526315789473681
+            ),
+        ),
         (RAY, geometry.Plane(1, 0, 0, -2), None),
         (RAY, geometry.Plane(0, 0, 1, -1), None),
         (RAY, geometry.Plane(0, 0, 1, 0), None),
@@ -58,9 +66,7 @@ def test_intersect_ray_with_plane(ray, plane, expected):
     assert are_close(ray.intersect(plane), expected)
 
 
-def are_close(
-        a: Optional[geometry.Point], b: Optional[geometry.Point],
-) -> bool:
+def are_close(a: Optional[geometry.Point], b: Optional[geometry.Point]) -> bool:
     if (a is None) and (b is None):
         return True
     return abs(b - a) == pytest.approx(0)
