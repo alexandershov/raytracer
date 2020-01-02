@@ -29,6 +29,8 @@ class Thing:
 
 @dataclasses.dataclass(frozen=True)
 class Scene:
+    width: int
+    height: int
     camera: geometry.Point
     things: List[Thing]
 

@@ -13,6 +13,8 @@ def test_scene():
         material=scene.Solid(image.Color.grey()),
     )
     camera = geometry.Point(300, 200, -600)
-    s = scene.Scene(camera=camera, things=[floor, sphere])
+    s = scene.Scene(width=600, height=400, camera=camera, things=[floor, sphere])
+    assert s.width == 600
+    assert s.height == 400
     assert s.camera == camera
     assert list(s) == [floor, sphere]
