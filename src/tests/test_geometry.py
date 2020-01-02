@@ -62,6 +62,11 @@ def test_sphere():
         (RAY, geometry.Plane(1, 0, 0, -2), []),
         (RAY, geometry.Plane(0, 0, 1, -1), []),
         (RAY, geometry.Plane(0, 0, 1, 0), []),
+        (
+            RAY,
+            geometry.Sphere(geometry.Point(0, 0, 0), 0.5),
+            [geometry.Point(0.5, 0, 0), geometry.Point(-0.5, 0, 0)],
+        ),
     ],
 )
 def test_intersect_ray(ray, figure, expected):

@@ -5,6 +5,8 @@ import dataclasses
 import math
 from typing import List
 
+from . import algebra
+
 
 @dataclasses.dataclass(frozen=True)
 class Point:
@@ -78,6 +80,23 @@ class Plane(Figure):
 
 
 @dataclasses.dataclass(frozen=True)
-class Sphere:
+class Sphere(Figure):
     center: Point
     radius: float
+
+    def intersect(self, ray: Ray) -> List[Point]:
+        x1 = ray.start.x - self.center.x
+        y1 = ray.start.y - self.center.y
+        z1 = ray.start.z - self.center.z
+        a = ray.direction.x ** 2 + ray.direction.y ** 2 + ray.direction.z ** 2
+        b = 2 * (x1 * ray.direction.x + y1 * ray.direction.y + z1 * ray.direction.z)
+        c = x1 ** 2 + y1 ** 2 + z1 ** 2 - self.radius ** 2
+        return [
+            Point(
+                ray.start.x + k * ray.direction.x,
+                ray.start.y + k * ray.direction.y,
+                ray.start.z + k * ray.direction.z,
+            )
+            for k in algebra.solve_quadratic(a, b, c)
+            if k >= 0
+        ]
