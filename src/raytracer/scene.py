@@ -60,7 +60,7 @@ class Scene:
                 )
             else:
                 img.set_pixel(
-                    point.x, self.height - 1 - point.y, image.Color(0, 0, 255)
+                    point.x, self.height - 1 - point.y, image.Color(26, 108, 171)
                 )
         duration = time.time() - started_at
         print(f"render took {duration:.3f} seconds")
