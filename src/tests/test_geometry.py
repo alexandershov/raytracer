@@ -51,4 +51,8 @@ def test_intersect_ray_with_plane(plane, expected):
     ray = geometry.Ray.from_points(
         geometry.Point(1, 0, 0), geometry.Point(0, 0, 0),
     )
-    assert ray.intersect(plane) == expected
+    assert are_close(ray.intersect(plane), expected)
+
+
+def are_close(a: geometry.Point, b: geometry.Point) -> bool:
+    return abs(b - a) == pytest.approx(0)
