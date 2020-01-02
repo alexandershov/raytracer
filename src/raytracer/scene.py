@@ -9,12 +9,16 @@ from . import image
 
 
 class Material:
-    pass
+    def get_color(self) -> image.Color:
+        raise NotImplementedError
 
 
 @dataclasses.dataclass(frozen=True)
 class Solid(Material):
     color: image.Color
+
+    def get_color(self) -> image.Color:
+        return self.color
 
 
 class Mirror(Material):
@@ -41,6 +45,18 @@ class Scene:
         img = image.PillowImage(self.width, self.height)
         for point in self._iter_screen():
             ray = geometry.Ray.from_points(self.camera, point)
+            intersections = []
+            for thing in self:
+                cur_intersections = ray.intersect(thing.figure)
+                for p in cur_intersections:
+                    intersections.append((p, thing))
+            if intersections:
+                _, thing = min(
+                    intersections, key=lambda p_thing: abs(p_thing[0] - self.camera)
+                )
+                img.set_pixel(point.x, point.y, thing.material.get_color())
+            else:
+                img.set_pixel(point.x, point.y, image.Color(0, 0, 255))
         img.show()
 
     def _iter_screen(self) -> Iterable[geometry.Point]:
