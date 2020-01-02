@@ -53,10 +53,15 @@ class Scene:
                 for p in ray.intersect(thing.figure):
                     intersections.append((p, thing))
             if intersections:
-                _, thing = min(
+                p, thing = min(
                     intersections, key=lambda p_thing: abs(p_thing[0] - self.camera)
                 )
                 color = thing.material.get_color()
+                for light in self.lights:
+                    d = abs(light - p)
+                    cutoff = 800
+                    if d > cutoff:
+                        color *= cutoff / d
             else:
                 color = image.Color(26, 108, 171)
             img.set_pixel(point.x, self.height - 1 - point.y, color)
