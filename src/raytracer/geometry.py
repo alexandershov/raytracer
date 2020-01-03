@@ -8,11 +8,12 @@ from typing import List
 from . import algebra
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass
 class Point:
-    x: float
-    y: float
-    z: float
+    coords: List[float] = dataclasses.field(init=False)
+
+    def __init__(self, x: float, y: float, z: float):
+        self.coords = [x, y, z]
 
     def __sub__(self, other) -> Point:
         if not isinstance(other, Point):
@@ -41,6 +42,18 @@ class Point:
 
     def __abs__(self) -> float:
         return math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
+
+    @property
+    def x(self):
+        return self.coords[0]
+
+    @property
+    def y(self):
+        return self.coords[1]
+
+    @property
+    def z(self):
+        return self.coords[2]
 
 
 @dataclasses.dataclass(frozen=True)
