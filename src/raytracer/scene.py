@@ -76,17 +76,21 @@ class Scene:
         for point in self._iter_screen():
             color = image.Color(26, 108, 171)
             ray = geometry.Ray.from_points(self.camera, point)
+            excluded_things = set()
             for _ in range(5):
                 intersections = []
                 for thing in self:
+                    if thing in excluded_things:
+                        continue
                     for p in ray.intersect(thing.figure):
                         intersections.append((p, thing))
                 if intersections:
                     p, thing = min(
-                        intersections, key=lambda p_thing: abs(p_thing[0] - self.camera)
+                        intersections, key=lambda p_thing: abs(p_thing[0] - ray.start)
                     )
                     if isinstance(thing.material, Mirror):
                         ray = ray.mirror(thing.figure.perpendicular(p))
+                        excluded_things = {thing}
                         continue
                     color = thing.material.get_color(p) * self._lightning_coeff(p)
                 break
