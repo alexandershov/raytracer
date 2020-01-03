@@ -109,6 +109,13 @@ def test_ray_perpendicular(ray, other, expected):
                 geometry.Point(10, 0, 0), geometry.Point(11, 0, 0)
             ),
         ),
+        (
+            geometry.Plane(0, 1, 0, -10),
+            geometry.Point(0, 10, 0),
+            geometry.Ray.from_points(
+                geometry.Point(0, 10, 0), geometry.Point(0, 11, 0)
+            ),
+        ),
     ],
 )
 def test_figure_perpendicular(figure, point, expected):
