@@ -90,7 +90,7 @@ def test_intersect_ray(ray, figure, expected):
         ),
     ],
 )
-def test_perpendicular(ray, other, expected):
+def test_ray_perpendicular(ray, other, expected):
     assert same_rays(ray.perpendicular(other), expected)
 
 
