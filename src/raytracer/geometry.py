@@ -14,6 +14,10 @@ from . import algebra
 class Point:
     coords: np.ndarray = dataclasses.field(init=False)
 
+    @staticmethod
+    def from_xyz(x: float, y: float, z: float) -> Point:
+        return Point(x, y, z)
+
     def __init__(self, x: float, y: float, z: float):
         self.coords = np.array((x, y, z))
 

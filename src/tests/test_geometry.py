@@ -11,6 +11,13 @@ RAY = geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(0, 0, 0))
 CENTER = geometry.Point(5, 10, 9)
 
 
+def test_point_from_xyz():
+    point = geometry.Point.from_xyz(1, 2, 3)
+    assert point.x == 1
+    assert point.y == 2
+    assert point.z == 3
+
+
 def test_sub_points():
     assert (AFTER_START - START) == DIRECTION
 
