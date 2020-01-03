@@ -129,12 +129,13 @@ class Sphere(Figure):
 
     def intersect(self, ray: Ray, max_k=None) -> List[Point]:
         v = ray.start - self.center
+        f = ray.start - self.center
         x1 = ray.start.x - self.center.x
         y1 = ray.start.y - self.center.y
         z1 = ray.start.z - self.center.z
         a = ray.direction.x ** 2 + ray.direction.y ** 2 + ray.direction.z ** 2
         b = 2 * (x1 * ray.direction.x + y1 * ray.direction.y + z1 * ray.direction.z)
-        c = x1 ** 2 + y1 ** 2 + z1 ** 2 - self.radius ** 2
+        c = (f @ f) - self.radius ** 2
         return [
             ray.start + ray.direction * k
             for k in algebra.solve_quadratic(a, b, c)
