@@ -80,6 +80,9 @@ Questions
     that's no good because you can't project Ox if plane contains Ox
   Idea 4: just get two different points on a plane, that'll be your Ox, then build perpendicular
   Idea 5: any plane can be made as the rotation + shift of Oxy we need to find this rotation
+  Actually, after a good night's sleep the simplest way is to have a simple projection
+  to Oxy or Oxz in the Material (no plane can be parallel to both of those). 
+  There'll be (almost) no math. 
 * ~~How to project point to a plane?~~
   On a plane y=ax + b projection of (x0; y0) will be intersection of
   another line y=-x/a + b1 (b1 can be found easily), then you can find intersection 
