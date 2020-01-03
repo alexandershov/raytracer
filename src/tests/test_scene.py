@@ -44,7 +44,11 @@ def test_squared_project_to_local_xz():
 
 
 @pytest.mark.parametrize(
-    "point, expected", [(geometry.Point(10, 10, 90), image.Color.white())]
+    "point, expected",
+    [
+        (geometry.Point(10, 10, 90), image.Color.white()),
+        (geometry.Point(-10, -10, 90), image.Color.white()),
+    ],
 )
 def test_squared_material(point, expected):
     material = scene.Squared(
