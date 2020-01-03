@@ -49,7 +49,7 @@ class Point:
     def __matmul__(self, other) -> float:
         if not isinstance(other, Point):
             return NotImplemented
-        return self.x * other.x + self.y * other.y + self.z * other.z
+        return self.coords @ other.coords
 
     def __abs__(self) -> float:
         return math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
