@@ -97,13 +97,10 @@ class Plane(Figure):
         return Point(self.a, self.b, self.c)
 
     def intersect(self, ray: Ray, max_k=None) -> List[Point]:
-        x0 = ray.start.x
-        y0 = ray.start.y
-        z0 = ray.start.z
         denominator = self.coeff_vec @ ray.direction
         if denominator == 0:
             return []
-        k = -(self.a * x0 + self.b * y0 + self.c * z0 + self.d) / denominator
+        k = -((self.coeff_vec @ ray.start) + self.d) / denominator
         if k < 0:
             return []
         if max_k is not None and k > max_k:
