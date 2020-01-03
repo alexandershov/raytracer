@@ -26,4 +26,4 @@ def test_scene():
 
 def test_solid_material():
     material = scene.Solid(color=image.Color.black())
-    assert material.get_color() == image.Color.black()
+    assert material.get_color(geometry.Point(0, 0, 0)) == image.Color.black()

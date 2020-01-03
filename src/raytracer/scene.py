@@ -10,7 +10,7 @@ from . import image
 
 
 class Material:
-    def get_color(self) -> image.Color:
+    def get_color(self, point: geometry.Point) -> image.Color:
         raise NotImplementedError
 
 
@@ -18,7 +18,7 @@ class Material:
 class Solid(Material):
     color: image.Color
 
-    def get_color(self) -> image.Color:
+    def get_color(self, point: geometry.Point) -> image.Color:
         return self.color
 
 
@@ -56,7 +56,7 @@ class Scene:
                 p, thing = min(
                     intersections, key=lambda p_thing: abs(p_thing[0] - self.camera)
                 )
-                color = thing.material.get_color() * self._lightning_coeff(p)
+                color = thing.material.get_color(p) * self._lightning_coeff(p)
             else:
                 color = image.Color(26, 108, 171)
             img.set_pixel(point.x, self.height - 1 - point.y, color)
