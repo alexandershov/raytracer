@@ -89,7 +89,7 @@ class Scene:
                         ray = ray.mirror(thing.figure.perpendicular(p))
                         continue
                     color = thing.material.get_color(p) * self._lightning_coeff(p)
-                    break
+                break
             img.set_pixel(point.x, self.height - 1 - point.y, color)
         duration = time.time() - started_at
         print(f"rendering took {duration:.3f} seconds")
