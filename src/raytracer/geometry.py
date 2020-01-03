@@ -39,7 +39,7 @@ class Point:
     def __mul__(self, other) -> Point:
         if not isinstance(other, (int, float)):
             return NotImplemented
-        return Point.from_xyz(self.x * other, self.y * other, self.z * other)
+        return Point(self.coords * other)
 
     def __truediv__(self, other) -> Point:
         if not isinstance(other, (int, float)):
