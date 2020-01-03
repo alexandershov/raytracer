@@ -94,7 +94,7 @@ class Scene:
                         continue
                     color = thing.material.get_color(p) * self._lightning_coeff(p)
                 break
-            img.set_pixel(point.x, self.height - 1 - point.y, color)
+            img.set_pixel(int(point.x), int(self.height - 1 - point.y), color)
         duration = time.time() - started_at
         print(f"rendering took {duration:.3f} seconds")
         img.show()
