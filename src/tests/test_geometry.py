@@ -19,6 +19,10 @@ def test_mul_point():
     assert START * 2 == geometry.Point(6, 4, 2)
 
 
+def test_mat_mul_points():
+    assert START @ AFTER_START == 42
+
+
 def test_vector_length():
     vector = geometry.Point(3, 4, 5)
     assert abs(vector) == pytest.approx(math.sqrt(50))
