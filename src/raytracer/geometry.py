@@ -92,14 +92,15 @@ class Plane(Figure):
     c: float
     d: float
 
+    @property
+    def coeff_vec(self) -> Point:
+        return Point(self.a, self.b, self.c)
+
     def intersect(self, ray: Ray, max_k=None) -> List[Point]:
         x0 = ray.start.x
         y0 = ray.start.y
         z0 = ray.start.z
-        dx = ray.direction.x
-        dy = ray.direction.y
-        dz = ray.direction.z
-        denominator = self.a * dx + self.b * dy + self.c * dz
+        denominator = self.coeff_vec @ ray.direction
         if denominator == 0:
             return []
         k = -(self.a * x0 + self.b * y0 + self.c * z0 + self.d) / denominator
