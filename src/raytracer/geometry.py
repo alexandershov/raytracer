@@ -14,31 +14,24 @@ class Point:
     y: float
     z: float
 
-    def __sub__(self, other) -> Vector:
+    def __sub__(self, other) -> Point:
         if not isinstance(other, Point):
             return NotImplemented
-        return Vector(self.x - other.x, self.y - other.y, self.z - other.z)
+        return Point(self.x - other.x, self.y - other.y, self.z - other.z)
 
     def __add__(self, other) -> Point:
-        if not isinstance(other, Vector):
+        if not isinstance(other, Point):
             return NotImplemented
         return Point(self.x + other.x, self.y + other.y, self.z + other.z)
 
-
-@dataclasses.dataclass(frozen=True)
-class Vector:
-    x: float
-    y: float
-    z: float
-
-    def __abs__(self):
+    def __abs__(self) -> float:
         return math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
 
 
 @dataclasses.dataclass(frozen=True)
 class Ray:
     start: Point
-    direction: Vector
+    direction: Point
 
     @staticmethod
     def from_points(start: Point, after_start: Point) -> Ray:

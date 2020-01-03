@@ -6,7 +6,7 @@ from raytracer import geometry
 
 START = geometry.Point(3, 2, 1)
 AFTER_START = geometry.Point(9, 6, 3)
-DIRECTION = geometry.Vector(6, 4, 2)
+DIRECTION = geometry.Point(6, 4, 2)
 RAY = geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(0, 0, 0))
 CENTER = geometry.Point(5, 10, 9)
 
@@ -16,7 +16,7 @@ def test_sub_points():
 
 
 def test_vector_length():
-    vector = geometry.Vector(3, 4, 5)
+    vector = geometry.Point(3, 4, 5)
     assert abs(vector) == pytest.approx(math.sqrt(50))
 
 
@@ -51,7 +51,7 @@ def test_sphere():
     [
         (RAY, geometry.Plane(1, 0, 0, 0), [geometry.Point(0, 0, 0)]),
         (
-            geometry.Ray(geometry.Point(8, 9, 10), geometry.Vector(-5, -6, -7)),
+            geometry.Ray(geometry.Point(8, 9, 10), geometry.Point(-5, -6, -7)),
             geometry.Plane(1, 2, 3, 4),
             [
                 geometry.Point(
