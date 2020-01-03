@@ -9,6 +9,7 @@ raytracer = {editable = true,path = "."}
 
 [packages]
 pillow = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.7"
