@@ -19,6 +19,10 @@ def test_mul_point():
     assert START * 2 == geometry.Point(6, 4, 2)
 
 
+def test_div_point():
+    assert are_close(START / 2, geometry.Point(1.5, 1, 0.5))
+
+
 def test_mat_mul_points():
     assert START @ AFTER_START == 42
 

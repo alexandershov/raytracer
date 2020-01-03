@@ -29,6 +29,11 @@ class Point:
             return NotImplemented
         return Point(self.x * other, self.y * other, self.z * other)
 
+    def __truediv__(self, other) -> Point:
+        if not isinstance(other, (int, float)):
+            return NotImplemented
+        return Point(self.x / other, self.y / other, self.z / other)
+
     def __matmul__(self, other) -> float:
         if not isinstance(other, Point):
             return NotImplemented
