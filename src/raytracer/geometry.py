@@ -52,7 +52,7 @@ class Point:
         return self.coords @ other.coords
 
     def __abs__(self) -> float:
-        return math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
+        return np.linalg.norm(self.coords)
 
     @property
     def x(self):
