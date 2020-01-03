@@ -68,11 +68,7 @@ class Ray:
         dy0 = other.start.y - self.start.y
         dz0 = other.start.z - self.start.z
         k = -(dx * dx0 + dy * dy0 + dz * dz0) / (dx ** 2 + dy ** 2 + dz ** 2)
-        p = Point(
-            other.start.x + k * other.direction.x,
-            other.start.y + k * other.direction.y,
-            other.start.z + k * other.direction.z,
-        )
+        p = other.start + other.direction * k
         return Ray.from_points(self.start, p)
 
     def mirror(self, axis: Ray) -> Ray:
