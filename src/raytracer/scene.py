@@ -74,18 +74,22 @@ class Scene:
         started_at = time.time()
         img = image.PillowImage(self.width, self.height)
         for point in self._iter_screen():
+            color = image.Color(26, 108, 171)
             ray = geometry.Ray.from_points(self.camera, point)
-            intersections = []
-            for thing in self:
-                for p in ray.intersect(thing.figure):
-                    intersections.append((p, thing))
-            if intersections:
-                p, thing = min(
-                    intersections, key=lambda p_thing: abs(p_thing[0] - self.camera)
-                )
-                color = thing.material.get_color(p) * self._lightning_coeff(p)
-            else:
-                color = image.Color(26, 108, 171)
+            for _ in range(5):
+                intersections = []
+                for thing in self:
+                    for p in ray.intersect(thing.figure):
+                        intersections.append((p, thing))
+                if intersections:
+                    p, thing = min(
+                        intersections, key=lambda p_thing: abs(p_thing[0] - self.camera)
+                    )
+                    if isinstance(thing.material, Mirror):
+                        ray = ray.mirror(thing.figure.perpendicular(p))
+                        continue
+                    color = thing.material.get_color(p) * self._lightning_coeff(p)
+                    break
             img.set_pixel(point.x, self.height - 1 - point.y, color)
         duration = time.time() - started_at
         print(f"rendering took {duration:.3f} seconds")
