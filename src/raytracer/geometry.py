@@ -50,11 +50,7 @@ class Ray:
 
     @property
     def not_start(self) -> Point:
-        return Point(
-            self.start.x + self.direction.x,
-            self.start.y + self.direction.y,
-            self.start.z + self.direction.z,
-        )
+        return self.start + self.direction
 
     def intersect(self, figure: Figure, max_k=None) -> List[Point]:
         return figure.intersect(self, max_k=max_k)
