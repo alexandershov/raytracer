@@ -12,11 +12,15 @@ from . import algebra
 
 @dataclasses.dataclass
 class Point:
-    coords: List[float] = dataclasses.field(init=False)
+    coords: np.ndarray = dataclasses.field(init=False)
 
     def __init__(self, x: float, y: float, z: float):
-        self.coords = [x, y, z]
-        self._arr = np.array(self.coords)
+        self.coords = np.array((x, y, z))
+
+    def __eq__(self, other):
+        if not isinstance(other, Point):
+            return NotImplemented
+        return all(self.coords == other.coords)
 
     def __sub__(self, other) -> Point:
         if not isinstance(other, Point):
