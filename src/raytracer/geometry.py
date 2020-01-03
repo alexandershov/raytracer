@@ -16,10 +16,10 @@ class Point:
 
     @staticmethod
     def from_xyz(x: float, y: float, z: float) -> Point:
-        return Point(x, y, z)
+        return Point(np.array((x, y, z)))
 
-    def __init__(self, x: float, y: float, z: float):
-        self.coords = np.array((x, y, z))
+    def __init__(self, coords: np.ndarray):
+        self.coords = coords
 
     def __eq__(self, other):
         if not isinstance(other, Point):
@@ -29,22 +29,22 @@ class Point:
     def __sub__(self, other) -> Point:
         if not isinstance(other, Point):
             return NotImplemented
-        return Point(self.x - other.x, self.y - other.y, self.z - other.z)
+        return Point.from_xyz(self.x - other.x, self.y - other.y, self.z - other.z)
 
     def __add__(self, other) -> Point:
         if not isinstance(other, Point):
             return NotImplemented
-        return Point(self.x + other.x, self.y + other.y, self.z + other.z)
+        return Point.from_xyz(self.x + other.x, self.y + other.y, self.z + other.z)
 
     def __mul__(self, other) -> Point:
         if not isinstance(other, (int, float)):
             return NotImplemented
-        return Point(self.x * other, self.y * other, self.z * other)
+        return Point.from_xyz(self.x * other, self.y * other, self.z * other)
 
     def __truediv__(self, other) -> Point:
         if not isinstance(other, (int, float)):
             return NotImplemented
-        return Point(self.x / other, self.y / other, self.z / other)
+        return Point.from_xyz(self.x / other, self.y / other, self.z / other)
 
     def __matmul__(self, other) -> float:
         if not isinstance(other, Point):
@@ -118,7 +118,7 @@ class Plane(Figure):
 
     @property
     def coeff_vec(self) -> Point:
-        return Point(self.a, self.b, self.c)
+        return Point.from_xyz(self.a, self.b, self.c)
 
     def intersect(self, ray: Ray, max_k=None) -> List[Point]:
         denominator = self.coeff_vec @ ray.direction
@@ -136,11 +136,11 @@ class Plane(Figure):
             0
         ) == 2, "only simple planes are supported"
         if self.a != 0:
-            return Ray.from_points(point, Point(point.x + 1, point.y, point.z))
+            return Ray.from_points(point, Point.from_xyz(point.x + 1, point.y, point.z))
         if self.b != 0:
-            return Ray.from_points(point, Point(point.x, point.y + 1, point.z))
+            return Ray.from_points(point, Point.from_xyz(point.x, point.y + 1, point.z))
         if self.c != 0:
-            return Ray.from_points(point, Point(point.x, point.y, point.z + 1))
+            return Ray.from_points(point, Point.from_xyz(point.x, point.y, point.z + 1))
         raise ValueError(f"only simple planes are supported: {self!r}")
 
 

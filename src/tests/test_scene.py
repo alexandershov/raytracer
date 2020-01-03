@@ -11,11 +11,11 @@ def test_scene():
     )
 
     sphere = scene.Thing(
-        geometry.Sphere(center=geometry.Point(150, -150, 150), radius=30),
+        geometry.Sphere(center=geometry.Point.from_xyz(150, -150, 150), radius=30),
         material=scene.Solid(image.Color.grey()),
     )
-    lights = [geometry.Point(1, 1, 1), geometry.Point(50, 50, 50)]
-    camera = geometry.Point(300, 200, -600)
+    lights = [geometry.Point.from_xyz(1, 1, 1), geometry.Point.from_xyz(50, 50, 50)]
+    camera = geometry.Point.from_xyz(300, 200, -600)
     s = scene.Scene(
         width=600, height=400, camera=camera, lights=lights, things=[floor, sphere]
     )
@@ -28,28 +28,28 @@ def test_scene():
 
 def test_solid_material():
     material = scene.Solid(color=image.Color.black())
-    assert material.get_color(geometry.Point(0, 0, 0)) == image.Color.black()
+    assert material.get_color(geometry.Point.from_xyz(0, 0, 0)) == image.Color.black()
 
 
 def test_squared_project_to_local_xy():
-    point = geometry.Point(3, 4, 5)
-    expected = geometry.Point(3, 4, 0)
+    point = geometry.Point.from_xyz(3, 4, 5)
+    expected = geometry.Point.from_xyz(3, 4, 0)
     assert scene.Squared.project_to_local_xy(point) == expected
 
 
 def test_squared_project_to_local_xz():
-    point = geometry.Point(3, 4, 5)
-    expected = geometry.Point(3, 5, 0)
+    point = geometry.Point.from_xyz(3, 4, 5)
+    expected = geometry.Point.from_xyz(3, 5, 0)
     assert scene.Squared.project_to_local_xz(point) == expected
 
 
 @pytest.mark.parametrize(
     "point, expected",
     [
-        (geometry.Point(10, 10, 90), image.Color.white()),
-        (geometry.Point(-10, -10, 90), image.Color.white()),
-        (geometry.Point(10, -10, 90), image.Color.black()),
-        (geometry.Point(30, 10, 90), image.Color.black()),
+        (geometry.Point.from_xyz(10, 10, 90), image.Color.white()),
+        (geometry.Point.from_xyz(-10, -10, 90), image.Color.white()),
+        (geometry.Point.from_xyz(10, -10, 90), image.Color.black()),
+        (geometry.Point.from_xyz(30, 10, 90), image.Color.black()),
     ],
 )
 def test_squared_material(point, expected):

@@ -31,15 +31,15 @@ class Squared(Material):
 
     @staticmethod
     def project_to_local_xy(point: geometry.Point) -> geometry.Point:
-        return geometry.Point(point.x, point.y, 0)
+        return geometry.Point.from_xyz(point.x, point.y, 0)
 
     @staticmethod
     def project_to_local_xz(point: geometry.Point) -> geometry.Point:
-        return geometry.Point(point.x, point.z, 0)
+        return geometry.Point.from_xyz(point.x, point.z, 0)
 
     @staticmethod
     def project_to_local_yz(point: geometry.Point) -> geometry.Point:
-        return geometry.Point(point.y, point.z, 0)
+        return geometry.Point.from_xyz(point.y, point.z, 0)
 
     def get_color(self, point: geometry.Point) -> image.Color:
         local = self.projection(point)
@@ -123,7 +123,7 @@ class Scene:
 
     def _iter_screen(self) -> Iterable[geometry.Point]:
         return (
-            geometry.Point(x, y, 0)
+            geometry.Point.from_xyz(x, y, 0)
             for x in range(0, self.width)
             for y in range(0, self.height)
         )

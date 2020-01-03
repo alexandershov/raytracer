@@ -4,11 +4,13 @@ from typing import List
 import pytest
 from raytracer import geometry
 
-START = geometry.Point(3, 2, 1)
-AFTER_START = geometry.Point(9, 6, 3)
-DIRECTION = geometry.Point(6, 4, 2)
-RAY = geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(0, 0, 0))
-CENTER = geometry.Point(5, 10, 9)
+START = geometry.Point.from_xyz(3, 2, 1)
+AFTER_START = geometry.Point.from_xyz(9, 6, 3)
+DIRECTION = geometry.Point.from_xyz(6, 4, 2)
+RAY = geometry.Ray.from_points(
+    geometry.Point.from_xyz(1, 0, 0), geometry.Point.from_xyz(0, 0, 0)
+)
+CENTER = geometry.Point.from_xyz(5, 10, 9)
 
 
 def test_point_from_xyz():
@@ -23,11 +25,11 @@ def test_sub_points():
 
 
 def test_mul_point():
-    assert START * 2 == geometry.Point(6, 4, 2)
+    assert START * 2 == geometry.Point.from_xyz(6, 4, 2)
 
 
 def test_div_point():
-    assert are_close(START / 2, geometry.Point(1.5, 1, 0.5))
+    assert are_close(START / 2, geometry.Point.from_xyz(1.5, 1, 0.5))
 
 
 def test_mat_mul_points():
@@ -35,7 +37,7 @@ def test_mat_mul_points():
 
 
 def test_vector_length():
-    vector = geometry.Point(3, 4, 5)
+    vector = geometry.Point.from_xyz(3, 4, 5)
     assert abs(vector) == pytest.approx(math.sqrt(50))
 
 
@@ -68,12 +70,14 @@ def test_sphere():
 @pytest.mark.parametrize(
     "ray, figure, expected",
     [
-        (RAY, geometry.Plane(1, 0, 0, 0), [geometry.Point(0, 0, 0)]),
+        (RAY, geometry.Plane(1, 0, 0, 0), [geometry.Point.from_xyz(0, 0, 0)]),
         (
-            geometry.Ray(geometry.Point(8, 9, 10), geometry.Point(-5, -6, -7)),
+            geometry.Ray(
+                geometry.Point.from_xyz(8, 9, 10), geometry.Point.from_xyz(-5, -6, -7)
+            ),
             geometry.Plane(1, 2, 3, 4),
             [
-                geometry.Point(
+                geometry.Point.from_xyz(
                     0.10526315789473628, -0.47368421052631504, -1.0526315789473681
                 )
             ],
@@ -83,11 +87,15 @@ def test_sphere():
         (RAY, geometry.Plane(0, 0, 1, 0), []),
         (
             RAY,
-            geometry.Sphere(geometry.Point(0, 0, 0), 0.5),
-            [geometry.Point(0.5, 0, 0), geometry.Point(-0.5, 0, 0)],
+            geometry.Sphere(geometry.Point.from_xyz(0, 0, 0), 0.5),
+            [geometry.Point.from_xyz(0.5, 0, 0), geometry.Point.from_xyz(-0.5, 0, 0)],
         ),
-        (RAY, geometry.Sphere(geometry.Point(10, 0, 0), 0.5), []),
-        (RAY, geometry.Sphere(geometry.Point(0, 0, 0), 2), [geometry.Point(-2, 0, 0)]),
+        (RAY, geometry.Sphere(geometry.Point.from_xyz(10, 0, 0), 0.5), []),
+        (
+            RAY,
+            geometry.Sphere(geometry.Point.from_xyz(0, 0, 0), 2),
+            [geometry.Point.from_xyz(-2, 0, 0)],
+        ),
     ],
 )
 def test_intersect_ray(ray, figure, expected):
@@ -98,14 +106,26 @@ def test_intersect_ray(ray, figure, expected):
     "ray, other, expected",
     [
         (
-            geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(1, 1, 0)),
-            geometry.Ray.from_points(geometry.Point(0, 0, 0), geometry.Point(0, 1, 0)),
-            geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(0, 0, 0)),
+            geometry.Ray.from_points(
+                geometry.Point.from_xyz(1, 0, 0), geometry.Point.from_xyz(1, 1, 0)
+            ),
+            geometry.Ray.from_points(
+                geometry.Point.from_xyz(0, 0, 0), geometry.Point.from_xyz(0, 1, 0)
+            ),
+            geometry.Ray.from_points(
+                geometry.Point.from_xyz(1, 0, 0), geometry.Point.from_xyz(0, 0, 0)
+            ),
         ),
         (
-            geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(1, 1, 0)),
-            geometry.Ray.from_points(geometry.Point(0, 1, 0), geometry.Point(0, 2, 0)),
-            geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(0, 0, 0)),
+            geometry.Ray.from_points(
+                geometry.Point.from_xyz(1, 0, 0), geometry.Point.from_xyz(1, 1, 0)
+            ),
+            geometry.Ray.from_points(
+                geometry.Point.from_xyz(0, 1, 0), geometry.Point.from_xyz(0, 2, 0)
+            ),
+            geometry.Ray.from_points(
+                geometry.Point.from_xyz(1, 0, 0), geometry.Point.from_xyz(0, 0, 0)
+            ),
         ),
     ],
 )
@@ -117,29 +137,31 @@ def test_ray_perpendicular(ray, other, expected):
     "figure, point, expected",
     [
         (
-            geometry.Sphere(geometry.Point(0, 0, 0), 10),
-            geometry.Point(10, 0, 0),
-            geometry.Ray.from_points(geometry.Point(0, 0, 0), geometry.Point(10, 0, 0)),
+            geometry.Sphere(geometry.Point.from_xyz(0, 0, 0), 10),
+            geometry.Point.from_xyz(10, 0, 0),
+            geometry.Ray.from_points(
+                geometry.Point.from_xyz(0, 0, 0), geometry.Point.from_xyz(10, 0, 0)
+            ),
         ),
         (
             geometry.Plane(1, 0, 0, -10),
-            geometry.Point(10, 0, 0),
+            geometry.Point.from_xyz(10, 0, 0),
             geometry.Ray.from_points(
-                geometry.Point(10, 0, 0), geometry.Point(11, 0, 0)
+                geometry.Point.from_xyz(10, 0, 0), geometry.Point.from_xyz(11, 0, 0)
             ),
         ),
         (
             geometry.Plane(0, 1, 0, -10),
-            geometry.Point(0, 10, 0),
+            geometry.Point.from_xyz(0, 10, 0),
             geometry.Ray.from_points(
-                geometry.Point(0, 10, 0), geometry.Point(0, 11, 0)
+                geometry.Point.from_xyz(0, 10, 0), geometry.Point.from_xyz(0, 11, 0)
             ),
         ),
         (
             geometry.Plane(0, 0, 1, -10),
-            geometry.Point(0, 0, 10),
+            geometry.Point.from_xyz(0, 0, 10),
             geometry.Ray.from_points(
-                geometry.Point(0, 0, 10), geometry.Point(0, 0, 11)
+                geometry.Point.from_xyz(0, 0, 10), geometry.Point.from_xyz(0, 0, 11)
             ),
         ),
     ],
@@ -152,9 +174,15 @@ def test_figure_perpendicular(figure, point, expected):
     "ray, axis, expected",
     [
         (
-            geometry.Ray.from_points(geometry.Point(2, 1, 0), geometry.Point(1, 0, 0)),
-            geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(1, 1, 0)),
-            geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(0, 1, 0)),
+            geometry.Ray.from_points(
+                geometry.Point.from_xyz(2, 1, 0), geometry.Point.from_xyz(1, 0, 0)
+            ),
+            geometry.Ray.from_points(
+                geometry.Point.from_xyz(1, 0, 0), geometry.Point.from_xyz(1, 1, 0)
+            ),
+            geometry.Ray.from_points(
+                geometry.Point.from_xyz(1, 0, 0), geometry.Point.from_xyz(0, 1, 0)
+            ),
         )
     ],
 )
@@ -183,4 +211,4 @@ def sort_by_distance_to_origin(points: List[geometry.Point]) -> List[geometry.Po
 
 
 def distance_to_origin(point: geometry.Point) -> float:
-    return abs(point - geometry.Point(0, 0, 0))
+    return abs(point - geometry.Point.from_xyz(0, 0, 0))
