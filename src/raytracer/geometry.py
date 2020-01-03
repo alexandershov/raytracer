@@ -15,7 +15,7 @@ class Point:
 
     @staticmethod
     def from_xyz(x: float, y: float, z: float) -> Point:
-        return Point(np.array((x, y, z)))
+        return Point(np.array((x, y, z), dtype=np.float))
 
     def __init__(self, coords: np.ndarray):
         self.coords = coords
@@ -108,16 +108,15 @@ class Figure(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass
 class Plane(Figure):
     a: float
     b: float
     c: float
     d: float
 
-    @property
-    def coeff_vec(self) -> Point:
-        return Point.from_xyz(self.a, self.b, self.c)
+    def __post_init__(self):
+        self.coeff_vec = Point.from_xyz(self.a, self.b, self.c)
 
     def intersect(self, ray: Ray, max_k=None) -> List[Point]:
         denominator = self.coeff_vec @ ray.direction
