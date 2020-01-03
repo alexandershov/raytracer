@@ -1,3 +1,5 @@
+import pytest
+
 from raytracer import geometry
 from raytracer import image
 from raytracer import scene
@@ -41,11 +43,14 @@ def test_squared_project_to_local_xz():
     assert scene.Squared.project_to_local_xz(point) == expected
 
 
-def test_squared_material():
+@pytest.mark.parametrize(
+    "point, expected", [(geometry.Point(10, 10, 90), image.Color.white())]
+)
+def test_squared_material(point, expected):
     material = scene.Squared(
         width=20,
         white=image.Color.white(),
         black=image.Color.black(),
         projection=scene.Squared.project_to_local_xy,
     )
-    assert material.get_color(geometry.Point(10, 10, 90)) == image.Color.white()
+    assert material.get_color(point) == expected
