@@ -5,6 +5,8 @@ import dataclasses
 import math
 from typing import List
 
+import numpy as np
+
 from . import algebra
 
 
@@ -14,6 +16,7 @@ class Point:
 
     def __init__(self, x: float, y: float, z: float):
         self.coords = [x, y, z]
+        self._arr = np.array(self.coords)
 
     def __sub__(self, other) -> Point:
         if not isinstance(other, Point):
