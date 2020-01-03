@@ -94,6 +94,20 @@ def test_perpendicular(ray, other, expected):
     assert same_rays(ray.perpendicular(other), expected)
 
 
+@pytest.mark.parametrize(
+    "ray, axis, expected",
+    [
+        (
+            geometry.Ray.from_points(geometry.Point(2, 1, 0), geometry.Point(1, 0, 0)),
+            geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(1, 1, 0)),
+            geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(0, 1, 0)),
+        )
+    ],
+)
+def test_mirror(ray, axis, expected):
+    assert same_rays(ray.mirror(axis), expected)
+
+
 def same_rays(x: geometry.Ray, y: geometry.Ray) -> bool:
     return are_close(x.start, y.start) and are_close(x.not_start, y.not_start)
 

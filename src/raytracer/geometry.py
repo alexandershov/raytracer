@@ -19,6 +19,11 @@ class Point:
             return NotImplemented
         return Vector(self.x - other.x, self.y - other.y, self.z - other.z)
 
+    def __add__(self, other) -> Point:
+        if not isinstance(other, Vector):
+            return NotImplemented
+        return Point(self.x + other.x, self.y + other.y, self.z + other.z)
+
 
 @dataclasses.dataclass(frozen=True)
 class Vector:
@@ -65,6 +70,13 @@ class Ray:
             other.start.z + k * other.direction.z,
         )
         return Ray.from_points(self.start, p)
+
+    def mirror(self, axis: Ray) -> Ray:
+        perpendicular = self.perpendicular(axis)
+        return Ray.from_points(
+            axis.start,
+            perpendicular.start + perpendicular.direction + perpendicular.direction,
+        )
 
 
 class Figure:
