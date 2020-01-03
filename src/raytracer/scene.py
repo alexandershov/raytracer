@@ -37,6 +37,10 @@ class Squared(Material):
     def project_to_local_xz(point: geometry.Point) -> geometry.Point:
         return geometry.Point(point.x, point.z, 0)
 
+    @staticmethod
+    def project_to_local_yz(point: geometry.Point) -> geometry.Point:
+        return geometry.Point(point.y, point.z, 0)
+
     def get_color(self, point: geometry.Point) -> image.Color:
         local = self.projection(point)
         score = int(local.x // self.width) + int(local.y // self.width)
