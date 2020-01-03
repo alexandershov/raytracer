@@ -29,13 +29,13 @@ def test_solid_material():
     assert material.get_color(geometry.Point(0, 0, 0)) == image.Color.black()
 
 
-def test_squared_project_to_xy():
+def test_squared_project_to_local_xy():
     point = geometry.Point(3, 4, 5)
     expected = geometry.Point(3, 4, 0)
-    assert scene.Squared.project_to_xy(point) == expected
+    assert scene.Squared.project_to_local_xy(point) == expected
 
 
-def test_squared_project_to_xz():
+def test_squared_project_to_local_xz():
     point = geometry.Point(3, 4, 5)
     expected = geometry.Point(3, 5, 0)
-    assert scene.Squared.project_to_xz(point) == expected
+    assert scene.Squared.project_to_local_xz(point) == expected

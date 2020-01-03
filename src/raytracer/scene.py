@@ -25,11 +25,11 @@ class Solid(Material):
 @dataclasses.dataclass(frozen=True)
 class Squared(Material):
     @staticmethod
-    def project_to_xy(point: geometry.Point) -> geometry.Point:
+    def project_to_local_xy(point: geometry.Point) -> geometry.Point:
         return geometry.Point(point.x, point.y, 0)
 
     @staticmethod
-    def project_to_xz(point: geometry.Point) -> geometry.Point:
+    def project_to_local_xz(point: geometry.Point) -> geometry.Point:
         return geometry.Point(point.x, point.z, 0)
 
 
