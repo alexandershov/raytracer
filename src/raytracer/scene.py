@@ -30,7 +30,7 @@ class Squared(Material):
 
     @staticmethod
     def project_to_xz(point: geometry.Point) -> geometry.Point:
-        return geometry.Point(point.x, 0, point.z)
+        return geometry.Point(point.x, point.z, 0)
 
 
 class Mirror(Material):

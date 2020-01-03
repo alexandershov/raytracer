@@ -37,5 +37,5 @@ def test_squared_project_to_xy():
 
 def test_squared_project_to_xz():
     point = geometry.Point(3, 4, 5)
-    expected = geometry.Point(3, 0, 5)
+    expected = geometry.Point(3, 5, 0)
     assert scene.Squared.project_to_xz(point) == expected
