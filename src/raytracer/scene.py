@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import time
-from typing import List, Iterable
+from typing import List, Iterable, Callable
 
 from . import geometry
 
@@ -24,6 +24,11 @@ class Solid(Material):
 
 @dataclasses.dataclass(frozen=True)
 class Squared(Material):
+    width: float
+    white: image.Color
+    black: image.Color
+    projection: Callable
+
     @staticmethod
     def project_to_local_xy(point: geometry.Point) -> geometry.Point:
         return geometry.Point(point.x, point.y, 0)
@@ -31,6 +36,13 @@ class Squared(Material):
     @staticmethod
     def project_to_local_xz(point: geometry.Point) -> geometry.Point:
         return geometry.Point(point.x, point.z, 0)
+
+    def get_color(self, point: geometry.Point) -> image.Color:
+        local = self.projection(point)
+        score = int(abs(local.x) // self.width) + int(abs(local.y) // self.width)
+        if not score % 2:
+            return self.white
+        return self.black
 
 
 class Mirror(Material):

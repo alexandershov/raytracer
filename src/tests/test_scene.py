@@ -39,3 +39,13 @@ def test_squared_project_to_local_xz():
     point = geometry.Point(3, 4, 5)
     expected = geometry.Point(3, 5, 0)
     assert scene.Squared.project_to_local_xz(point) == expected
+
+
+def test_squared_material():
+    material = scene.Squared(
+        width=20,
+        white=image.Color.white(),
+        black=image.Color.black(),
+        projection=scene.Squared.project_to_local_xy,
+    )
+    assert material.get_color(geometry.Point(10, 10, 90)) == image.Color.white()
