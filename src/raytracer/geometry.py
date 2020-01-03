@@ -128,6 +128,7 @@ class Sphere(Figure):
     radius: float
 
     def intersect(self, ray: Ray, max_k=None) -> List[Point]:
+        v = ray.start - self.center
         x1 = ray.start.x - self.center.x
         y1 = ray.start.y - self.center.y
         z1 = ray.start.z - self.center.z
@@ -135,11 +136,7 @@ class Sphere(Figure):
         b = 2 * (x1 * ray.direction.x + y1 * ray.direction.y + z1 * ray.direction.z)
         c = x1 ** 2 + y1 ** 2 + z1 ** 2 - self.radius ** 2
         return [
-            Point(
-                ray.start.x + k * ray.direction.x,
-                ray.start.y + k * ray.direction.y,
-                ray.start.z + k * ray.direction.z,
-            )
+            ray.start + ray.direction * k
             for k in algebra.solve_quadratic(a, b, c)
             if k >= 0 and (max_k is None or k < max_k)
         ]
