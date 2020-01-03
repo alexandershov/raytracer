@@ -64,10 +64,11 @@ class Ray:
         dx = other.direction.x
         dy = other.direction.y
         dz = other.direction.z
+        v = other.start - self.start
         dx0 = other.start.x - self.start.x
         dy0 = other.start.y - self.start.y
         dz0 = other.start.z - self.start.z
-        k = -(dx * dx0 + dy * dy0 + dz * dz0) / (dx ** 2 + dy ** 2 + dz ** 2)
+        k = -(other.direction @ v) / (other.direction @ other.direction)
         p = other.start + other.direction * k
         return Ray.from_points(self.start, p)
 
