@@ -112,4 +112,7 @@ Questions
 * ~~What is the math for the sphere mirror?~~
   Same as for floor/wall mirror, start building the perpendicular from the center
   to the intersection. The rest is the same.
+* ~~Is there a simpler way to build floor/wall mirror?~~
+  Since floor/wall is always of the kind z=1 we can determine perpendicular
+  without equation just from the common sense.
 * Why we need self.height - 1 in set_pixel?
