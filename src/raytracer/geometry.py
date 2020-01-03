@@ -24,6 +24,16 @@ class Point:
             return NotImplemented
         return Point(self.x + other.x, self.y + other.y, self.z + other.z)
 
+    def __mul__(self, other) -> Point:
+        if not isinstance(other, (int, float)):
+            return NotImplemented
+        return Point(self.x * other, self.y * other, self.z * other)
+
+    def __matmul__(self, other) -> float:
+        if not isinstance(other, Point):
+            return NotImplemented
+        return self.x * other.x + self.y * other.y + self.z * other.z
+
     def __abs__(self) -> float:
         return math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
 
