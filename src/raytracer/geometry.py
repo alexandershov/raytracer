@@ -40,8 +40,19 @@ class Ray:
         assert start != after_start
         return Ray(start, after_start - start)
 
+    @property
+    def not_start(self) -> Point:
+        return Point(
+            self.start.x + self.direction.x,
+            self.start.y + self.direction.y,
+            self.start.z + self.direction.z,
+        )
+
     def intersect(self, figure: Figure, max_k=None) -> List[Point]:
         return figure.intersect(self, max_k=max_k)
+
+    def perpendicular(self, other) -> Ray:
+        return Ray.from_points(self.start, other.start)
 
 
 class Figure:

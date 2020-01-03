@@ -75,6 +75,24 @@ def test_intersect_ray(ray, figure, expected):
     assert same_points(ray.intersect(figure), expected)
 
 
+@pytest.mark.parametrize(
+    "ray, other, expected",
+    [
+        (
+            geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(1, 1, 0)),
+            geometry.Ray.from_points(geometry.Point(0, 0, 0), geometry.Point(0, 1, 0)),
+            geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(0, 0, 0)),
+        )
+    ],
+)
+def test_perpendicular(ray, other, expected):
+    assert same_rays(ray.perpendicular(other), expected)
+
+
+def same_rays(x: geometry.Ray, y: geometry.Ray) -> bool:
+    return are_close(x.start, y.start) and are_close(x.not_start, y.not_start)
+
+
 def same_points(xs: List[geometry.Point], ys: List[geometry.Point]) -> bool:
     if len(xs) != len(ys):
         return False
