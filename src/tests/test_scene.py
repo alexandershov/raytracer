@@ -22,3 +22,8 @@ def test_scene():
     assert s.camera == camera
     assert s.lights == lights
     assert list(s) == [floor, sphere]
+
+
+def test_material():
+    material = scene.Solid(color=image.Color.black())
+    assert material.get_color() == image.Color.black()
