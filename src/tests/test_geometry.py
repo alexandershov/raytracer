@@ -82,7 +82,12 @@ def test_intersect_ray(ray, figure, expected):
             geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(1, 1, 0)),
             geometry.Ray.from_points(geometry.Point(0, 0, 0), geometry.Point(0, 1, 0)),
             geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(0, 0, 0)),
-        )
+        ),
+        (
+            geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(1, 1, 0)),
+            geometry.Ray.from_points(geometry.Point(0, 1, 0), geometry.Point(0, 2, 0)),
+            geometry.Ray.from_points(geometry.Point(1, 0, 0), geometry.Point(0, 0, 0)),
+        ),
     ],
 )
 def test_perpendicular(ray, other, expected):

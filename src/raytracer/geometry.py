@@ -51,8 +51,20 @@ class Ray:
     def intersect(self, figure: Figure, max_k=None) -> List[Point]:
         return figure.intersect(self, max_k=max_k)
 
-    def perpendicular(self, other) -> Ray:
-        return Ray.from_points(self.start, other.start)
+    def perpendicular(self, other: Ray) -> Ray:
+        dx = other.direction.x
+        dy = other.direction.y
+        dz = other.direction.z
+        dx0 = other.start.x - self.start.x
+        dy0 = other.start.y - self.start.y
+        dz0 = other.start.z - self.start.z
+        k = -(dx * dx0 + dy * dy0 + dz * dz0) / (dx ** 2 + dy ** 2 + dz ** 2)
+        p = Point(
+            other.start.x + k * other.direction.x,
+            other.start.y + k * other.direction.y,
+            other.start.z + k * other.direction.z,
+        )
+        return Ray.from_points(self.start, p)
 
 
 class Figure:
