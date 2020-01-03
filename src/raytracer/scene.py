@@ -50,7 +50,8 @@ class Squared(Material):
 
 
 class Mirror(Material):
-    pass
+    def get_color(self, point: geometry.Point) -> image.Color:
+        raise NotImplemented("should never be called")
 
 
 @dataclasses.dataclass(frozen=True)
