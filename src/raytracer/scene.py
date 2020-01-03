@@ -84,7 +84,7 @@ class Scene:
                 color = image.Color(26, 108, 171)
             img.set_pixel(point.x, self.height - 1 - point.y, color)
         duration = time.time() - started_at
-        print(f"render took {duration:.3f} seconds")
+        print(f"rendering took {duration:.3f} seconds")
         img.show()
 
     def _lightning_coeff(self, p: geometry.Point) -> float:
