@@ -61,14 +61,9 @@ class Ray:
         return figure.intersect(self, max_k=max_k)
 
     def perpendicular(self, other: Ray) -> Ray:
-        dx = other.direction.x
-        dy = other.direction.y
-        dz = other.direction.z
-        v = other.start - self.start
-        dx0 = other.start.x - self.start.x
-        dy0 = other.start.y - self.start.y
-        dz0 = other.start.z - self.start.z
-        k = -(other.direction @ v) / (other.direction @ other.direction)
+        k = (other.direction @ (self.start - other.start)) / (
+            other.direction @ other.direction
+        )
         p = other.start + other.direction * k
         return Ray.from_points(self.start, p)
 
