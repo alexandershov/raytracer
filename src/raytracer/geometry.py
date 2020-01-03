@@ -29,7 +29,7 @@ class Point:
     def __sub__(self, other) -> Point:
         if not isinstance(other, Point):
             return NotImplemented
-        return Point.from_xyz(self.x - other.x, self.y - other.y, self.z - other.z)
+        return Point(self.coords - other.coords)
 
     def __add__(self, other) -> Point:
         if not isinstance(other, Point):
