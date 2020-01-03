@@ -120,7 +120,11 @@ class Plane(Figure):
         ]
 
     def perpendicular(self, point: Point) -> Ray:
-        raise NotImplementedError
+        assert [self.a, self.b, self.c].count(
+            0
+        ) == 2, "only simple planes are supported"
+        if self.a != 0:
+            return Ray.from_points(point, Point(point.x + 1, point.y, point.z))
 
 
 @dataclasses.dataclass(frozen=True)
