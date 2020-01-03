@@ -48,6 +48,7 @@ def test_squared_project_to_local_xz():
     [
         (geometry.Point(10, 10, 90), image.Color.white()),
         (geometry.Point(-10, -10, 90), image.Color.white()),
+        (geometry.Point(30, 10, 90), image.Color.black()),
     ],
 )
 def test_squared_material(point, expected):
