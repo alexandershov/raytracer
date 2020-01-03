@@ -22,6 +22,13 @@ class Solid(Material):
         return self.color
 
 
+@dataclasses.dataclass(frozen=True)
+class Squared(Material):
+    @staticmethod
+    def project_to_xy(point: geometry.Point) -> geometry.Point:
+        return geometry.Point(point.x, point.y, 0)
+
+
 class Mirror(Material):
     pass
 

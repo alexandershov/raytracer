@@ -27,3 +27,9 @@ def test_scene():
 def test_solid_material():
     material = scene.Solid(color=image.Color.black())
     assert material.get_color(geometry.Point(0, 0, 0)) == image.Color.black()
+
+
+def test_squared_projection():
+    point = geometry.Point(3, 4, 5)
+    expected = geometry.Point(3, 4, 0)
+    assert scene.Squared.project_to_xy(point) == expected
