@@ -129,7 +129,7 @@ class Sphere(Figure):
 
     def intersect(self, ray: Ray, max_k=None) -> List[Point]:
         v = ray.start - self.center
-        a = ray.direction.x ** 2 + ray.direction.y ** 2 + ray.direction.z ** 2
+        a = ray.direction @ ray.direction
         b = 2 * (v @ ray.direction)
         c = (v @ v) - self.radius ** 2
         return [
