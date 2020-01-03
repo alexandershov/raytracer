@@ -127,6 +127,9 @@ class Plane(Figure):
             return Ray.from_points(point, Point(point.x + 1, point.y, point.z))
         if self.b != 0:
             return Ray.from_points(point, Point(point.x, point.y + 1, point.z))
+        if self.c != 0:
+            return Ray.from_points(point, Point(point.x, point.y, point.z + 1))
+        raise ValueError(f"only simple planes are supported: {self!r}")
 
 
 @dataclasses.dataclass(frozen=True)
