@@ -79,10 +79,14 @@ class Ray:
         )
 
 
-class Figure:
+class Figure(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def intersect(self, ray: Ray, max_k=None) -> List[Point]:
         raise NotImplemented
+
+    @abc.abstractmethod
+    def perpendicular(self, point: Point) -> Ray:
+        raise NotImplementedError
 
 
 @dataclasses.dataclass(frozen=True)
@@ -115,6 +119,9 @@ class Plane(Figure):
             )
         ]
 
+    def perpendicular(self, point: Point) -> Ray:
+        raise NotImplementedError
+
 
 @dataclasses.dataclass(frozen=True)
 class Sphere(Figure):
@@ -137,3 +144,6 @@ class Sphere(Figure):
             for k in algebra.solve_quadratic(a, b, c)
             if k >= 0 and (max_k is None or k < max_k)
         ]
+
+    def perpendicular(self, point: Point) -> Ray:
+        return Ray.from_points(self.center, point)

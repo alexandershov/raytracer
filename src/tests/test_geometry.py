@@ -95,6 +95,20 @@ def test_ray_perpendicular(ray, other, expected):
 
 
 @pytest.mark.parametrize(
+    "figure, point, expected",
+    [
+        (
+            geometry.Sphere(geometry.Point(0, 0, 0), 10),
+            geometry.Point(10, 0, 0),
+            geometry.Ray.from_points(geometry.Point(0, 0, 0), geometry.Point(10, 0, 0)),
+        )
+    ],
+)
+def test_figure_perpendicular(figure, point, expected):
+    assert same_rays(figure.perpendicular(point), expected)
+
+
+@pytest.mark.parametrize(
     "ray, axis, expected",
     [
         (
