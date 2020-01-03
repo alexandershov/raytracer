@@ -107,13 +107,7 @@ class Plane(Figure):
             return []
         if max_k is not None and k > max_k:
             return []
-        return [
-            Point(
-                ray.start.x + k * ray.direction.x,
-                ray.start.y + k * ray.direction.y,
-                ray.start.z + k * ray.direction.z,
-            )
-        ]
+        return [ray.start + ray.direction * k]
 
     def perpendicular(self, point: Point) -> Ray:
         assert [self.a, self.b, self.c].count(
