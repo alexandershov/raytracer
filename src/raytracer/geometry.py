@@ -50,9 +50,6 @@ class Point:
             return NotImplemented
         return self.coords @ other.coords
 
-    def __abs__(self) -> float:
-        return np.linalg.norm(self.coords)
-
     @property
     def x(self):
         return self.coords[0]
@@ -64,6 +61,10 @@ class Point:
     @property
     def z(self):
         return self.coords[2]
+
+
+def norm(point: Point) -> float:
+    return np.linalg.norm(point.coords)
 
 
 @dataclasses.dataclass(frozen=True)
