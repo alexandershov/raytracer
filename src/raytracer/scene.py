@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import multiprocessing
 import time
 from typing import List, Callable, Tuple
 
@@ -74,8 +75,12 @@ class Scene:
         started_at = time.time()
         img = image.PillowImage(self.width, self.height)
         points = self._screen_points()
-        for point, color in self._get_colors(points):
-            img.set_pixel(int(point.x), int(self.height - 1 - point.y), color)
+        num_processes = 6
+        with multiprocessing.Pool(processes=num_processes) as pool:
+            chunks = _get_chunks(points, num_processes)
+            for colored in pool.map(self._get_colors, chunks):
+                for point, color in colored:
+                    img.set_pixel(int(point.x), int(self.height - 1 - point.y), color)
         duration = time.time() - started_at
         print(f"rendering took {duration:.3f} seconds")
         img.show()
@@ -134,3 +139,10 @@ class Scene:
             for x in range(0, self.width)
             for y in range(0, self.height)
         ]
+
+
+def _get_chunks(seq: list, n: int) -> List[list]:
+    chunks = []
+    for i in range(n):
+        chunks.append(seq[i::n])
+    return chunks
