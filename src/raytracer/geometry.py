@@ -51,10 +51,6 @@ class Point:
         return self.coords @ other.coords
 
     @property
-    def x(self):
-        return self.coords[0]
-
-    @property
     def y(self):
         return self.coords[1]
 
