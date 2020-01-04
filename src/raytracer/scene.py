@@ -31,11 +31,11 @@ class Squared(Material):
 
     @staticmethod
     def project_to_local_xy(point: geometry.Point) -> geometry.Point:
-        return geometry.Point.from_xyz(point.x, point.y, 0)
+        return geometry.Point.from_xyz(geometry.get_x(point), point.y, 0)
 
     @staticmethod
     def project_to_local_xz(point: geometry.Point) -> geometry.Point:
-        return geometry.Point.from_xyz(point.x, point.z, 0)
+        return geometry.Point.from_xyz(geometry.get_x(point), point.z, 0)
 
     @staticmethod
     def project_to_local_yz(point: geometry.Point) -> geometry.Point:
@@ -43,7 +43,7 @@ class Squared(Material):
 
     def get_color(self, point: geometry.Point) -> image.Color:
         local = self.projection(point)
-        score = int(local.x // self.width) + int(local.y // self.width)
+        score = int(geometry.get_x(local) // self.width) + int(local.y // self.width)
         if not score % 2:
             return self.white
         return self.black
@@ -80,7 +80,11 @@ class Scene:
             chunks = _get_chunks(points, num_processes)
             for colored in pool.map(self._get_colors, chunks):
                 for point, color in colored:
-                    img.set_pixel(int(point.x), int(self.height - 1 - point.y), color)
+                    img.set_pixel(
+                        int(geometry.get_x(point)),
+                        int(self.height - 1 - point.y),
+                        color,
+                    )
         duration = time.time() - started_at
         print(f"rendering took {duration:.3f} seconds")
         img.show()
@@ -102,7 +106,8 @@ class Scene:
                         intersections.append((p, thing))
                 if intersections:
                     p, thing = min(
-                        intersections, key=lambda p_thing: geometry.norm(p_thing[0] - ray.start)
+                        intersections,
+                        key=lambda p_thing: geometry.norm(p_thing[0] - ray.start),
                     )
                     if isinstance(thing.material, Mirror):
                         ray = ray.mirror(thing.figure.perpendicular(p))

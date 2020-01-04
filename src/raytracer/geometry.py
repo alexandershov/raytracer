@@ -67,6 +67,18 @@ def norm(point: Point) -> float:
     return np.linalg.norm(point.coords)
 
 
+def get_x(point: Point) -> float:
+    return point.coords[0]
+
+
+def get_y(point: Point) -> float:
+    return point.coords[1]
+
+
+def get_z(point: Point) -> float:
+    return point.coords[2]
+
+
 @dataclasses.dataclass(frozen=True)
 class Ray:
     start: Point
@@ -135,11 +147,17 @@ class Plane(Figure):
             0
         ) == 2, "only simple planes are supported"
         if self.a != 0:
-            return Ray.from_points(point, Point.from_xyz(point.x + 1, point.y, point.z))
+            return Ray.from_points(
+                point, Point.from_xyz(get_x(point) + 1, point.y, point.z)
+            )
         if self.b != 0:
-            return Ray.from_points(point, Point.from_xyz(point.x, point.y + 1, point.z))
+            return Ray.from_points(
+                point, Point.from_xyz(get_x(point), point.y + 1, point.z)
+            )
         if self.c != 0:
-            return Ray.from_points(point, Point.from_xyz(point.x, point.y, point.z + 1))
+            return Ray.from_points(
+                point, Point.from_xyz(get_x(point), point.y, point.z + 1)
+            )
         raise ValueError(f"only simple planes are supported: {self!r}")
 
 
