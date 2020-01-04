@@ -31,7 +31,7 @@ class Squared(Material):
 
     @staticmethod
     def project_to_local_xy(point: geometry.Point) -> geometry.Point:
-        return geometry.Point.from_xyz(geometry.get_x(point), point.y, 0)
+        return geometry.Point.from_xyz(geometry.get_x(point), geometry.get_y(point), 0)
 
     @staticmethod
     def project_to_local_xz(point: geometry.Point) -> geometry.Point:
@@ -39,11 +39,11 @@ class Squared(Material):
 
     @staticmethod
     def project_to_local_yz(point: geometry.Point) -> geometry.Point:
-        return geometry.Point.from_xyz(point.y, point.z, 0)
+        return geometry.Point.from_xyz(geometry.get_y(point), point.z, 0)
 
     def get_color(self, point: geometry.Point) -> image.Color:
         local = self.projection(point)
-        score = int(geometry.get_x(local) // self.width) + int(local.y // self.width)
+        score = int(geometry.get_x(local) // self.width) + int(geometry.get_y(local) // self.width)
         if not score % 2:
             return self.white
         return self.black
@@ -82,7 +82,7 @@ class Scene:
                 for point, color in colored:
                     img.set_pixel(
                         int(geometry.get_x(point)),
-                        int(self.height - 1 - point.y),
+                        int(self.height - 1 - geometry.get_y(point)),
                         color,
                     )
         duration = time.time() - started_at

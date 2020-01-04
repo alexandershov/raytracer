@@ -16,7 +16,7 @@ CENTER = geometry.Point.from_xyz(5, 10, 9)
 def test_point_from_xyz():
     point = geometry.Point.from_xyz(1, 2, 3)
     assert geometry.get_x(point) == 1
-    assert point.y == 2
+    assert geometry.get_y(point) == 2
     assert point.z == 3
 
 
