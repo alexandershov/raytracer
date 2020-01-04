@@ -140,15 +140,15 @@ class Plane(Figure):
         ) == 2, "only simple planes are supported"
         if self.a != 0:
             return Ray.from_points(
-                point, Point.from_xyz(get_x(point) + 1, get_y(point), point.z)
+                point, Point.from_xyz(get_x(point) + 1, get_y(point), get_z(point))
             )
         if self.b != 0:
             return Ray.from_points(
-                point, Point.from_xyz(get_x(point), get_y(point) + 1, point.z)
+                point, Point.from_xyz(get_x(point), get_y(point) + 1, get_z(point))
             )
         if self.c != 0:
             return Ray.from_points(
-                point, Point.from_xyz(get_x(point), get_y(point), point.z + 1)
+                point, Point.from_xyz(get_x(point), get_y(point), get_z(point) + 1)
             )
         raise ValueError(f"only simple planes are supported: {self!r}")
 

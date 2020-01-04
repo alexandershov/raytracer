@@ -35,11 +35,11 @@ class Squared(Material):
 
     @staticmethod
     def project_to_local_xz(point: geometry.Point) -> geometry.Point:
-        return geometry.Point.from_xyz(geometry.get_x(point), point.z, 0)
+        return geometry.Point.from_xyz(geometry.get_x(point), geometry.get_z(point), 0)
 
     @staticmethod
     def project_to_local_yz(point: geometry.Point) -> geometry.Point:
-        return geometry.Point.from_xyz(geometry.get_y(point), point.z, 0)
+        return geometry.Point.from_xyz(geometry.get_y(point), geometry.get_z(point), 0)
 
     def get_color(self, point: geometry.Point) -> image.Color:
         local = self.projection(point)

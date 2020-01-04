@@ -17,7 +17,7 @@ def test_point_from_xyz():
     point = geometry.Point.from_xyz(1, 2, 3)
     assert geometry.get_x(point) == 1
     assert geometry.get_y(point) == 2
-    assert point.z == 3
+    assert geometry.get_z(point) == 3
 
 
 def test_sub_points():
