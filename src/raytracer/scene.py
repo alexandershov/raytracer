@@ -43,7 +43,9 @@ class Squared(Material):
 
     def get_color(self, point: geometry.Point) -> image.Color:
         local = self.projection(point)
-        score = int(geometry.get_x(local) // self.width) + int(geometry.get_y(local) // self.width)
+        score = int(geometry.get_x(local) // self.width) + int(
+            geometry.get_y(local) // self.width
+        )
         if not score % 2:
             return self.white
         return self.black
