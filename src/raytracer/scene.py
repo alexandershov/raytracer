@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import time
-from typing import List, Callable
+from typing import List, Callable, Tuple
 
 from . import geometry
 from . import image
@@ -73,7 +73,16 @@ class Scene:
     def render(self):
         started_at = time.time()
         img = image.PillowImage(self.width, self.height)
-        for point in self._screen_points():
+        points = self._screen_points()
+        for point, color in self._get_colors(points):
+            img.set_pixel(int(point.x), int(self.height - 1 - point.y), color)
+        duration = time.time() - started_at
+        print(f"rendering took {duration:.3f} seconds")
+        img.show()
+
+    def _get_colors(self, points: List[geometry.Point]) -> List[Tuple[geometry.Point, image.Color]]:
+        result = []
+        for point in points:
             color = image.Color(26, 108, 171)
             ray = geometry.Ray.from_points(self.camera, point)
             excluded_ids = set()
@@ -94,10 +103,8 @@ class Scene:
                         continue
                     color = thing.material.get_color(p) * self._lightning_coeff(p)
                 break
-            img.set_pixel(int(point.x), int(self.height - 1 - point.y), color)
-        duration = time.time() - started_at
-        print(f"rendering took {duration:.3f} seconds")
-        img.show()
+            result.append((point, color))
+        return result
 
     def _lightning_coeff(self, p: geometry.Point) -> float:
         coeffs = []
