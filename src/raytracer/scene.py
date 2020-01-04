@@ -5,6 +5,8 @@ import multiprocessing
 import time
 from typing import List, Callable, Tuple
 
+import numpy as np
+
 from . import geometry
 from . import image
 
@@ -109,7 +111,7 @@ class Scene:
                 if intersections:
                     p, thing = min(
                         intersections,
-                        key=lambda p_thing: geometry.norm(p_thing[0] - ray.start),
+                        key=lambda p_thing: np.linalg.norm(p_thing[0] - ray.start),
                     )
                     if isinstance(thing.material, Mirror):
                         ray = ray.mirror(thing.figure.perpendicular(p))
@@ -127,12 +129,12 @@ class Scene:
             ray = geometry.Ray.from_points(p, light)
             for thing in self:
                 for intersect in ray.intersect(thing.figure, max_k=1):
-                    if geometry.norm(intersect - p) > 1:
+                    if np.linalg.norm(intersect - p) > 1:
                         in_the_shadow = True
             if in_the_shadow:
                 coeffs.append(0.5)
                 continue
-            d = geometry.norm(light - p)
+            d = np.linalg.norm(light - p)
             cutoff = 800
             if d > cutoff:
                 coeffs.append(cutoff / d)

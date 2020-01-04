@@ -37,7 +37,7 @@ def test_mat_mul_points():
 
 def test_vector_length():
     vector = geometry.from_xyz(3, 4, 5)
-    assert geometry.norm(vector) == pytest.approx(math.sqrt(50))
+    assert np.linalg.norm(vector) == pytest.approx(math.sqrt(50))
 
 
 def test_create_ray_from_start_and_direction():
@@ -200,7 +200,7 @@ def same_points(xs: List[geometry.Point], ys: List[geometry.Point]) -> bool:
 
 
 def are_close(a: geometry.Point, b: geometry.Point) -> bool:
-    return geometry.norm(b - a) == pytest.approx(0)
+    return np.linalg.norm(b - a) == pytest.approx(0)
 
 
 def sort_by_distance_to_origin(points: List[geometry.Point]) -> List[geometry.Point]:
@@ -208,4 +208,4 @@ def sort_by_distance_to_origin(points: List[geometry.Point]) -> List[geometry.Po
 
 
 def distance_to_origin(point: geometry.Point) -> float:
-    return geometry.norm(point - geometry.from_xyz(0, 0, 0))
+    return np.linalg.norm(point - geometry.from_xyz(0, 0, 0))

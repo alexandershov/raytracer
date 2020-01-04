@@ -15,10 +15,6 @@ def from_xyz(x: float, y: float, z: float) -> Point:
     return np.array((x, y, z), dtype=np.float)
 
 
-def norm(point: Point) -> float:
-    return np.linalg.norm(point)
-
-
 def get_x(point: Point) -> float:
     return point[0]
 
