@@ -85,7 +85,9 @@ class Scene:
         print(f"rendering took {duration:.3f} seconds")
         img.show()
 
-    def _get_colors(self, points: List[geometry.Point]) -> List[Tuple[geometry.Point, image.Color]]:
+    def _get_colors(
+        self, points: List[geometry.Point]
+    ) -> List[Tuple[geometry.Point, image.Color]]:
         result = []
         for point in points:
             color = image.Color(26, 108, 171)
