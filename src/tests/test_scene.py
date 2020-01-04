@@ -27,6 +27,7 @@ def test_scene():
         np.array_equal(actual_light, expected_light)
         for actual_light, expected_light in zip(s.lights, lights)
     )
+    assert len(s.lights) == len(lights)
     assert list(map(id, s)) == [id(floor), id(sphere)]
 
 
