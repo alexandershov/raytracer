@@ -50,10 +50,6 @@ class Point:
             return NotImplemented
         return self.coords @ other.coords
 
-    @property
-    def z(self):
-        return self.coords[2]
-
 
 def norm(point: Point) -> float:
     return np.linalg.norm(point.coords)
