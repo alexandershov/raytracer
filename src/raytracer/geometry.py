@@ -8,63 +8,27 @@ import numpy as np
 
 from . import algebra
 
+Point = np.ndarray
 
-@dataclasses.dataclass
-class Point:
-    coords: np.ndarray = dataclasses.field(init=False)
 
-    @staticmethod
-    def from_xyz(x: float, y: float, z: float) -> Point:
-        return Point(np.array((x, y, z), dtype=np.float))
-
-    def __init__(self, coords: np.ndarray):
-        self.coords = coords
-
-    def __eq__(self, other):
-        if not isinstance(other, Point):
-            return NotImplemented
-        return all(self.coords == other.coords)
-
-    def __sub__(self, other) -> Point:
-        if not isinstance(other, Point):
-            return NotImplemented
-        return Point(self.coords - other.coords)
-
-    def __add__(self, other) -> Point:
-        if not isinstance(other, Point):
-            return NotImplemented
-        return Point(self.coords + other.coords)
-
-    def __mul__(self, other) -> Point:
-        if not isinstance(other, (int, float)):
-            return NotImplemented
-        return Point(self.coords * other)
-
-    def __truediv__(self, other) -> Point:
-        if not isinstance(other, (int, float)):
-            return NotImplemented
-        return Point(self.coords / other)
-
-    def __matmul__(self, other) -> float:
-        if not isinstance(other, Point):
-            return NotImplemented
-        return self.coords @ other.coords
+def from_xyz(x: float, y: float, z: float) -> Point:
+    return np.array((x, y, z), dtype=np.float)
 
 
 def norm(point: Point) -> float:
-    return np.linalg.norm(point.coords)
+    return np.linalg.norm(point)
 
 
 def get_x(point: Point) -> float:
-    return point.coords[0]
+    return point[0]
 
 
 def get_y(point: Point) -> float:
-    return point.coords[1]
+    return point[1]
 
 
 def get_z(point: Point) -> float:
-    return point.coords[2]
+    return point[2]
 
 
 @dataclasses.dataclass(frozen=True)
@@ -74,7 +38,7 @@ class Ray:
 
     @staticmethod
     def from_points(start: Point, after_start: Point) -> Ray:
-        assert start != after_start
+        assert not np.array_equal(start, after_start)
         return Ray(start, after_start - start)
 
     @property
@@ -117,7 +81,7 @@ class Plane(Figure):
     d: float
 
     def __post_init__(self):
-        self.coeff_vec = Point.from_xyz(self.a, self.b, self.c)
+        self.coeff_vec = from_xyz(self.a, self.b, self.c)
 
     def intersect(self, ray: Ray, max_k=None) -> List[Point]:
         denominator = self.coeff_vec @ ray.direction
@@ -136,15 +100,15 @@ class Plane(Figure):
         ) == 2, "only simple planes are supported"
         if self.a != 0:
             return Ray.from_points(
-                point, Point.from_xyz(get_x(point) + 1, get_y(point), get_z(point))
+                point, from_xyz(get_x(point) + 1, get_y(point), get_z(point))
             )
         if self.b != 0:
             return Ray.from_points(
-                point, Point.from_xyz(get_x(point), get_y(point) + 1, get_z(point))
+                point, from_xyz(get_x(point), get_y(point) + 1, get_z(point))
             )
         if self.c != 0:
             return Ray.from_points(
-                point, Point.from_xyz(get_x(point), get_y(point), get_z(point) + 1)
+                point, from_xyz(get_x(point), get_y(point), get_z(point) + 1)
             )
         raise ValueError(f"only simple planes are supported: {self!r}")
 
