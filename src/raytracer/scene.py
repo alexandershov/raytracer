@@ -2,10 +2,9 @@ from __future__ import annotations
 
 import dataclasses
 import time
-from typing import List, Iterable, Callable
+from typing import List, Callable
 
 from . import geometry
-
 from . import image
 
 
@@ -74,7 +73,7 @@ class Scene:
     def render(self):
         started_at = time.time()
         img = image.PillowImage(self.width, self.height)
-        for point in self._iter_screen():
+        for point in self._screen_points():
             color = image.Color(26, 108, 171)
             ray = geometry.Ray.from_points(self.camera, point)
             excluded_ids = set()
@@ -122,9 +121,9 @@ class Scene:
             return 1
         return max(coeffs)
 
-    def _iter_screen(self) -> Iterable[geometry.Point]:
-        return (
+    def _screen_points(self) -> List[geometry.Point]:
+        return [
             geometry.Point.from_xyz(x, y, 0)
             for x in range(0, self.width)
             for y in range(0, self.height)
-        )
+        ]
