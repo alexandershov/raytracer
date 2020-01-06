@@ -115,4 +115,11 @@ Questions
 * ~~Is there a simpler way to build floor/wall mirror?~~
   Since floor/wall is always of the kind z=1 we can determine perpendicular
   without equation just from the common sense.
+* ~~Why does raytracing work? There's no rays coming out of your eye in real life~~
+  And it looks like camera in your phone can work without inner light.
+  Looks like when light goes from the source of light it spreads
+  in all directions and when it meets a block it also spreads
+  from this block in all directions.
+* What there's a need for camera & screen in raytracing?
+  Is there a camera in real life?
 * Why we need self.height - 1 in set_pixel?
