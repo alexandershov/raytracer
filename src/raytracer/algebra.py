@@ -4,7 +4,7 @@ from typing import List
 
 def solve_quadratic(a, b, c) -> List[float]:
     if a == 0 and b == 0:
-        raise ValueError(f"not an equation: {a}x^2 + {b}x + c")
+        raise ValueError(f"`{a}x^2 + {b}x + c = 0` is not a function")
     if a == 0:
         return [-c / b]
     d = b ** 2 - 4 * a * c
