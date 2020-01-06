@@ -8,12 +8,16 @@ def solve_quadratic(a, b, c) -> List[float]:
     d = b ** 2 - 4 * a * c
     if d < 0:
         return []
-    # TODO: is using set on floats okay?
-    roots = {(-b + sign * math.sqrt(d)) / (2 * a) for sign in [-1, 1]}
-    return list(roots)
+    roots = [(-b + sign * math.sqrt(d)) / (2 * a) for sign in [-1, 1]]
+    return _exclude_duplicates(roots)
 
 
 def _solve_linear(a, b) -> List[float]:
     if a == 0:
         raise ValueError(f"`{a}x + {b} = 0` is not a function")
     return [-b / a]
+
+
+def _exclude_duplicates(roots: List[float]) -> List[float]:
+    # TODO: is using set on floats okay?
+    return list(set(roots))
