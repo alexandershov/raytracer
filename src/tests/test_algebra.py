@@ -19,6 +19,5 @@ from raytracer import algebra
     ],
 )
 def test_solve_quadratic(a, b, c, expected):
-    assert sorted(algebra.solve_quadratic(a, b, c)) == list(
-        map(pytest.approx, expected)
-    )
+    approx_expected = [pytest.approx(a_root) for a_root in expected]
+    assert algebra.solve_quadratic(a, b, c) == approx_expected
