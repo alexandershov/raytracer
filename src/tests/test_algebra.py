@@ -19,5 +19,4 @@ from raytracer import algebra
     ],
 )
 def test_solve_quadratic(a, b, c, expected):
-    approx_expected = [pytest.approx(a_root) for a_root in expected]
-    assert algebra.solve_quadratic(a, b, c) == approx_expected
+    assert algebra.solve_quadratic(a, b, c) == pytest.approx(expected)
