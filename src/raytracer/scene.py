@@ -86,7 +86,7 @@ class Scene:
                 for point, color in colored:
                     img.set_pixel(
                         int(geometry.get_x(point)),
-                        int(self.height - 1 - geometry.get_y(point)),
+                        int(geometry.get_y(point)),
                         color,
                     )
         duration = time.time() - started_at

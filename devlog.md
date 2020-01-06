@@ -120,7 +120,9 @@ Questions
   Looks like when light goes from the source of light it spreads
   in all directions and when it meets a block it also spreads
   from this block in all directions.
+* ~~Why we need self.height - 1 in set_pixel?~~
+  Actually we don't need it. There was a bug in the scene.
+  Camera was under floor so that's it.
 * What there's a need for camera & screen in raytracing?
   Is there a camera & screen in real life?
 * How do mirrors work in real life?
-* Why we need self.height - 1 in set_pixel?
