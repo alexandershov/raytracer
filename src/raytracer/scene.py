@@ -85,9 +85,7 @@ class Scene:
             for colored in pool.map(self._get_colors, chunks):
                 for point, color in colored:
                     img.set_pixel(
-                        int(geometry.get_x(point)),
-                        int(geometry.get_y(point)),
-                        color,
+                        int(geometry.get_x(point)), int(geometry.get_y(point)), color,
                     )
         duration = time.time() - started_at
         print(f"rendering took {duration:.3f} seconds")
