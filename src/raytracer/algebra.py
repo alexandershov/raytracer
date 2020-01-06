@@ -9,9 +9,7 @@ def solve_quadratic(a, b, c) -> List[float]:
     if d < 0:
         return []
     # TODO: is using set on floats okay?
-    roots = set()
-    for sign in [-1, 1]:
-        roots.add((-b + sign * math.sqrt(d)) / (2 * a))
+    roots = {(-b + sign * math.sqrt(d)) / (2 * a) for sign in [-1, 1]}
     return list(roots)
 
 
