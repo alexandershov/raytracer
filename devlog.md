@@ -123,7 +123,13 @@ Questions
 * ~~Why we need self.height - 1 in set_pixel?~~
   Actually we don't need it. There was a bug in the scene.
   Camera was under floor so that's it.
-* How to exclude close floats from the list?
+* ~~How to exclude close floats from the list?~~
+    1. list(set)
+    2. check all pairs by math.isclose
+    3. check only math.isclose(d, 0) if it's close to zero
+        then pretend like it's only one root. 
+    4. [winner]if there's two roots then do math.isclose
+      That's the most simple, correct and easiest to reason about.
 * What there's a need for camera & screen in raytracing?
   Is there a camera & screen in real life?
 * How do mirrors work in real life?

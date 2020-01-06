@@ -19,5 +19,7 @@ def _solve_linear(a, b) -> List[float]:
 
 
 def _exclude_duplicates(roots: List[float]) -> List[float]:
-    # TODO: is using set on floats okay?
-    return list(set(roots))
+    assert len(roots) == 2
+    if math.isclose(roots[0], roots[1]):
+        return [roots[0]]
+    return roots
