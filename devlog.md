@@ -123,6 +123,7 @@ Questions
 * ~~Why we need self.height - 1 in set_pixel?~~
   Actually we don't need it. There was a bug in the scene.
   Camera was under floor so that's it.
+* How to exclude close floats from the list?
 * What there's a need for camera & screen in raytracing?
   Is there a camera & screen in real life?
 * How do mirrors work in real life?
