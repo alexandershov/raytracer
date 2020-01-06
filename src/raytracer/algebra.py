@@ -8,6 +8,8 @@ def solve_quadratic(a, b, c) -> List[float]:
     d = b ** 2 - 4 * a * c
     if d < 0:
         return []
+    # TODO: dry it up
+    # TODO: is using set on floats okay?
     return list({(-b - math.sqrt(d)) / (2 * a), (-b + math.sqrt(d)) / (2 * a)})
 
 
