@@ -1,8 +1,6 @@
 import math
 from typing import List
 
-import numpy as np
-
 
 def solve_quadratic(a, b, c) -> List[float]:
     if a == 0 and b == 0:
@@ -13,7 +11,3 @@ def solve_quadratic(a, b, c) -> List[float]:
     if d < 0:
         return []
     return list({(-b - math.sqrt(d)) / (2 * a), (-b + math.sqrt(d)) / (2 * a)})
-
-
-def solve_quadratic_numpy(a, b, c) -> List[float]:
-    return list({x for x in np.roots([a, b, c]) if np.isreal(x)})
