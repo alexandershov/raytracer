@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 import multiprocessing
 import time
+from dataclasses import dataclass
 from typing import List, Callable, Tuple
 
 import numpy as np
 
+from raytracer.image import Image
 from . import geometry
-from . import image
 from .color import Color
 
 
@@ -78,7 +78,7 @@ class Scene:
 
     def render(self):
         started_at = time.time()
-        img = image.Image(self.width, self.height)
+        img = Image(self.width, self.height)
         points = self._screen_points()
         num_processes = 6
         with multiprocessing.Pool(processes=num_processes) as pool:
