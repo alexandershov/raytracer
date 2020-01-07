@@ -19,7 +19,7 @@ class Color:
             if not (Color._MIN_RGB <= component <= Color._MAX_RGB):
                 raise ValueError(f"{self!r} is not a valid color")
 
-    def __mul__(self, other):
+    def __mul__(self, other) -> Color:
         if not isinstance(other, (int, float)):
             return NotImplemented
         return Color(
