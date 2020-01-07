@@ -12,10 +12,6 @@ class Color:
     green: int
     blue: int
 
-    @staticmethod
-    def grey() -> Color:
-        return Color(100, 100, 100)
-
     def __mul__(self, other):
         if not isinstance(other, (int, float)):
             return NotImplemented
