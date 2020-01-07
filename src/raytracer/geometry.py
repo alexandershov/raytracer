@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import abc
-import dataclasses
+from dataclasses import dataclass
 from typing import List
 
 import numpy as np
@@ -27,7 +27,7 @@ def get_z(point: Point) -> float:
     return point[2]
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclass(frozen=True)
 class Ray:
     start: Point
     direction: Point
@@ -69,7 +69,7 @@ class Figure(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
 
-@dataclasses.dataclass
+@dataclass
 class Plane(Figure):
     a: float
     b: float
@@ -109,7 +109,7 @@ class Plane(Figure):
         raise ValueError(f"only simple planes are supported: {self!r}")
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclass(frozen=True)
 class Sphere(Figure):
     center: Point
     radius: float

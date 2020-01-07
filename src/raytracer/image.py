@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 import abc
-import dataclasses
+from dataclasses import dataclass
 
 import PIL.Image
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclass(frozen=True)
 class Color:
     red: int
     green: int

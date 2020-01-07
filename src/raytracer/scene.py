@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import dataclasses
+from dataclasses import dataclass
 import multiprocessing
 import time
 from typing import List, Callable, Tuple
@@ -16,7 +16,7 @@ class Material:
         raise NotImplementedError
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclass(frozen=True)
 class Solid(Material):
     color: image.Color
 
@@ -24,7 +24,7 @@ class Solid(Material):
         return self.color
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclass(frozen=True)
 class Squared(Material):
     width: float
     white: image.Color
@@ -58,13 +58,13 @@ class Mirror(Material):
         raise NotImplemented("should never be called")
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclass(frozen=True)
 class Thing:
     figure: geometry.Figure
     material: Material
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclass(frozen=True)
 class Scene:
     width: int
     height: int
