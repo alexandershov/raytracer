@@ -12,6 +12,7 @@ class Color:
     green: int
     blue: int
 
+    # TODO: black/white/grey is method, red/green/blue is property, that's confusing
     @staticmethod
     def black() -> Color:
         return Color(0, 0, 0)
