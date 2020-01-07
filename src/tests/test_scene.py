@@ -8,7 +8,7 @@ from raytracer import scene
 
 def test_scene():
     floor = scene.Thing(
-        figure=geometry.Plane(0, 1, 0, 200), material=scene.Solid(image.Color.black())
+        figure=geometry.Plane(0, 1, 0, 200), material=scene.Solid(image.Palette.BLACK)
     )
 
     sphere = scene.Thing(
@@ -32,8 +32,8 @@ def test_scene():
 
 
 def test_solid_material():
-    material = scene.Solid(color=image.Color.black())
-    assert material.get_color(geometry.from_xyz(0, 0, 0)) == image.Color.black()
+    material = scene.Solid(color=image.Palette.BLACK)
+    assert material.get_color(geometry.from_xyz(0, 0, 0)) == image.Palette.BLACK
 
 
 def test_squared_project_to_local_xy():
@@ -53,15 +53,15 @@ def test_squared_project_to_local_xz():
     [
         (geometry.from_xyz(10, 10, 90), image.Color.white()),
         (geometry.from_xyz(-10, -10, 90), image.Color.white()),
-        (geometry.from_xyz(10, -10, 90), image.Color.black()),
-        (geometry.from_xyz(30, 10, 90), image.Color.black()),
+        (geometry.from_xyz(10, -10, 90), image.Palette.BLACK),
+        (geometry.from_xyz(30, 10, 90), image.Palette.BLACK),
     ],
 )
 def test_squared_material(point, expected):
     material = scene.Squared(
         width=20,
         white=image.Color.white(),
-        black=image.Color.black(),
+        black=image.Palette.BLACK,
         projection=scene.Squared.project_to_local_xy,
     )
     assert material.get_color(point) == expected
