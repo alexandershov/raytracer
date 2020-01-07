@@ -11,6 +11,11 @@ class Color:
     green: int
     blue: int
 
+    def __post_init__(self):
+        for component in [self.red, self.green, self.blue]:
+            if component > 255:
+                raise ValueError(f'{self!r} is not a valid color')
+
     def __mul__(self, other):
         if not isinstance(other, (int, float)):
             return NotImplemented
