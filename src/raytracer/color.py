@@ -13,7 +13,7 @@ class Color:
     _MIN_RGB = 0
     _MAX_RGB = 255
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         for rgb in self._components():
             self._check_valid_rgb(rgb)
 
