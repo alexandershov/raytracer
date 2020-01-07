@@ -13,3 +13,6 @@ class Image:
 
     def set_pixel(self, x: int, y: int, color: Color) -> None:
         self._pixels[x, y] = (color.r, color.g, color.b)
+
+    def get_pixel(self, x: int, y: int) -> Color:
+        return Color(*self._pixels[x, y])
