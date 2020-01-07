@@ -16,17 +16,21 @@ class Color:
     def __post_init__(self):
         for component in [self.r, self.g, self.b]:
             if component > Color._MAX:
-                raise ValueError(f'{self!r} is not a valid color')
+                raise ValueError(f"{self!r} is not a valid color")
 
     def __mul__(self, other):
         if not isinstance(other, (int, float)):
             return NotImplemented
-        assert other >= 0
         return Color(
-            r=min(int(self.r * other), Color._MAX),
-            g=min(int(self.g * other), Color._MAX),
-            b=min(int(self.b * other), Color._MAX),
+            r=Color._mul_component(self.r, other),
+            g=Color._mul_component(self.g, other),
+            b=Color._mul_component(self.b, other),
         )
+
+    @staticmethod
+    def _mul_component(x: int, mul: float) -> int:
+        assert mul >= 0
+        return min(int(x * mul), Color._MAX)
 
 
 class Palette:
