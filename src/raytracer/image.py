@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import List
 
 import PIL.Image
 
@@ -15,9 +16,8 @@ class Color:
     _MAX_RGB = 255
 
     def __post_init__(self):
-        for component in [self.r, self.g, self.b]:
-            if not (Color._MIN_RGB <= component <= Color._MAX_RGB):
-                raise ValueError(f"{self!r} is not a valid color")
+        for rgb in self._as_list():
+            self._check_valid_rgb(rgb)
 
     def __mul__(self, other) -> Color:
         if not isinstance(other, (int, float)):
@@ -32,6 +32,13 @@ class Color:
         if mul < 0:
             raise ValueError(f"can't multiply {self!r} by negative {mul!r}")
         return min(int(x * mul), Color._MAX_RGB)
+
+    def _as_list(self) -> List[int]:
+        return [self.r, self.g, self.b]
+
+    def _check_valid_rgb(self, rgb: int) -> None:
+        if not (Color._MIN_RGB <= rgb <= Color._MAX_RGB):
+            raise ValueError(f"{self!r} is not a valid color")
 
 
 class Palette:
