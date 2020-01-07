@@ -7,12 +7,12 @@ import PIL.Image
 
 @dataclass(frozen=True)
 class Color:
-    red: int
-    green: int
-    blue: int
+    r: int
+    g: int
+    b: int
 
     def __post_init__(self):
-        for component in [self.red, self.green, self.blue]:
+        for component in [self.r, self.g, self.b]:
             if component > 255:
                 raise ValueError(f'{self!r} is not a valid color')
 
@@ -21,9 +21,9 @@ class Color:
             return NotImplemented
         assert other >= 0
         return Color(
-            red=min(int(self.red * other), 255),
-            green=min(int(self.green * other), 255),
-            blue=min(int(self.blue * other), 255),
+            r=min(int(self.r * other), 255),
+            g=min(int(self.g * other), 255),
+            b=min(int(self.b * other), 255),
         )
 
 
@@ -42,4 +42,4 @@ class Image:
         self._image.show()
 
     def set_pixel(self, x: int, y: int, color: Color) -> None:
-        self._pixels[x, y] = (color.red, color.green, color.blue)
+        self._pixels[x, y] = (color.r, color.g, color.b)
