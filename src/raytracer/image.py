@@ -11,26 +11,27 @@ class Color:
     g: int
     b: int
 
-    _MAX_COMPONENT = 255
+    _MIN_RGB = 0
+    _MAX_RGB = 255
 
     def __post_init__(self):
         for component in [self.r, self.g, self.b]:
-            if component > Color._MAX_COMPONENT:
+            if not (Color._MIN_RGB <= component <= Color._MAX_RGB):
                 raise ValueError(f"{self!r} is not a valid color")
 
     def __mul__(self, other):
         if not isinstance(other, (int, float)):
             return NotImplemented
         return Color(
-            r=Color._mul_component(self.r, other),
-            g=Color._mul_component(self.g, other),
-            b=Color._mul_component(self.b, other),
+            r=Color._mul_rgb(self.r, other),
+            g=Color._mul_rgb(self.g, other),
+            b=Color._mul_rgb(self.b, other),
         )
 
     @staticmethod
-    def _mul_component(x: int, mul: float) -> int:
+    def _mul_rgb(x: int, mul: float) -> int:
         assert mul >= 0
-        return min(int(x * mul), Color._MAX_COMPONENT)
+        return min(int(x * mul), Color._MAX_RGB)
 
 
 class Palette:
