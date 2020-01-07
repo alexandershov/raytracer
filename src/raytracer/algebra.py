@@ -17,10 +17,9 @@ class _QuadraticSolver:
     def solve(self) -> List[float]:
         if self.a == 0:
             return self._solve_linear()
-        d = self._get_discriminant()
-        if d < 0:
+        if self._get_discriminant() < 0:
             return []
-        roots = [(-self.b + sign * math.sqrt(d)) / (2 * self.a) for sign in [-1, 1]]
+        roots = [self._get_root(sign) for sign in [-1, 1]]
         return _exclude_duplicates(roots)
 
     def _solve_linear(self) -> List[float]:
@@ -29,8 +28,12 @@ class _QuadraticSolver:
             raise ValueError(f"`{self.b}x + {self.c} = 0` is not a function")
         return [-self.c / self.b]
 
-    def _get_discriminant(self):
+    def _get_discriminant(self) -> float:
         return self.b ** 2 - 4 * self.a * self.c
+
+    def _get_root(self, sign: float) -> float:
+        d = self._get_discriminant()
+        return (-self.b + sign * math.sqrt(d)) / (2 * self.a)
 
 
 def _exclude_duplicates(roots: List[float]) -> List[float]:
