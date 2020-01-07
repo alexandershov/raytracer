@@ -8,9 +8,9 @@ def test_color_mul():
     assert Color(1, 2, 3) * 200 == Color(200, 255, 255)
 
 
-@pytest.mark.parametrize('rgb', [
+@pytest.mark.parametrize('r, g, b', [
     (256, 255, 255),
 ])
-def test_color_creation_failure(rgb):
+def test_color_creation_failure(r, g, b):
     with pytest.raises(ValueError):
-        Color(*rgb)
+        Color(r, g, b)
