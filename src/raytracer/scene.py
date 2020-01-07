@@ -9,26 +9,27 @@ import numpy as np
 
 from . import geometry
 from . import image
+from .color import Color
 
 
 class Material:
-    def get_color(self, point: geometry.Point) -> image.Color:
+    def get_color(self, point: geometry.Point) -> Color:
         raise NotImplementedError
 
 
 @dataclass(frozen=True)
 class Solid(Material):
-    color: image.Color
+    color: Color
 
-    def get_color(self, point: geometry.Point) -> image.Color:
+    def get_color(self, point: geometry.Point) -> Color:
         return self.color
 
 
 @dataclass(frozen=True)
 class Squared(Material):
     width: float
-    white: image.Color
-    black: image.Color
+    white: Color
+    black: Color
     projection: Callable
 
     @staticmethod
@@ -43,7 +44,7 @@ class Squared(Material):
     def project_to_local_yz(point: geometry.Point) -> geometry.Point:
         return geometry.from_xyz(geometry.get_y(point), geometry.get_z(point), 0)
 
-    def get_color(self, point: geometry.Point) -> image.Color:
+    def get_color(self, point: geometry.Point) -> Color:
         local = self.projection(point)
         score = int(geometry.get_x(local) // self.width) + int(
             geometry.get_y(local) // self.width
@@ -54,7 +55,7 @@ class Squared(Material):
 
 
 class Mirror(Material):
-    def get_color(self, point: geometry.Point) -> image.Color:
+    def get_color(self, point: geometry.Point) -> Color:
         raise NotImplemented("should never be called")
 
 
@@ -93,10 +94,10 @@ class Scene:
 
     def _get_colors(
         self, points: List[geometry.Point]
-    ) -> List[Tuple[geometry.Point, image.Color]]:
+    ) -> List[Tuple[geometry.Point, Color]]:
         result = []
         for point in points:
-            color = image.Color(26, 108, 171)
+            color = Color(26, 108, 171)
             ray = geometry.Ray.from_points(self.camera, point)
             excluded_ids = set()
             for _ in range(5):

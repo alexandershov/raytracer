@@ -2,18 +2,18 @@ import numpy as np
 import pytest
 
 from raytracer import geometry
-from raytracer import image
 from raytracer import scene
+from raytracer.color import Palette
 
 
 def test_scene():
     floor = scene.Thing(
-        figure=geometry.Plane(0, 1, 0, 200), material=scene.Solid(image.Palette.BLACK)
+        figure=geometry.Plane(0, 1, 0, 200), material=scene.Solid(Palette.BLACK)
     )
 
     sphere = scene.Thing(
         geometry.Sphere(center=geometry.from_xyz(150, -150, 150), radius=30),
-        material=scene.Solid(image.Palette.GRAY),
+        material=scene.Solid(Palette.GRAY),
     )
     lights = [geometry.from_xyz(1, 1, 1), geometry.from_xyz(50, 50, 50)]
     camera = geometry.from_xyz(300, 200, -600)
@@ -32,8 +32,8 @@ def test_scene():
 
 
 def test_solid_material():
-    material = scene.Solid(color=image.Palette.BLACK)
-    assert material.get_color(geometry.from_xyz(0, 0, 0)) == image.Palette.BLACK
+    material = scene.Solid(color=Palette.BLACK)
+    assert material.get_color(geometry.from_xyz(0, 0, 0)) == Palette.BLACK
 
 
 def test_squared_project_to_local_xy():
@@ -51,17 +51,17 @@ def test_squared_project_to_local_xz():
 @pytest.mark.parametrize(
     "point, expected",
     [
-        (geometry.from_xyz(10, 10, 90), image.Palette.WHITE),
-        (geometry.from_xyz(-10, -10, 90), image.Palette.WHITE),
-        (geometry.from_xyz(10, -10, 90), image.Palette.BLACK),
-        (geometry.from_xyz(30, 10, 90), image.Palette.BLACK),
+        (geometry.from_xyz(10, 10, 90), Palette.WHITE),
+        (geometry.from_xyz(-10, -10, 90), Palette.WHITE),
+        (geometry.from_xyz(10, -10, 90), Palette.BLACK),
+        (geometry.from_xyz(30, 10, 90), Palette.BLACK),
     ],
 )
 def test_squared_material(point, expected):
     material = scene.Squared(
         width=20,
-        white=image.Palette.WHITE,
-        black=image.Palette.BLACK,
+        white=Palette.WHITE,
+        black=Palette.BLACK,
         projection=scene.Squared.project_to_local_xy,
     )
     assert material.get_color(point) == expected
