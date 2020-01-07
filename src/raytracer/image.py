@@ -13,10 +13,6 @@ class Color:
     blue: int
 
     @staticmethod
-    def white() -> Color:
-        return Color(255, 255, 255)
-
-    @staticmethod
     def grey() -> Color:
         return Color(100, 100, 100)
 
