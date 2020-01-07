@@ -1,15 +1,27 @@
 import math
+from dataclasses import dataclass
 from typing import List
 
 
 def solve_quadratic(a, b, c) -> List[float]:
-    if a == 0:
-        return _solve_linear(b, c)
-    d = b ** 2 - 4 * a * c
-    if d < 0:
-        return []
-    roots = [(-b + sign * math.sqrt(d)) / (2 * a) for sign in [-1, 1]]
-    return _exclude_duplicates(roots)
+    solver = _QuadraticSolver(a, b, c)
+    return solver.solve()
+
+
+@dataclass(frozen=True)
+class _QuadraticSolver:
+    a: float
+    b: float
+    c: float
+
+    def solve(self) -> List[float]:
+        if self.a == 0:
+            return _solve_linear(self.b, self.c)
+        d = self.b ** 2 - 4 * self.a * self.c
+        if d < 0:
+            return []
+        roots = [(-self.b + sign * math.sqrt(d)) / (2 * self.a) for sign in [-1, 1]]
+        return _exclude_duplicates(roots)
 
 
 def _solve_linear(a, b) -> List[float]:
