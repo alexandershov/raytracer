@@ -77,7 +77,7 @@ class Scene:
 
     def render(self):
         started_at = time.time()
-        img = image.PillowImage(self.width, self.height)
+        img = image.Image(self.width, self.height)
         points = self._screen_points()
         num_processes = 6
         with multiprocessing.Pool(processes=num_processes) as pool:

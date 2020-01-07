@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import abc
 from dataclasses import dataclass
 
 import PIL.Image
@@ -29,23 +28,13 @@ class Palette:
     WHITE = Color(255, 255, 255)
 
 
-class Image(metaclass=abc.ABCMeta):
-    @abc.abstractmethod
-    def show(self):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def set_pixel(self, x, y, color):
-        raise NotImplementedError
-
-
-class PillowImage(Image):
-    def __init__(self, width, height):
+class Image:
+    def __init__(self, width: int, height: int) -> None:
         self._image = PIL.Image.new("RGB", (width, height), "white")
         self._pixels = self._image.load()
 
-    def show(self):
+    def show(self) -> None:
         self._image.show()
 
-    def set_pixel(self, x, y, color):
+    def set_pixel(self, x: int, y: int, color: Color) -> None:
         self._pixels[x, y] = (color.red, color.green, color.blue)
