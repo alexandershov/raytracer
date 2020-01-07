@@ -31,7 +31,7 @@ class Color:
     def _mul_rgb(self, x: int, mul: float) -> int:
         if mul < 0:
             raise ValueError(f"can't multiply {self!r} by negative {mul!r}")
-        return min(int(x * mul), Color._MAX_RGB)
+        return int(min((x * mul), Color._MAX_RGB))
 
     def _components(self) -> List[int]:
         return [self.r, self.g, self.b]
