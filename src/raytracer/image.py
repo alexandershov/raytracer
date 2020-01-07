@@ -16,7 +16,7 @@ class Color:
     _MAX_RGB = 255
 
     def __post_init__(self):
-        for rgb in self._as_list():
+        for rgb in self._components():
             self._check_valid_rgb(rgb)
 
     def __mul__(self, other) -> Color:
@@ -33,7 +33,7 @@ class Color:
             raise ValueError(f"can't multiply {self!r} by negative {mul!r}")
         return min(int(x * mul), Color._MAX_RGB)
 
-    def _as_list(self) -> List[int]:
+    def _components(self) -> List[int]:
         return [self.r, self.g, self.b]
 
     def _check_valid_rgb(self, rgb: int) -> None:
