@@ -5,7 +5,11 @@ from raytracer.image import Color
 
 @pytest.mark.parametrize(
     "color, mul, expected",
-    [(Color(1, 2, 3), 2, Color(2, 4, 6)), (Color(1, 2, 3), 200, Color(200, 255, 255)),],
+    [
+        (Color(1, 2, 3), 2, Color(2, 4, 6)),
+        (Color(1, 2, 3), 200, Color(200, 255, 255)),
+        (Color(1, 2, 3), 0, Color(0, 0, 0)),
+    ],
 )
 def test_color_mul(color, mul, expected):
     assert color * mul == expected
