@@ -23,14 +23,14 @@ class Color:
         if not isinstance(other, (int, float)):
             return NotImplemented
         return Color(
-            r=Color._mul_rgb(self.r, other),
-            g=Color._mul_rgb(self.g, other),
-            b=Color._mul_rgb(self.b, other),
+            r=self._mul_rgb(self.r, other),
+            g=self._mul_rgb(self.g, other),
+            b=self._mul_rgb(self.b, other),
         )
 
-    @staticmethod
-    def _mul_rgb(x: int, mul: float) -> int:
-        assert mul >= 0
+    def _mul_rgb(self, x: int, mul: float) -> int:
+        if mul < 0:
+            raise ValueError(f"can't multiply {self!r} by negative {mul!r}")
         return min(int(x * mul), Color._MAX_RGB)
 
 
