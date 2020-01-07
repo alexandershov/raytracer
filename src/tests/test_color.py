@@ -10,6 +10,8 @@ def test_color_mul():
 
 @pytest.mark.parametrize('r, g, b', [
     (256, 255, 255),
+    (255, 256, 255),
+    (255, 255, 256),
 ])
 def test_color_creation_failure(r, g, b):
     with pytest.raises(ValueError):
