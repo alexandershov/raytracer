@@ -16,18 +16,18 @@ class _QuadraticSolver:
 
     def solve(self) -> List[float]:
         if self.a == 0:
-            return _solve_linear(self.b, self.c)
+            return self._solve_linear()
         d = self.b ** 2 - 4 * self.a * self.c
         if d < 0:
             return []
         roots = [(-self.b + sign * math.sqrt(d)) / (2 * self.a) for sign in [-1, 1]]
         return _exclude_duplicates(roots)
 
-
-def _solve_linear(a, b) -> List[float]:
-    if a == 0:
-        raise ValueError(f"`{a}x + {b} = 0` is not a function")
-    return [-b / a]
+    def _solve_linear(self) -> List[float]:
+        assert self.a == 0
+        if self.b == 0:
+            raise ValueError(f"`{self.b}x + {self.c} = 0` is not a function")
+        return [-self.c / self.b]
 
 
 def _exclude_duplicates(roots: List[float]) -> List[float]:
