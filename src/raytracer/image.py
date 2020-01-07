@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import abc
-import enum
 from dataclasses import dataclass
 
 import PIL.Image
@@ -36,8 +35,7 @@ class Color:
         )
 
 
-@enum.unique
-class Palette(enum.Enum):
+class Palette:
     BLACK = Color(0, 0, 0)
     GRAY = Color(100, 100, 100)
     WHITE = Color(255, 255, 255)
