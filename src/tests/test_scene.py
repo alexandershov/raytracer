@@ -13,7 +13,7 @@ def test_scene():
 
     sphere = scene.Thing(
         geometry.Sphere(center=geometry.from_xyz(150, -150, 150), radius=30),
-        material=scene.Solid(image.Color.grey()),
+        material=scene.Solid(image.Palette.GRAY),
     )
     lights = [geometry.from_xyz(1, 1, 1), geometry.from_xyz(50, 50, 50)]
     camera = geometry.from_xyz(300, 200, -600)
