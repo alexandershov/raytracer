@@ -11,9 +11,11 @@ class Color:
     g: int
     b: int
 
+    _MAX = 255
+
     def __post_init__(self):
         for component in [self.r, self.g, self.b]:
-            if component > 255:
+            if component > Color._MAX:
                 raise ValueError(f'{self!r} is not a valid color')
 
     def __mul__(self, other):
@@ -21,9 +23,9 @@ class Color:
             return NotImplemented
         assert other >= 0
         return Color(
-            r=min(int(self.r * other), 255),
-            g=min(int(self.g * other), 255),
-            b=min(int(self.b * other), 255),
+            r=min(int(self.r * other), Color._MAX),
+            g=min(int(self.g * other), Color._MAX),
+            b=min(int(self.b * other), Color._MAX),
         )
 
 
