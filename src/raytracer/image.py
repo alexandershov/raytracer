@@ -38,8 +38,11 @@ class Color:
 
     def _check_valid_rgb(self, rgb: int) -> None:
         if not (Color._MIN_RGB <= rgb <= Color._MAX_RGB):
-            range_msg = f"{rgb} should be in range [{Color._MIN_RGB}; {Color._MAX_RGB}]"
-            raise ValueError(f"{self!r} is not a valid color: {range_msg}")
+            raise ValueError(self._get_invalid_rgb_msg(rgb))
+
+    def _get_invalid_rgb_msg(self, rgb: int) -> str:
+        range_msg = f"{rgb} should be in range [{Color._MIN_RGB}; {Color._MAX_RGB}]"
+        return f"{self!r} is not a valid color: {range_msg}"
 
 
 class Palette:
