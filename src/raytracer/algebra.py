@@ -25,7 +25,7 @@ class _QuadraticSolver:
     def _solve_linear(self) -> List[float]:
         assert self.a == 0
         if self.b == 0:
-            raise ValueError(f"`{self.b}x + {self.c} = 0` is not a function")
+            raise ValueError(f"`{self.b}x + {self.c} = 0` is not a valid equation")
         return [-self.c / self.b]
 
     def _get_discriminant(self) -> float:
