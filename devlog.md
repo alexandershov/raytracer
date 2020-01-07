@@ -130,6 +130,9 @@ Questions
         then pretend like it's only one root. 
     4. [winner]if there's two roots then do math.isclose
       That's the most simple, correct and easiest to reason about.
+* Color class looks pretty bad. How to improve it?
+  1. call attributes .r .g .b
+  2. move black/white/grey outside of the class
 * What there's a need for camera & screen in raytracing?
   Is there a camera & screen in real life?
 * How do mirrors work in real life?

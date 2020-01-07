@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import abc
+import enum
 from dataclasses import dataclass
 
 import PIL.Image
@@ -12,7 +13,6 @@ class Color:
     green: int
     blue: int
 
-    # TODO: black/white/grey is method, red/green/blue is property, that's confusing
     @staticmethod
     def black() -> Color:
         return Color(0, 0, 0)
@@ -34,6 +34,13 @@ class Color:
             green=min(int(self.green * other), 255),
             blue=min(int(self.blue * other), 255),
         )
+
+
+@enum.unique
+class Palette(enum.Enum):
+    BLACK = Color(0, 0, 0)
+    GRAY = Color(100, 100, 100)
+    WHITE = Color(255, 255, 255)
 
 
 class Image(metaclass=abc.ABCMeta):
