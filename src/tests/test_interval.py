@@ -32,8 +32,9 @@ def test_contains(interval, value, expected):
     assert (value in interval) is expected
 
 
-@pytest.mark.parametrize('left, right, expected', [
-    (POSITIVE_OR_ZERO, INFINITE, False),
-])
+@pytest.mark.parametrize(
+    "left, right, expected",
+    [(POSITIVE_OR_ZERO, INFINITE, False), (POSITIVE_OR_ZERO, Interval(min=0), True),],
+)
 def test_eq(left, right, expected):
     assert (left == right) is expected
