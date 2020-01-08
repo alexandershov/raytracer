@@ -8,9 +8,7 @@ from raytracer import geometry
 START = geometry.make_point(3, 2, 1)
 AFTER_START = geometry.make_point(9, 6, 3)
 DIRECTION = geometry.make_point(6, 4, 2)
-RAY = geometry.Ray.from_points(
-    geometry.make_point(1, 0, 0), geometry.make_point(0, 0, 0)
-)
+RAY = geometry.make_ray(geometry.make_point(1, 0, 0), geometry.make_point(0, 0, 0))
 CENTER = geometry.make_point(5, 10, 9)
 
 
@@ -48,8 +46,8 @@ def test_create_ray_from_start_and_direction():
     assert np.array_equal(ray.direction, DIRECTION)
 
 
-def test_create_ray_from_points():
-    ray = geometry.Ray.from_points(START, AFTER_START)
+def test_make_ray():
+    ray = geometry.make_ray(START, AFTER_START)
     assert np.array_equal(ray.point, START)
     assert np.array_equal(ray.direction, DIRECTION)
 
@@ -107,24 +105,24 @@ def test_intersect_ray(ray, figure, expected):
     "ray, other, expected",
     [
         (
-            geometry.Ray.from_points(
+            geometry.make_ray(
                 geometry.make_point(1, 0, 0), geometry.make_point(1, 1, 0)
             ),
-            geometry.Ray.from_points(
+            geometry.make_ray(
                 geometry.make_point(0, 0, 0), geometry.make_point(0, 1, 0)
             ),
-            geometry.Ray.from_points(
+            geometry.make_ray(
                 geometry.make_point(1, 0, 0), geometry.make_point(0, 0, 0)
             ),
         ),
         (
-            geometry.Ray.from_points(
+            geometry.make_ray(
                 geometry.make_point(1, 0, 0), geometry.make_point(1, 1, 0)
             ),
-            geometry.Ray.from_points(
+            geometry.make_ray(
                 geometry.make_point(0, 1, 0), geometry.make_point(0, 2, 0)
             ),
-            geometry.Ray.from_points(
+            geometry.make_ray(
                 geometry.make_point(1, 0, 0), geometry.make_point(0, 0, 0)
             ),
         ),
@@ -140,28 +138,28 @@ def test_ray_perpendicular(ray, other, expected):
         (
             geometry.Sphere(geometry.make_point(0, 0, 0), 10),
             geometry.make_point(10, 0, 0),
-            geometry.Ray.from_points(
+            geometry.make_ray(
                 geometry.make_point(0, 0, 0), geometry.make_point(10, 0, 0)
             ),
         ),
         (
             geometry.Plane(1, 0, 0, -10),
             geometry.make_point(10, 0, 0),
-            geometry.Ray.from_points(
+            geometry.make_ray(
                 geometry.make_point(10, 0, 0), geometry.make_point(11, 0, 0)
             ),
         ),
         (
             geometry.Plane(0, 1, 0, -10),
             geometry.make_point(0, 10, 0),
-            geometry.Ray.from_points(
+            geometry.make_ray(
                 geometry.make_point(0, 10, 0), geometry.make_point(0, 11, 0)
             ),
         ),
         (
             geometry.Plane(0, 0, 1, -10),
             geometry.make_point(0, 0, 10),
-            geometry.Ray.from_points(
+            geometry.make_ray(
                 geometry.make_point(0, 0, 10), geometry.make_point(0, 0, 11)
             ),
         ),
@@ -175,13 +173,13 @@ def test_figure_perpendicular(figure, point, expected):
     "ray, axis, expected",
     [
         (
-            geometry.Ray.from_points(
+            geometry.make_ray(
                 geometry.make_point(2, 1, 0), geometry.make_point(1, 0, 0)
             ),
-            geometry.Ray.from_points(
+            geometry.make_ray(
                 geometry.make_point(1, 0, 0), geometry.make_point(1, 1, 0)
             ),
-            geometry.Ray.from_points(
+            geometry.make_ray(
                 geometry.make_point(1, 0, 0), geometry.make_point(0, 1, 0)
             ),
         )

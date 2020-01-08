@@ -98,7 +98,7 @@ class Scene:
         result = []
         for point in points:
             color = Color(26, 108, 171)
-            ray = geometry.Ray.from_points(self.camera, point)
+            ray = geometry.make_ray(self.camera, point)
             excluded_ids = set()
             for _ in range(5):
                 intersections = []
@@ -125,7 +125,7 @@ class Scene:
         coeffs = []
         for light in self.lights:
             in_the_shadow = False
-            ray = geometry.Ray.from_points(p, light)
+            ray = geometry.make_ray(p, light)
             for thing in self:
                 for intersect in ray.intersect(thing.figure, max_k=1):
                     if np.linalg.norm(intersect - p) > 1:

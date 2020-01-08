@@ -27,6 +27,10 @@ def get_z(point: Point) -> float:
     return point[2]
 
 
+def make_ray(start: Point, to: Point) -> Ray:
+    return Ray.from_points(start, to)
+
+
 @dataclass(frozen=True)
 class Ray:
     point: Point
@@ -45,11 +49,11 @@ class Ray:
             other.direction @ other.direction
         )
         p = other.point + other.direction * k
-        return Ray.from_points(self.point, p)
+        return make_ray(self.point, p)
 
     def mirror(self, axis: Ray) -> Ray:
         perpendicular = self.perpendicular(axis)
-        return Ray.from_points(
+        return make_ray(
             axis.point,
             perpendicular.point + perpendicular.direction + perpendicular.direction,
         )
@@ -91,15 +95,15 @@ class Plane(Figure):
             0
         ) == 2, "only simple planes are supported"
         if self.a != 0:
-            return Ray.from_points(
+            return make_ray(
                 point, make_point(get_x(point) + 1, get_y(point), get_z(point))
             )
         if self.b != 0:
-            return Ray.from_points(
+            return make_ray(
                 point, make_point(get_x(point), get_y(point) + 1, get_z(point))
             )
         if self.c != 0:
-            return Ray.from_points(
+            return make_ray(
                 point, make_point(get_x(point), get_y(point), get_z(point) + 1)
             )
         raise ValueError(f"only simple planes are supported: {self!r}")
@@ -122,4 +126,4 @@ class Sphere(Figure):
         ]
 
     def perpendicular(self, point: Point) -> Ray:
-        return Ray.from_points(self.center, point)
+        return make_ray(self.center, point)
