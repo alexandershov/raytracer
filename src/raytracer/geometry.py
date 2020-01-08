@@ -37,10 +37,6 @@ class Ray:
         assert not np.array_equal(start, after_start)
         return Ray(start, after_start - start)
 
-    @property
-    def not_start(self) -> Point:
-        return self.start + self.direction
-
     def intersect(self, figure: Figure, max_k=None) -> List[Point]:
         return figure.intersect(self, max_k=max_k)
 

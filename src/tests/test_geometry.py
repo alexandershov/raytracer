@@ -8,7 +8,9 @@ from raytracer import geometry
 START = geometry.make_point(3, 2, 1)
 AFTER_START = geometry.make_point(9, 6, 3)
 DIRECTION = geometry.make_point(6, 4, 2)
-RAY = geometry.Ray.from_points(geometry.make_point(1, 0, 0), geometry.make_point(0, 0, 0))
+RAY = geometry.Ray.from_points(
+    geometry.make_point(1, 0, 0), geometry.make_point(0, 0, 0)
+)
 CENTER = geometry.make_point(5, 10, 9)
 
 
@@ -71,7 +73,9 @@ def test_sphere():
     [
         (RAY, geometry.Plane(1, 0, 0, 0), [geometry.make_point(0, 0, 0)]),
         (
-            geometry.Ray(geometry.make_point(8, 9, 10), geometry.make_point(-5, -6, -7)),
+            geometry.Ray(
+                geometry.make_point(8, 9, 10), geometry.make_point(-5, -6, -7)
+            ),
             geometry.Plane(1, 2, 3, 4),
             [
                 geometry.make_point(
