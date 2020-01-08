@@ -6,6 +6,7 @@ from typing import List
 
 import numpy as np
 
+from raytracer.interval import Interval
 from . import algebra
 
 Point = np.ndarray
@@ -28,18 +29,14 @@ def get_z(point: Point) -> float:
 
 
 def make_ray(start: Point, to: Point) -> Line:
-    return Line.from_points(start, to)
+    return Line(start, to - start, Interval(min=0))
 
 
 @dataclass(frozen=True)
 class Line:
     point: Point
     direction: Point
-
-    @staticmethod
-    def from_points(start: Point, to: Point) -> Line:
-        assert not np.array_equal(start, to)
-        return Line(start, to - start)
+    ks: Interval
 
     def intersect(self, figure: Figure, max_k=None) -> List[Point]:
         return figure.intersect(self, max_k=max_k)

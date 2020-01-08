@@ -4,6 +4,7 @@ from typing import List
 import pytest
 import numpy as np
 from raytracer import geometry
+from raytracer.interval import Interval
 
 START = geometry.make_point(3, 2, 1)
 AFTER_START = geometry.make_point(9, 6, 3)
@@ -40,12 +41,6 @@ def test_vector_length():
     assert np.linalg.norm(vector) == pytest.approx(math.sqrt(50))
 
 
-def test_create_ray_from_start_and_direction():
-    ray = geometry.Line(START, DIRECTION)
-    assert np.array_equal(ray.point, START)
-    assert np.array_equal(ray.direction, DIRECTION)
-
-
 def test_make_ray():
     ray = geometry.make_ray(START, AFTER_START)
     assert np.array_equal(ray.point, START)
@@ -72,7 +67,9 @@ def test_sphere():
         (RAY, geometry.Plane(1, 0, 0, 0), [geometry.make_point(0, 0, 0)]),
         (
             geometry.Line(
-                geometry.make_point(8, 9, 10), geometry.make_point(-5, -6, -7)
+                geometry.make_point(8, 9, 10),
+                geometry.make_point(-5, -6, -7),
+                Interval(min=0),
             ),
             geometry.Plane(1, 2, 3, 4),
             [
