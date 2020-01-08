@@ -110,7 +110,7 @@ class Scene:
                 if intersections:
                     p, thing = min(
                         intersections,
-                        key=lambda p_thing: np.linalg.norm(p_thing[0] - ray.start),
+                        key=lambda p_thing: np.linalg.norm(p_thing[0] - ray.point),
                     )
                     if isinstance(thing.material, Mirror):
                         ray = ray.mirror(thing.figure.perpendicular(p))

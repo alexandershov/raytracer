@@ -45,17 +45,17 @@ class Ray:
         return figure.intersect(self, max_k=max_k)
 
     def perpendicular(self, other: Ray) -> Ray:
-        k = (other.direction @ (self.start - other.start)) / (
+        k = (other.direction @ (self.point - other.point)) / (
             other.direction @ other.direction
         )
-        p = other.start + other.direction * k
-        return Ray.from_points(self.start, p)
+        p = other.point + other.direction * k
+        return Ray.from_points(self.point, p)
 
     def mirror(self, axis: Ray) -> Ray:
         perpendicular = self.perpendicular(axis)
         return Ray.from_points(
-            axis.start,
-            perpendicular.start + perpendicular.direction + perpendicular.direction,
+            axis.point,
+            perpendicular.point + perpendicular.direction + perpendicular.direction,
         )
 
 
@@ -83,12 +83,12 @@ class Plane(Figure):
         denominator = self.coeff_vec @ ray.direction
         if denominator == 0:
             return []
-        k = -((self.coeff_vec @ ray.start) + self.d) / denominator
+        k = -((self.coeff_vec @ ray.point) + self.d) / denominator
         if k < 0:
             return []
         if max_k is not None and k > max_k:
             return []
-        return [ray.start + ray.direction * k]
+        return [ray.point + ray.direction * k]
 
     def perpendicular(self, point: Point) -> Ray:
         assert [self.a, self.b, self.c].count(
@@ -115,12 +115,12 @@ class Sphere(Figure):
     radius: float
 
     def intersect(self, ray: Ray, max_k=None) -> List[Point]:
-        v = ray.start - self.center
+        v = ray.point - self.center
         a = ray.direction @ ray.direction
         b = 2 * (v @ ray.direction)
         c = (v @ v) - self.radius ** 2
         return [
-            ray.start + ray.direction * k
+            ray.point + ray.direction * k
             for k in algebra.solve_quadratic(a, b, c)
             if k >= 0 and (max_k is None or k < max_k)
         ]
