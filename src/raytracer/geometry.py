@@ -27,31 +27,31 @@ def get_z(point: Point) -> float:
     return point[2]
 
 
-def make_ray(start: Point, to: Point) -> Ray:
-    return Ray.from_points(start, to)
+def make_ray(start: Point, to: Point) -> Line:
+    return Line.from_points(start, to)
 
 
 @dataclass(frozen=True)
-class Ray:
+class Line:
     point: Point
     direction: Point
 
     @staticmethod
-    def from_points(start: Point, to: Point) -> Ray:
+    def from_points(start: Point, to: Point) -> Line:
         assert not np.array_equal(start, to)
-        return Ray(start, to - start)
+        return Line(start, to - start)
 
     def intersect(self, figure: Figure, max_k=None) -> List[Point]:
         return figure.intersect(self, max_k=max_k)
 
-    def perpendicular(self, other: Ray) -> Ray:
+    def perpendicular(self, other: Line) -> Line:
         k = (other.direction @ (self.point - other.point)) / (
             other.direction @ other.direction
         )
         p = other.point + other.direction * k
         return make_ray(self.point, p)
 
-    def mirror(self, axis: Ray) -> Ray:
+    def mirror(self, axis: Line) -> Line:
         perpendicular = self.perpendicular(axis)
         return make_ray(
             axis.point,
@@ -61,11 +61,11 @@ class Ray:
 
 class Figure(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def intersect(self, ray: Ray, max_k=None) -> List[Point]:
+    def intersect(self, ray: Line, max_k=None) -> List[Point]:
         raise NotImplemented
 
     @abc.abstractmethod
-    def perpendicular(self, point: Point) -> Ray:
+    def perpendicular(self, point: Point) -> Line:
         raise NotImplementedError
 
 
@@ -79,7 +79,7 @@ class Plane(Figure):
     def __post_init__(self):
         self.coeff_vec = make_point(self.a, self.b, self.c)
 
-    def intersect(self, ray: Ray, max_k=None) -> List[Point]:
+    def intersect(self, ray: Line, max_k=None) -> List[Point]:
         denominator = self.coeff_vec @ ray.direction
         if denominator == 0:
             return []
@@ -90,7 +90,7 @@ class Plane(Figure):
             return []
         return [ray.point + ray.direction * k]
 
-    def perpendicular(self, point: Point) -> Ray:
+    def perpendicular(self, point: Point) -> Line:
         assert [self.a, self.b, self.c].count(
             0
         ) == 2, "only simple planes are supported"
@@ -114,7 +114,7 @@ class Sphere(Figure):
     center: Point
     radius: float
 
-    def intersect(self, ray: Ray, max_k=None) -> List[Point]:
+    def intersect(self, ray: Line, max_k=None) -> List[Point]:
         v = ray.point - self.center
         a = ray.direction @ ray.direction
         b = 2 * (v @ ray.direction)
@@ -125,5 +125,5 @@ class Sphere(Figure):
             if k >= 0 and (max_k is None or k < max_k)
         ]
 
-    def perpendicular(self, point: Point) -> Ray:
+    def perpendicular(self, point: Point) -> Line:
         return make_ray(self.center, point)

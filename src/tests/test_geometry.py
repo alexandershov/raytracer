@@ -41,7 +41,7 @@ def test_vector_length():
 
 
 def test_create_ray_from_start_and_direction():
-    ray = geometry.Ray(START, DIRECTION)
+    ray = geometry.Line(START, DIRECTION)
     assert np.array_equal(ray.point, START)
     assert np.array_equal(ray.direction, DIRECTION)
 
@@ -71,7 +71,7 @@ def test_sphere():
     [
         (RAY, geometry.Plane(1, 0, 0, 0), [geometry.make_point(0, 0, 0)]),
         (
-            geometry.Ray(
+            geometry.Line(
                 geometry.make_point(8, 9, 10), geometry.make_point(-5, -6, -7)
             ),
             geometry.Plane(1, 2, 3, 4),
@@ -189,7 +189,7 @@ def test_mirror(ray, axis, expected):
     assert same_rays(ray.mirror(axis), expected)
 
 
-def same_rays(x: geometry.Ray, y: geometry.Ray) -> bool:
+def same_rays(x: geometry.Line, y: geometry.Line) -> bool:
     same_starts = are_close(x.point, y.point)
     same_directions = are_close(normalize(x.direction), normalize(y.direction))
     return same_starts and same_directions

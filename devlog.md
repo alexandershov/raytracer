@@ -38,7 +38,7 @@ Questions
 * ~~Should I use Entity-Component-System here (at least for the sake of learning)?~~
   Let's not use it, seems like overkill.
 * ~~What are the primitive objects here?~~
-  Point, Ray, Sphere, Plane
+  Point, Line, Sphere, Plane
 * ~~What are the primitive operations here?~~
   Intersections, mirror reflections, set_pixel
 * ~~How to test it?~~
@@ -150,10 +150,10 @@ Questions
     4. two points (a, b), stops_at_b
     5. [winner]origin, direction, k interval - looks like the
         most elegant.
-* ~~What are the alternatives to Ray?~~
+* ~~What are the alternatives to Line?~~
     1. [winner]Line with optional restrictions (we can have restrictions from both sides)
-    2. Ray with optional restriction
-    3. Separate Segment class (which is basically a Ray with restriction)
+    2. Line with optional restriction
+    3. Separate Segment class (which is basically a Line with restriction)
 * What there's a need for camera & screen in raytracing?
   Is there a camera & screen in real life?
 * How do mirrors work in real life?
