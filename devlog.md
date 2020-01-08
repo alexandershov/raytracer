@@ -142,6 +142,10 @@ Questions
         will make it harder to change to a proper Point class
     5. leave if make_point - that' terrible, not clear that we're
         creating a point.
+* What are the alternatives to Ray?
+    1. Line with restrictions (we can have restrictions from both sides)
+    2. Ray with optional restriction
+    3. Separate Segment class (which is basically a Ray with restriction)
 * What there's a need for camera & screen in raytracing?
   Is there a camera & screen in real life?
 * How do mirrors work in real life?
