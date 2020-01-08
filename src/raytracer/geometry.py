@@ -29,12 +29,8 @@ def get_z(point: Point) -> float:
 
 @dataclass(frozen=True)
 class Ray:
-    start: Point
+    point: Point
     direction: Point
-
-    @property
-    def point(self) -> Point:
-        return self.start
 
     @staticmethod
     def from_points(start: Point, after_start: Point) -> Ray:
