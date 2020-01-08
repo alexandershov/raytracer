@@ -33,9 +33,9 @@ class Ray:
     direction: Point
 
     @staticmethod
-    def from_points(start: Point, after_start: Point) -> Ray:
-        assert not np.array_equal(start, after_start)
-        return Ray(start, after_start - start)
+    def from_points(start: Point, to: Point) -> Ray:
+        assert not np.array_equal(start, to)
+        return Ray(start, to - start)
 
     def intersect(self, figure: Figure, max_k=None) -> List[Point]:
         return figure.intersect(self, max_k=max_k)
