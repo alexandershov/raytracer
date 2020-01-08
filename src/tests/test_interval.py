@@ -6,6 +6,7 @@ from raytracer.interval import Interval
 POSITIVE_OR_ZERO = Interval(min=0)
 NEGATIVE_OR_ZERO = Interval(max=0)
 ZERO_TO_ONE = Interval(min=0, max=1)
+INFINITE = Interval()
 
 
 @pytest.mark.parametrize(
@@ -22,6 +23,9 @@ ZERO_TO_ONE = Interval(min=0, max=1)
         (ZERO_TO_ONE, 0.5, True),
         (ZERO_TO_ONE, 2, False),
         (ZERO_TO_ONE, -1, False),
+        (INFINITE, 0, True),
+        (INFINITE, -1000, True),
+        (INFINITE, 1000, True),
     ],
 )
 def test_contains(interval, value, expected):
