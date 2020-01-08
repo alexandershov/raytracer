@@ -188,7 +188,7 @@ def test_mirror(ray, axis, expected):
 
 
 def same_rays(x: geometry.Ray, y: geometry.Ray) -> bool:
-    return are_close(x.start, y.start) and are_close(x.not_start, y.not_start)
+    return are_close(x.start, y.start) and are_close(x.direction, y.direction)
 
 
 def same_points(xs: List[geometry.Point], ys: List[geometry.Point]) -> bool:
