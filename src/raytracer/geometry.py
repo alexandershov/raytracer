@@ -28,6 +28,10 @@ def get_z(point: Point) -> float:
     return point[2]
 
 
+def make_segment(start: Point, to: Point) -> Line:
+    return Line(start, to - start, Interval(min=0, max=1))
+
+
 def make_ray(start: Point, to: Point) -> Line:
     return Line(start, to - start, Interval(min=0))
 
@@ -38,8 +42,8 @@ class Line:
     direction: Point
     ks: Interval
 
-    def intersect(self, figure: Figure, max_k=None) -> List[Point]:
-        return figure.intersect(self, max_k=max_k)
+    def intersect(self, figure: Figure) -> List[Point]:
+        return figure.intersect(self)
 
     def perpendicular(self, other: Line) -> Line:
         k = (other.direction @ (self.point - other.point)) / (
@@ -58,7 +62,7 @@ class Line:
 
 class Figure(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def intersect(self, ray: Line, max_k=None) -> List[Point]:
+    def intersect(self, ray: Line) -> List[Point]:
         raise NotImplemented
 
     @abc.abstractmethod
@@ -76,14 +80,12 @@ class Plane(Figure):
     def __post_init__(self):
         self.coeff_vec = make_point(self.a, self.b, self.c)
 
-    def intersect(self, ray: Line, max_k=None) -> List[Point]:
+    def intersect(self, ray: Line) -> List[Point]:
         denominator = self.coeff_vec @ ray.direction
         if denominator == 0:
             return []
         k = -((self.coeff_vec @ ray.point) + self.d) / denominator
-        if k < 0:
-            return []
-        if max_k is not None and k > max_k:
+        if k not in ray.ks:
             return []
         return [ray.point + ray.direction * k]
 
@@ -111,7 +113,7 @@ class Sphere(Figure):
     center: Point
     radius: float
 
-    def intersect(self, ray: Line, max_k=None) -> List[Point]:
+    def intersect(self, ray: Line) -> List[Point]:
         v = ray.point - self.center
         a = ray.direction @ ray.direction
         b = 2 * (v @ ray.direction)
@@ -119,7 +121,7 @@ class Sphere(Figure):
         return [
             ray.point + ray.direction * k
             for k in algebra.solve_quadratic(a, b, c)
-            if k >= 0 and (max_k is None or k < max_k)
+            if k in ray.ks
         ]
 
     def perpendicular(self, point: Point) -> Line:

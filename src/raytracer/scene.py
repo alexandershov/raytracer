@@ -125,9 +125,9 @@ class Scene:
         coeffs = []
         for light in self.lights:
             in_the_shadow = False
-            ray = geometry.make_ray(p, light)
+            ray = geometry.make_segment(p, light)
             for thing in self:
-                for intersect in ray.intersect(thing.figure, max_k=1):
+                for intersect in ray.intersect(thing.figure):
                     if np.linalg.norm(intersect - p) > 1:
                         in_the_shadow = True
             if in_the_shadow:
