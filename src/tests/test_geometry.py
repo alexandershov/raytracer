@@ -192,7 +192,13 @@ def test_mirror(ray, axis, expected):
 
 
 def same_rays(x: geometry.Ray, y: geometry.Ray) -> bool:
-    return are_close(x.start, y.start) and are_close(x.direction, y.direction)
+    return are_close(x.start, y.start) and are_close(
+        normalize(x.direction), normalize(y.direction)
+    )
+
+
+def normalize(x: geometry.Point) -> geometry.Point:
+    return x / np.linalg.norm(x)
 
 
 def same_points(xs: List[geometry.Point], ys: List[geometry.Point]) -> bool:
