@@ -133,6 +133,15 @@ Questions
 * ~~Color class looks pretty bad. How to improve it?~~
   1. [winner]call attributes .r .g .b
   2. move black/white/grey outside of the class
+* ~~What's the better name for make_point to create a point?~~
+    1. [winner]make_point - let's go with that, it's specific
+        and can return a proper Point instance 
+    2. Point
+    3. point
+    4. just call ndarray directly - this I don't like, 
+        will make it harder to change to a proper Point class
+    5. leave if make_point - that' terrible, not clear that we're
+        creating a point.
 * What there's a need for camera & screen in raytracing?
   Is there a camera & screen in real life?
 * How do mirrors work in real life?

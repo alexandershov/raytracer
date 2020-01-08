@@ -11,7 +11,7 @@ from . import algebra
 Point = np.ndarray
 
 
-def from_xyz(x: float, y: float, z: float) -> Point:
+def make_point(x: float, y: float, z: float) -> Point:
     return np.array((x, y, z), dtype=np.float)
 
 
@@ -77,7 +77,7 @@ class Plane(Figure):
     d: float
 
     def __post_init__(self):
-        self.coeff_vec = from_xyz(self.a, self.b, self.c)
+        self.coeff_vec = make_point(self.a, self.b, self.c)
 
     def intersect(self, ray: Ray, max_k=None) -> List[Point]:
         denominator = self.coeff_vec @ ray.direction
@@ -96,15 +96,15 @@ class Plane(Figure):
         ) == 2, "only simple planes are supported"
         if self.a != 0:
             return Ray.from_points(
-                point, from_xyz(get_x(point) + 1, get_y(point), get_z(point))
+                point, make_point(get_x(point) + 1, get_y(point), get_z(point))
             )
         if self.b != 0:
             return Ray.from_points(
-                point, from_xyz(get_x(point), get_y(point) + 1, get_z(point))
+                point, make_point(get_x(point), get_y(point) + 1, get_z(point))
             )
         if self.c != 0:
             return Ray.from_points(
-                point, from_xyz(get_x(point), get_y(point), get_z(point) + 1)
+                point, make_point(get_x(point), get_y(point), get_z(point) + 1)
             )
         raise ValueError(f"only simple planes are supported: {self!r}")
 

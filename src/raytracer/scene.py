@@ -34,15 +34,15 @@ class Squared(Material):
 
     @staticmethod
     def project_to_local_xy(point: geometry.Point) -> geometry.Point:
-        return geometry.from_xyz(geometry.get_x(point), geometry.get_y(point), 0)
+        return geometry.make_point(geometry.get_x(point), geometry.get_y(point), 0)
 
     @staticmethod
     def project_to_local_xz(point: geometry.Point) -> geometry.Point:
-        return geometry.from_xyz(geometry.get_x(point), geometry.get_z(point), 0)
+        return geometry.make_point(geometry.get_x(point), geometry.get_z(point), 0)
 
     @staticmethod
     def project_to_local_yz(point: geometry.Point) -> geometry.Point:
-        return geometry.from_xyz(geometry.get_y(point), geometry.get_z(point), 0)
+        return geometry.make_point(geometry.get_y(point), geometry.get_z(point), 0)
 
     def get_color(self, point: geometry.Point) -> Color:
         local = self.projection(point)
@@ -145,7 +145,7 @@ class Scene:
 
     def _screen_points(self) -> List[geometry.Point]:
         return [
-            geometry.from_xyz(x, y, 0)
+            geometry.make_point(x, y, 0)
             for x in range(0, self.width)
             for y in range(0, self.height)
         ]
