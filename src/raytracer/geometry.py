@@ -62,7 +62,7 @@ class Line:
 
 class Figure(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def intersect(self, ray: Line) -> List[Point]:
+    def intersect(self, line: Line) -> List[Point]:
         raise NotImplemented
 
     @abc.abstractmethod
@@ -80,14 +80,14 @@ class Plane(Figure):
     def __post_init__(self):
         self.coeff_vec = make_point(self.a, self.b, self.c)
 
-    def intersect(self, ray: Line) -> List[Point]:
-        denominator = self.coeff_vec @ ray.direction
+    def intersect(self, line: Line) -> List[Point]:
+        denominator = self.coeff_vec @ line.direction
         if denominator == 0:
             return []
-        k = -((self.coeff_vec @ ray.point) + self.d) / denominator
-        if k not in ray.ks:
+        k = -((self.coeff_vec @ line.point) + self.d) / denominator
+        if k not in line.ks:
             return []
-        return [ray.point + ray.direction * k]
+        return [line.point + line.direction * k]
 
     def perpendicular(self, point: Point) -> Line:
         assert [self.a, self.b, self.c].count(
@@ -113,15 +113,15 @@ class Sphere(Figure):
     center: Point
     radius: float
 
-    def intersect(self, ray: Line) -> List[Point]:
-        v = ray.point - self.center
-        a = ray.direction @ ray.direction
-        b = 2 * (v @ ray.direction)
+    def intersect(self, line: Line) -> List[Point]:
+        v = line.point - self.center
+        a = line.direction @ line.direction
+        b = 2 * (v @ line.direction)
         c = (v @ v) - self.radius ** 2
         return [
-            ray.point + ray.direction * k
+            line.point + line.direction * k
             for k in algebra.solve_quadratic(a, b, c)
-            if k in ray.ks
+            if k in line.ks
         ]
 
     def perpendicular(self, point: Point) -> Line:

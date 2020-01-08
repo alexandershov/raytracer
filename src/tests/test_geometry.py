@@ -62,7 +62,7 @@ def test_sphere():
 
 
 @pytest.mark.parametrize(
-    "ray, figure, expected",
+    "line, figure, expected",
     [
         (RAY, geometry.Plane(1, 0, 0, 0), [geometry.make_point(0, 0, 0)]),
         (
@@ -94,12 +94,12 @@ def test_sphere():
         ),
     ],
 )
-def test_intersect_ray(ray, figure, expected):
-    assert same_points(ray.intersect(figure), expected)
+def test_intersect_line(line, figure, expected):
+    assert same_points(line.intersect(figure), expected)
 
 
 @pytest.mark.parametrize(
-    "ray, other, expected",
+    "line, other, expected",
     [
         (
             geometry.make_ray(
@@ -125,8 +125,8 @@ def test_intersect_ray(ray, figure, expected):
         ),
     ],
 )
-def test_ray_perpendicular(ray, other, expected):
-    assert same_rays(ray.perpendicular(other), expected)
+def test_line_perpendicular(line, other, expected):
+    assert same_rays(line.perpendicular(other), expected)
 
 
 @pytest.mark.parametrize(
