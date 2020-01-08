@@ -32,6 +32,10 @@ class Ray:
     start: Point
     direction: Point
 
+    @property
+    def point(self) -> Point:
+        return self.start
+
     @staticmethod
     def from_points(start: Point, after_start: Point) -> Ray:
         assert not np.array_equal(start, after_start)
