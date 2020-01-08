@@ -12,7 +12,7 @@ Point = np.ndarray
 
 
 def make_point(x: float, y: float, z: float) -> Point:
-    return np.array((x, y, z), dtype=np.float)
+    return np.array((x, y, z))
 
 
 def get_x(point: Point) -> float:
