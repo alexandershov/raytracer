@@ -12,6 +12,11 @@ from raytracer.interval import Interval
         (Interval(max=0), 5, False),
         (Interval(max=0), 0, True),
         (Interval(max=0), -1, True),
+        (Interval(min=0, max=1), 0, True),
+        (Interval(min=0, max=1), 1, True),
+        (Interval(min=0, max=1), 0.5, True),
+        (Interval(min=0, max=1), 2, False),
+        (Interval(min=0, max=1), -1, False),
     ],
 )
 def test_contains(interval, value, expected):
