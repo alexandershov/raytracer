@@ -143,6 +143,10 @@ Questions
     5. leave if make_point - that' terrible, not clear that we're
         creating a point.
 * How to represent restriction on line dimensions?
+    1. origin, direction, min_k, max_k
+    2. two points (a, b), stops_at_a, stops_at_b
+    3. no restrictions just check that point is located between
+        two other points
 * What are the alternatives to Ray?
     1. Line with restrictions (we can have restrictions from both sides)
     2. Ray with optional restriction
