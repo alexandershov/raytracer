@@ -98,22 +98,22 @@ class Scene:
         result = []
         for point in points:
             color = Color(26, 108, 171)
-            line = geometry.make_ray(self.camera, point)
+            ray = geometry.make_ray(self.camera, point)
             excluded_ids = set()
             for _ in range(5):
                 intersections = []
                 for thing in self:
                     if id(thing) in excluded_ids:
                         continue
-                    for p in line.intersect(thing.figure):
+                    for p in ray.intersect(thing.figure):
                         intersections.append((p, thing))
                 if intersections:
                     p, thing = min(
                         intersections,
-                        key=lambda p_thing: np.linalg.norm(p_thing[0] - line.point),
+                        key=lambda p_thing: np.linalg.norm(p_thing[0] - ray.point),
                     )
                     if isinstance(thing.material, Mirror):
-                        line = line.mirror(thing.figure.perpendicular(p))
+                        ray = ray.mirror(thing.figure.perpendicular(p))
                         excluded_ids = {id(thing)}
                         continue
                     color = thing.material.get_color(p) * self._lightning_coeff(p)
@@ -125,9 +125,9 @@ class Scene:
         coeffs = []
         for light in self.lights:
             in_the_shadow = False
-            line = geometry.make_segment(p, light)
+            segment = geometry.make_segment(p, light)
             for thing in self:
-                for intersect in line.intersect(thing.figure):
+                for intersect in segment.intersect(thing.figure):
                     if np.linalg.norm(intersect - p) > 1:
                         in_the_shadow = True
             if in_the_shadow:
