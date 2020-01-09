@@ -93,15 +93,8 @@ class Plane(Figure):
         assert [self.a, self.b, self.c].count(
             0
         ) == 2, "only simple planes are supported"
-        if self.a != 0:
-            return make_ray(
-                point, make_point(get_x(point) + 1, get_y(point), get_z(point))
-            )
-        if self.b != 0:
-            return make_ray(
-                point, make_point(get_x(point), get_y(point) + 1, get_z(point))
-            )
-        return make_ray(point, make_point(get_x(point), get_y(point), get_z(point) + 1))
+        delta = self.coeff_vec / np.linalg.norm(self.coeff_vec)
+        return make_ray(point, point + delta)
 
 
 @dataclass(frozen=True)
