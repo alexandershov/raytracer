@@ -85,24 +85,24 @@ class Plane(Figure):
     d: float
 
     def __post_init__(self):
-        self.coeff_vec = make_point(self.a, self.b, self.c)
+        self.coeffs = make_point(self.a, self.b, self.c)
 
     def intersections(self, line: Line) -> List[Point]:
-        denominator = self.coeff_vec @ line.direction
+        denominator = self.coeffs @ line.direction
         if denominator == 0:
             return []
-        k = -((self.coeff_vec @ line.point) + self.d) / denominator
+        k = -((self.coeffs @ line.point) + self.d) / denominator
         if k not in line.ks:
             return []
         return [line.point_at(k)]
 
     def perpendicular(self, point: Point) -> Line:
         assert self._get_num_zero_coeffs() == 2, "only simple planes are supported"
-        delta = self.coeff_vec / np.linalg.norm(self.coeff_vec)
+        delta = self.coeffs / np.linalg.norm(self.coeffs)
         return make_ray(point, point + make_point(*delta))
 
     def _get_num_zero_coeffs(self) -> int:
-        return sum(self.coeff_vec == 0)
+        return sum(self.coeffs == 0)
 
 
 @dataclass(frozen=True)
