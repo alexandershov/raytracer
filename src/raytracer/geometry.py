@@ -36,8 +36,8 @@ def make_ray(start: Point, to: Point) -> Line:
     return Line(start, to - start, Interval(min=0))
 
 
-def make_plane(coeffs: Point, d: float) -> Plane:
-    return Plane(*coeffs, d)
+def make_plane(a: float, b: float, c: float, d: float) -> Plane:
+    return Plane(a, b, c, d)
 
 
 @dataclass(frozen=True)
