@@ -101,11 +101,7 @@ class Plane(Figure):
             return make_ray(
                 point, make_point(get_x(point), get_y(point) + 1, get_z(point))
             )
-        if self.c != 0:
-            return make_ray(
-                point, make_point(get_x(point), get_y(point), get_z(point) + 1)
-            )
-        raise ValueError(f"only simple planes are supported: {self!r}")
+        return make_ray(point, make_point(get_x(point), get_y(point), get_z(point) + 1))
 
 
 @dataclass(frozen=True)
