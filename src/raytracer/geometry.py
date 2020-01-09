@@ -66,6 +66,9 @@ class Line:
     def point_at(self, k: float) -> Point:
         return self.point + self.direction * k
 
+    def is_mine(self, k: float) -> bool:
+        return k in self.ks
+
 
 class Figure(metaclass=abc.ABCMeta):
     @abc.abstractmethod
@@ -87,7 +90,7 @@ class Plane(Figure):
         if denominator == 0:
             return []
         k = -((self.coeffs @ line.point) + self.d) / denominator
-        if k not in line.ks:
+        if not line.is_mine(k):
             return []
         return [line.point_at(k)]
 
@@ -111,7 +114,9 @@ class Sphere(Figure):
         b = 2 * (v @ line.direction)
         c = (v @ v) - self.radius ** 2
         return [
-            line.point_at(k) for k in algebra.solve_quadratic(a, b, c) if k in line.ks
+            line.point_at(k)
+            for k in algebra.solve_quadratic(a, b, c)
+            if line.is_mine(k)
         ]
 
     def perpendicular(self, point: Point) -> Line:
