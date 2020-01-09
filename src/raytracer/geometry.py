@@ -42,8 +42,8 @@ class Line:
     direction: Point
     ks: Interval
 
-    def intersect(self, figure: Figure) -> List[Point]:
-        return figure.intersect(self)
+    def intersections(self, figure: Figure) -> List[Point]:
+        return figure.intersections(self)
 
     def perpendicular(self, other: Line) -> Line:
         k = (other.direction @ (self.point - other.point)) / (
@@ -65,7 +65,7 @@ class Line:
 
 class Figure(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def intersect(self, line: Line) -> List[Point]:
+    def intersections(self, line: Line) -> List[Point]:
         raise NotImplemented
 
     @abc.abstractmethod
@@ -83,7 +83,7 @@ class Plane(Figure):
     def __post_init__(self):
         self.coeff_vec = make_point(self.a, self.b, self.c)
 
-    def intersect(self, line: Line) -> List[Point]:
+    def intersections(self, line: Line) -> List[Point]:
         denominator = self.coeff_vec @ line.direction
         if denominator == 0:
             return []
@@ -106,7 +106,7 @@ class Sphere(Figure):
     center: Point
     radius: float
 
-    def intersect(self, line: Line) -> List[Point]:
+    def intersections(self, line: Line) -> List[Point]:
         v = line.point - self.center
         a = line.direction @ line.direction
         b = 2 * (v @ line.direction)
