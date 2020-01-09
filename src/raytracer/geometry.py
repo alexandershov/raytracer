@@ -37,7 +37,7 @@ def make_ray(start: Point, to: Point) -> Line:
 
 
 def make_plane(a: float, b: float, c: float, d: float) -> Plane:
-    return Plane(a, b, c, d)
+    return Plane(make_point(a, b, c), d)
 
 
 @dataclass(frozen=True)
@@ -79,13 +79,8 @@ class Figure(metaclass=abc.ABCMeta):
 
 @dataclass
 class Plane(Figure):
-    a: float
-    b: float
-    c: float
+    coeffs: Point
     d: float
-
-    def __post_init__(self):
-        self.coeffs = make_point(self.a, self.b, self.c)
 
     def intersections(self, line: Line) -> List[Point]:
         denominator = self.coeffs @ line.direction
