@@ -95,7 +95,7 @@ class Plane(Figure):
         return make_ray(point, point + delta)
 
     def _get_num_zero_coeffs(self) -> int:
-        return [self.a, self.b, self.c].count(0)
+        return sum(self.coeff_vec == 0)
 
 
 @dataclass(frozen=True)
