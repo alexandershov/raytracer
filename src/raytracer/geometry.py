@@ -90,11 +90,12 @@ class Plane(Figure):
         return [line.point + line.direction * k]
 
     def perpendicular(self, point: Point) -> Line:
-        assert [self.a, self.b, self.c].count(
-            0
-        ) == 2, "only simple planes are supported"
+        assert self._get_num_zero_coeffs() == 2, "only simple planes are supported"
         delta = self.coeff_vec / np.linalg.norm(self.coeff_vec)
         return make_ray(point, point + delta)
+
+    def _get_num_zero_coeffs(self) -> int:
+        return [self.a, self.b, self.c].count(0)
 
 
 @dataclass(frozen=True)
