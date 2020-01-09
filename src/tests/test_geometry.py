@@ -93,7 +93,7 @@ def test_sphere():
     ],
 )
 def test_line_intersections(line, figure, expected):
-    assert same_points(line.intersections(figure), expected)
+    assert same_points(figure.intersections(line), expected)
 
 
 @pytest.mark.parametrize(

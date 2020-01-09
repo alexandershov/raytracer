@@ -105,7 +105,7 @@ class Scene:
                 for thing in self:
                     if id(thing) in excluded_ids:
                         continue
-                    for p in ray.intersections(thing.figure):
+                    for p in thing.figure.intersections(ray):
                         intersections.append((p, thing))
                 if intersections:
                     p, thing = min(
@@ -127,7 +127,7 @@ class Scene:
             in_the_shadow = False
             segment = geometry.make_segment(p, light)
             for thing in self:
-                for intersections in segment.intersections(thing.figure):
+                for intersections in thing.figure.intersections(segment):
                     if np.linalg.norm(intersections - p) > 1:
                         in_the_shadow = True
             if in_the_shadow:
