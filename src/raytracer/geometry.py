@@ -49,7 +49,7 @@ class Line:
         k = (other.direction @ (self.point - other.point)) / (
             other.direction @ other.direction
         )
-        p = other.point + other.direction * k
+        p = other.point_at(k)
         return make_ray(self.point, p)
 
     def mirror(self, axis: Line) -> Line:
@@ -59,7 +59,7 @@ class Line:
             perpendicular.point + perpendicular.direction + perpendicular.direction,
         )
 
-    def point_at_k(self, k: float) -> Point:
+    def point_at(self, k: float) -> Point:
         return self.point + self.direction * k
 
 
@@ -90,7 +90,7 @@ class Plane(Figure):
         k = -((self.coeff_vec @ line.point) + self.d) / denominator
         if k not in line.ks:
             return []
-        return [line.point + line.direction * k]
+        return [line.point_at(k)]
 
     def perpendicular(self, point: Point) -> Line:
         assert self._get_num_zero_coeffs() == 2, "only simple planes are supported"
@@ -112,9 +112,7 @@ class Sphere(Figure):
         b = 2 * (v @ line.direction)
         c = (v @ v) - self.radius ** 2
         return [
-            line.point + line.direction * k
-            for k in algebra.solve_quadratic(a, b, c)
-            if k in line.ks
+            line.point_at(k) for k in algebra.solve_quadratic(a, b, c) if k in line.ks
         ]
 
     def perpendicular(self, point: Point) -> Line:
