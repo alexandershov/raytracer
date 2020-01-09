@@ -46,6 +46,9 @@ class Line:
     direction: Point
     ks: Interval
 
+    def __post_init__(self):
+        assert not np.array_equal(self.direction, make_point(0, 0, 0))
+
     def intersections(self, figure: Figure) -> List[Point]:
         return figure.intersections(self)
 
