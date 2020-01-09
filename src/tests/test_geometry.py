@@ -48,7 +48,7 @@ def test_make_ray():
 
 
 def test_plane():
-    plane = geometry.Plane(1, 2, 3, 4)
+    plane = geometry.make_plane(1, 2, 3, 4)
     assert plane.a == 1
     assert plane.b == 2
     assert plane.c == 3
@@ -64,23 +64,23 @@ def test_sphere():
 @pytest.mark.parametrize(
     "line, figure, expected",
     [
-        (RAY, geometry.Plane(1, 0, 0, 0), [geometry.make_point(0, 0, 0)]),
+        (RAY, geometry.make_plane(1, 0, 0, 0), [geometry.make_point(0, 0, 0)]),
         (
             geometry.Line(
                 geometry.make_point(8, 9, 10),
                 geometry.make_point(-5, -6, -7),
                 Interval(min=0),
             ),
-            geometry.Plane(1, 2, 3, 4),
+            geometry.make_plane(1, 2, 3, 4),
             [
                 geometry.make_point(
                     0.10526315789473628, -0.47368421052631504, -1.0526315789473681
                 )
             ],
         ),
-        (RAY, geometry.Plane(1, 0, 0, -2), []),
-        (RAY, geometry.Plane(0, 0, 1, -1), []),
-        (RAY, geometry.Plane(0, 0, 1, 0), []),
+        (RAY, geometry.make_plane(1, 0, 0, -2), []),
+        (RAY, geometry.make_plane(0, 0, 1, -1), []),
+        (RAY, geometry.make_plane(0, 0, 1, 0), []),
         (
             RAY,
             geometry.Sphere(geometry.make_point(0, 0, 0), 0.5),
@@ -140,21 +140,21 @@ def test_line_perpendicular(line, other, expected):
             ),
         ),
         (
-            geometry.Plane(1, 0, 0, -10),
+            geometry.make_plane(1, 0, 0, -10),
             geometry.make_point(10, 0, 0),
             geometry.make_ray(
                 geometry.make_point(10, 0, 0), geometry.make_point(11, 0, 0)
             ),
         ),
         (
-            geometry.Plane(0, 1, 0, -10),
+            geometry.make_plane(0, 1, 0, -10),
             geometry.make_point(0, 10, 0),
             geometry.make_ray(
                 geometry.make_point(0, 10, 0), geometry.make_point(0, 11, 0)
             ),
         ),
         (
-            geometry.Plane(0, 0, 1, -10),
+            geometry.make_plane(0, 0, 1, -10),
             geometry.make_point(0, 0, 10),
             geometry.make_ray(
                 geometry.make_point(0, 0, 10), geometry.make_point(0, 0, 11)

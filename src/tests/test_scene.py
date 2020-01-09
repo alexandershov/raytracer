@@ -8,7 +8,7 @@ from raytracer.color import Palette
 
 def test_scene():
     floor = scene.Thing(
-        figure=geometry.Plane(0, 1, 0, 200), material=scene.Solid(Palette.BLACK)
+        figure=geometry.make_plane(0, 1, 0, 200), material=scene.Solid(Palette.BLACK)
     )
 
     sphere = scene.Thing(
