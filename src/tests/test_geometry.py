@@ -49,6 +49,7 @@ def test_make_ray():
 
 def test_plane():
     plane = geometry.make_plane(1, 2, 3, 4)
+    assert np.array_equal(plane.coeffs, geometry.make_point(1, 2, 3))
     assert plane.a == 1
     assert plane.b == 2
     assert plane.c == 3
