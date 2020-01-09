@@ -61,10 +61,7 @@ class Line:
 
     def mirror(self, axis: Line) -> Line:
         perpendicular = self.perpendicular(axis)
-        return make_ray(
-            axis.point,
-            perpendicular.point + perpendicular.direction + perpendicular.direction,
-        )
+        return make_ray(axis.point, perpendicular.point_at(2))
 
     def point_at(self, k: float) -> Point:
         return self.point + self.direction * k
