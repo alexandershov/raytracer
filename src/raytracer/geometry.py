@@ -49,9 +49,6 @@ class Line:
     def __post_init__(self):
         assert not np.array_equal(self.direction, make_point(0, 0, 0))
 
-    def intersections(self, figure: Figure) -> List[Point]:
-        return figure.intersections(self)
-
     def perpendicular(self, other: Line) -> Line:
         k = (other.direction @ (self.point - other.point)) / (
             other.direction @ other.direction
