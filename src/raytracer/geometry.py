@@ -59,6 +59,9 @@ class Line:
             perpendicular.point + perpendicular.direction + perpendicular.direction,
         )
 
+    def point_at_k(self, k: float) -> Point:
+        return self.point + self.direction * k
+
 
 class Figure(metaclass=abc.ABCMeta):
     @abc.abstractmethod
