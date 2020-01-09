@@ -96,7 +96,7 @@ class Plane(Figure):
 
     def perpendicular(self, point: Point) -> Line:
         assert self._get_num_zero_coeffs() == 2, "only simple planes are supported"
-        delta = normalize(self.coeffs)
+        delta = _normalize(self.coeffs)
         return make_ray(point, point + make_point(*delta))
 
     def _get_num_zero_coeffs(self) -> int:
@@ -123,5 +123,5 @@ class Sphere(Figure):
         return make_ray(self.center, point)
 
 
-def normalize(point: Point) -> Point:
+def _normalize(point: Point) -> Point:
     return point / np.linalg.norm(point)
