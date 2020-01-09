@@ -15,13 +15,13 @@ def test_color_mul(color, mul, expected):
     assert color * mul == expected
 
 
-@pytest.mark.parametrize("mul, exception", [(-1, ValueError), (1j, TypeError),])
+@pytest.mark.parametrize("mul, exception", [(-1, ValueError), (1j, TypeError)])
 def test_color_mul_failure(mul, exception):
     with pytest.raises(exception):
         assert Color(1, 2, 3) * mul
 
 
-@pytest.mark.parametrize("r, g, b", [(256, 255, 255), (255, -1, 255),])
+@pytest.mark.parametrize("r, g, b", [(256, 255, 255), (255, -1, 255)])
 def test_color_creation_failure(r, g, b):
     with pytest.raises(ValueError):
         Color(r, g, b)

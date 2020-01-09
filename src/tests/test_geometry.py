@@ -189,7 +189,8 @@ def test_mirror(ray, axis, expected):
 def same_rays(x: geometry.Line, y: geometry.Line) -> bool:
     same_starts = are_close(x.point, y.point)
     same_directions = are_close(normalize(x.direction), normalize(y.direction))
-    return same_starts and same_directions
+    same_ks = x.ks == y.ks
+    return same_starts and same_directions and same_ks
 
 
 def normalize(x: geometry.Point) -> geometry.Point:
