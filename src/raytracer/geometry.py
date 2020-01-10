@@ -36,6 +36,10 @@ def make_ray(start: Point, to: Point) -> Line:
     return Line(start, to - start, Interval(min=0))
 
 
+def make_line(a: Point, b: Point) -> Line:
+    return Line(a, b - a, Interval())
+
+
 def make_plane(a: float, b: float, c: float, d: float) -> Plane:
     return Plane(make_point(a, b, c), d)
 
