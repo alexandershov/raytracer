@@ -130,28 +130,28 @@ def test_line_perpendicular(line, other, expected):
         (
             geometry.Sphere(geometry.make_point(0, 0, 0), 10),
             geometry.make_point(10, 0, 0),
-            geometry.make_line(
+            geometry.make_infinite_line(
                 geometry.make_point(0, 0, 0), geometry.make_point(10, 0, 0)
             ),
         ),
         (
             geometry.make_plane(1, 0, 0, -10),
             geometry.make_point(10, 0, 0),
-            geometry.make_line(
+            geometry.make_infinite_line(
                 geometry.make_point(10, 0, 0), geometry.make_point(11, 0, 0)
             ),
         ),
         (
             geometry.make_plane(0, 1, 0, -10),
             geometry.make_point(0, 10, 0),
-            geometry.make_line(
+            geometry.make_infinite_line(
                 geometry.make_point(0, 10, 0), geometry.make_point(0, 11, 0)
             ),
         ),
         (
             geometry.make_plane(0, 0, 1, -10),
             geometry.make_point(0, 0, 10),
-            geometry.make_line(
+            geometry.make_infinite_line(
                 geometry.make_point(0, 0, 10), geometry.make_point(0, 0, 11)
             ),
         ),

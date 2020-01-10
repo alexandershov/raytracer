@@ -27,7 +27,7 @@ def get_z(point: Point) -> float:
     return point[2]
 
 
-def make_segment(start: Point, to: Point) -> LineSegment:
+def make_line_segment(start: Point, to: Point) -> LineSegment:
     return LineSegment(_point=start, _direction=to - start, min_k=0, max_k=1)
 
 
@@ -35,7 +35,7 @@ def make_ray(start: Point, to: Point) -> Ray:
     return Ray(_point=start, _direction=to - start, min_k=0)
 
 
-def make_line(a: Point, b: Point) -> InfiniteLine:
+def make_infinite_line(a: Point, b: Point) -> InfiniteLine:
     return InfiniteLine(a, b - a)
 
 
@@ -153,7 +153,7 @@ class Plane(Figure):
     def perpendicular(self, point: Point) -> InfiniteLine:
         assert self._get_num_zero_coeffs() == 2, "only simple planes are supported"
         delta = _normalize(self.coeffs)
-        return make_line(point, point + make_point(*delta))
+        return make_infinite_line(point, point + make_point(*delta))
 
     def _get_num_zero_coeffs(self) -> int:
         return sum(self.coeffs == 0)
@@ -172,7 +172,7 @@ class Sphere(Figure):
         return _get_line_points_at_ks(line, algebra.solve_quadratic(a, b, c))
 
     def perpendicular(self, point: Point) -> InfiniteLine:
-        return make_line(self.center, point)
+        return make_infinite_line(self.center, point)
 
 
 def _normalize(point: Point) -> Point:
