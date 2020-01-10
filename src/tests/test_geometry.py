@@ -5,10 +5,18 @@ import pytest
 import numpy as np
 from raytracer import geometry
 
+
+def Ray(x1, y1, z1, placeholder, x2, y2, z2):
+    assert placeholder is Ellipsis
+    a = geometry.make_point(x1, y1, z1)
+    b = geometry.make_point(x2, y2, z2)
+    return geometry.make_ray(a, b)
+
+
 START = geometry.make_point(3, 2, 1)
 AFTER_START = geometry.make_point(9, 6, 3)
 DIRECTION = geometry.make_point(6, 4, 2)
-RAY = geometry.make_ray(geometry.make_point(1, 0, 0), geometry.make_point(0, 0, 0))
+RAY = Ray(1, 0, 0, ..., 0, 0, 0)
 CENTER = geometry.make_point(5, 10, 9)
 
 
@@ -63,29 +71,29 @@ def test_sphere():
     [
         (RAY, geometry.make_plane(1, 0, 0, 0), [geometry.make_point(0, 0, 0)]),
         (
-            geometry.make_ray(
-                geometry.make_point(8, 9, 10), geometry.make_point(3, 3, 3),
-            ),
-            geometry.make_plane(1, 2, 3, 4),
-            [
-                geometry.make_point(
-                    0.10526315789473628, -0.47368421052631504, -1.0526315789473681
-                )
-            ],
+                geometry.make_ray(
+                    geometry.make_point(8, 9, 10), geometry.make_point(3, 3, 3),
+                ),
+                geometry.make_plane(1, 2, 3, 4),
+                [
+                    geometry.make_point(
+                        0.10526315789473628, -0.47368421052631504, -1.0526315789473681
+                    )
+                ],
         ),
         (RAY, geometry.make_plane(1, 0, 0, -2), []),
         (RAY, geometry.make_plane(0, 0, 1, -1), []),
         (RAY, geometry.make_plane(0, 0, 1, 0), []),
         (
-            RAY,
-            geometry.Sphere(geometry.make_point(0, 0, 0), 0.5),
-            [geometry.make_point(0.5, 0, 0), geometry.make_point(-0.5, 0, 0)],
+                RAY,
+                geometry.Sphere(geometry.make_point(0, 0, 0), 0.5),
+                [geometry.make_point(0.5, 0, 0), geometry.make_point(-0.5, 0, 0)],
         ),
         (RAY, geometry.Sphere(geometry.make_point(10, 0, 0), 0.5), []),
         (
-            RAY,
-            geometry.Sphere(geometry.make_point(0, 0, 0), 2),
-            [geometry.make_point(-2, 0, 0)],
+                RAY,
+                geometry.Sphere(geometry.make_point(0, 0, 0), 2),
+                [geometry.make_point(-2, 0, 0)],
         ),
     ],
 )
@@ -97,26 +105,26 @@ def test_line_intersections(line, figure, expected):
     "line, other, expected",
     [
         (
-            geometry.make_ray(
-                geometry.make_point(1, 0, 0), geometry.make_point(1, 1, 0)
-            ),
-            geometry.make_infinite_line(
-                geometry.make_point(0, 0, 0), geometry.make_point(0, 1, 0)
-            ),
-            geometry.make_ray(
-                geometry.make_point(1, 0, 0), geometry.make_point(0, 0, 0)
-            ),
+                geometry.make_ray(
+                    geometry.make_point(1, 0, 0), geometry.make_point(1, 1, 0)
+                ),
+                geometry.make_infinite_line(
+                    geometry.make_point(0, 0, 0), geometry.make_point(0, 1, 0)
+                ),
+                geometry.make_ray(
+                    geometry.make_point(1, 0, 0), geometry.make_point(0, 0, 0)
+                ),
         ),
         (
-            geometry.make_ray(
-                geometry.make_point(1, 0, 0), geometry.make_point(1, 1, 0)
-            ),
-            geometry.make_infinite_line(
-                geometry.make_point(0, 1, 0), geometry.make_point(0, 2, 0)
-            ),
-            geometry.make_ray(
-                geometry.make_point(1, 0, 0), geometry.make_point(0, 0, 0)
-            ),
+                geometry.make_ray(
+                    geometry.make_point(1, 0, 0), geometry.make_point(1, 1, 0)
+                ),
+                geometry.make_infinite_line(
+                    geometry.make_point(0, 1, 0), geometry.make_point(0, 2, 0)
+                ),
+                geometry.make_ray(
+                    geometry.make_point(1, 0, 0), geometry.make_point(0, 0, 0)
+                ),
         ),
     ],
 )
@@ -128,32 +136,32 @@ def test_line_perpendicular(line, other, expected):
     "figure, point, expected",
     [
         (
-            geometry.Sphere(geometry.make_point(0, 0, 0), 10),
-            geometry.make_point(10, 0, 0),
-            geometry.make_infinite_line(
-                geometry.make_point(0, 0, 0), geometry.make_point(10, 0, 0)
-            ),
+                geometry.Sphere(geometry.make_point(0, 0, 0), 10),
+                geometry.make_point(10, 0, 0),
+                geometry.make_infinite_line(
+                    geometry.make_point(0, 0, 0), geometry.make_point(10, 0, 0)
+                ),
         ),
         (
-            geometry.make_plane(1, 0, 0, -10),
-            geometry.make_point(10, 0, 0),
-            geometry.make_infinite_line(
-                geometry.make_point(10, 0, 0), geometry.make_point(11, 0, 0)
-            ),
+                geometry.make_plane(1, 0, 0, -10),
+                geometry.make_point(10, 0, 0),
+                geometry.make_infinite_line(
+                    geometry.make_point(10, 0, 0), geometry.make_point(11, 0, 0)
+                ),
         ),
         (
-            geometry.make_plane(0, 1, 0, -10),
-            geometry.make_point(0, 10, 0),
-            geometry.make_infinite_line(
-                geometry.make_point(0, 10, 0), geometry.make_point(0, 11, 0)
-            ),
+                geometry.make_plane(0, 1, 0, -10),
+                geometry.make_point(0, 10, 0),
+                geometry.make_infinite_line(
+                    geometry.make_point(0, 10, 0), geometry.make_point(0, 11, 0)
+                ),
         ),
         (
-            geometry.make_plane(0, 0, 1, -10),
-            geometry.make_point(0, 0, 10),
-            geometry.make_infinite_line(
-                geometry.make_point(0, 0, 10), geometry.make_point(0, 0, 11)
-            ),
+                geometry.make_plane(0, 0, 1, -10),
+                geometry.make_point(0, 0, 10),
+                geometry.make_infinite_line(
+                    geometry.make_point(0, 0, 10), geometry.make_point(0, 0, 11)
+                ),
         ),
     ],
 )
@@ -165,15 +173,15 @@ def test_figure_perpendicular(figure, point, expected):
     "ray, axis, expected",
     [
         (
-            geometry.make_ray(
-                geometry.make_point(2, 1, 0), geometry.make_point(1, 0, 0)
-            ),
-            geometry.make_infinite_line(
-                geometry.make_point(1, 0, 0), geometry.make_point(1, 1, 0)
-            ),
-            geometry.make_infinite_line(
-                geometry.make_point(1, 0, 0), geometry.make_point(0, 1, 0)
-            ),
+                geometry.make_ray(
+                    geometry.make_point(2, 1, 0), geometry.make_point(1, 0, 0)
+                ),
+                geometry.make_infinite_line(
+                    geometry.make_point(1, 0, 0), geometry.make_point(1, 1, 0)
+                ),
+                geometry.make_infinite_line(
+                    geometry.make_point(1, 0, 0), geometry.make_point(0, 1, 0)
+                ),
         )
     ],
 )
