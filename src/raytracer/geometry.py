@@ -83,7 +83,7 @@ class Plane(Figure):
     d: float
 
     def intersections(self, line: Line) -> List[Point]:
-        # solving equation k = -s / t
+        # solving equation tk + s = 0
         t = self.coeffs @ line.direction
         if t == 0:
             return []
