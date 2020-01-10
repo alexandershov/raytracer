@@ -157,7 +157,8 @@ Questions
 * ~~Should Figure.perpendicular return a line or ray?~~
     1. [winner]line - I like it more since it has no direction
     2. ray
-* Is there any physical sense for having mirror for line & segment?
+* Is there any physical sense for having .mirror|.perpendicular 
+  not just for ray but also for line & segment?
     1. yes
     2. no
 * What there's a need for camera & screen in raytracing?
