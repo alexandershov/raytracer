@@ -32,12 +32,12 @@ def make_segment(start: Point, to: Point) -> LineSegment:
     return LineSegment(_point=start, _direction=to - start, min_k=0, max_k=1)
 
 
-def make_ray(start: Point, to: Point) -> Line:
-    return Line(start, to - start, Interval(min=0))
+def make_ray(start: Point, to: Point) -> Ray:
+    return Ray(start, to - start, Interval(min=0))
 
 
-def make_line(a: Point, b: Point) -> Line:
-    return Line(a, b - a, Interval())
+def make_line(a: Point, b: Point) -> Ray:
+    return Ray(a, b - a, Interval())
 
 
 def make_plane(a: float, b: float, c: float, d: float) -> Plane:
@@ -83,7 +83,7 @@ class LineSegment(Straight):
 
 
 @dataclass(frozen=True)
-class Line:
+class Ray:
     point: Point
     direction: Point
     ks: Interval
@@ -91,14 +91,14 @@ class Line:
     def __post_init__(self):
         assert not np.array_equal(self.direction, make_point(0, 0, 0))
 
-    def perpendicular(self, other: Line) -> Line:
+    def perpendicular(self, other: Ray) -> Ray:
         k = (other.direction @ (self.point - other.point)) / (
             other.direction @ other.direction
         )
         p = other.point_at(k)
         return make_ray(self.point, p)
 
-    def mirror(self, axis: Line) -> Line:
+    def mirror(self, axis: Ray) -> Ray:
         perpendicular = self.perpendicular(axis)
         return make_ray(axis.point, perpendicular.point_at(2))
 
@@ -111,11 +111,11 @@ class Line:
 
 class Figure(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def intersections(self, line: Line) -> List[Point]:
+    def intersections(self, line: Ray) -> List[Point]:
         raise NotImplemented
 
     @abc.abstractmethod
-    def perpendicular(self, point: Point) -> Line:
+    def perpendicular(self, point: Point) -> Ray:
         raise NotImplementedError
 
 
@@ -124,7 +124,7 @@ class Plane(Figure):
     coeffs: Point
     d: float
 
-    def intersections(self, line: Line) -> List[Point]:
+    def intersections(self, line: Ray) -> List[Point]:
         # solving equation tk + s = 0
         s = (self.coeffs @ line.point) + self.d
         t = self.coeffs @ line.direction
@@ -132,7 +132,7 @@ class Plane(Figure):
             return []
         return _get_line_points_at_ks(line, [-s / t])
 
-    def perpendicular(self, point: Point) -> Line:
+    def perpendicular(self, point: Point) -> Ray:
         assert self._get_num_zero_coeffs() == 2, "only simple planes are supported"
         delta = _normalize(self.coeffs)
         return make_line(point, point + make_point(*delta))
@@ -146,14 +146,14 @@ class Sphere(Figure):
     center: Point
     radius: float
 
-    def intersections(self, line: Line) -> List[Point]:
+    def intersections(self, line: Ray) -> List[Point]:
         v = line.point - self.center
         a = line.direction @ line.direction
         b = 2 * (v @ line.direction)
         c = (v @ v) - self.radius ** 2
         return _get_line_points_at_ks(line, algebra.solve_quadratic(a, b, c))
 
-    def perpendicular(self, point: Point) -> Line:
+    def perpendicular(self, point: Point) -> Ray:
         return make_line(self.center, point)
 
 
@@ -161,5 +161,5 @@ def _normalize(point: Point) -> Point:
     return point / np.linalg.norm(point)
 
 
-def _get_line_points_at_ks(line: Line, ks: List[float]) -> List[Point]:
+def _get_line_points_at_ks(line: Ray, ks: List[float]) -> List[Point]:
     return [line.point_at(k) for k in ks if line.is_mine(k)]

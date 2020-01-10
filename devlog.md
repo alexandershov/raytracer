@@ -38,7 +38,7 @@ Questions
 * ~~Should I use Entity-Component-System here (at least for the sake of learning)?~~
   Let's not use it, seems like overkill.
 * ~~What are the primitive objects here?~~
-  Point, Line, Sphere, Plane
+  Point, Ray, Sphere, Plane
 * ~~What are the primitive operations here?~~
   Intersections, mirror reflections, set_pixel
 * ~~How to test it?~~
@@ -150,10 +150,10 @@ Questions
     4. two points (a, b), stops_at_b
     5. [winner]origin, direction, k interval - looks like the
         most elegant.
-* ~~What are the alternatives to Line?~~
-    1. [winner]Line with optional restrictions (we can have restrictions from both sides)
-    2. Line with optional restriction
-    3. Separate Segment class (which is basically a Line with restriction)
+* ~~What are the alternatives to Ray?~~
+    1. [winner]Ray with optional restrictions (we can have restrictions from both sides)
+    2. Ray with optional restriction
+    3. Separate Segment class (which is basically a Ray with restriction)
 * ~~Should Figure.perpendicular return a line or ray?~~
     1. [winner]line - I like it more since it has no direction
     2. ray

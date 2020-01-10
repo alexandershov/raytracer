@@ -64,7 +64,7 @@ def test_sphere():
     [
         (RAY, geometry.make_plane(1, 0, 0, 0), [geometry.make_point(0, 0, 0)]),
         (
-            geometry.Line(
+            geometry.Ray(
                 geometry.make_point(8, 9, 10),
                 geometry.make_point(-5, -6, -7),
                 Interval(min=0),
@@ -184,7 +184,7 @@ def test_mirror(ray, axis, expected):
     assert same_lines(ray.mirror(axis), expected)
 
 
-def same_lines(x: geometry.Line, y: geometry.Line) -> bool:
+def same_lines(x: geometry.Ray, y: geometry.Ray) -> bool:
     same_starts = are_close(x.point, y.point)
     same_directions = are_close(normalize(x.direction), normalize(y.direction))
     same_ks = x.ks == y.ks
