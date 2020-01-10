@@ -35,8 +35,8 @@ def make_ray(start: Point, to: Point) -> Ray:
     return Ray(_point=start, _direction=to - start, min_k=0)
 
 
-def make_line(a: Point, b: Point) -> Line:
-    return Line(a, b - a)
+def make_line(a: Point, b: Point) -> InfiniteLine:
+    return InfiniteLine(a, b - a)
 
 
 def make_plane(a: float, b: float, c: float, d: float) -> Plane:
@@ -82,7 +82,7 @@ class LineSegment(LineBase):
 
 
 @dataclass(frozen=True)
-class Line(LineBase):
+class InfiniteLine(LineBase):
     _point: Point
     _direction: Point
 
@@ -156,7 +156,7 @@ class Plane(Figure):
             return []
         return _get_line_points_at_ks(straight, [-s / t])
 
-    def perpendicular(self, point: Point) -> Line:
+    def perpendicular(self, point: Point) -> InfiniteLine:
         assert self._get_num_zero_coeffs() == 2, "only simple planes are supported"
         delta = _normalize(self.coeffs)
         return make_line(point, point + make_point(*delta))
@@ -177,7 +177,7 @@ class Sphere(Figure):
         c = (v @ v) - self.radius ** 2
         return _get_line_points_at_ks(straight, algebra.solve_quadratic(a, b, c))
 
-    def perpendicular(self, point: Point) -> Line:
+    def perpendicular(self, point: Point) -> InfiniteLine:
         return make_line(self.center, point)
 
 
