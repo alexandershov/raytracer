@@ -8,6 +8,12 @@ from raytracer import geometry
 Point = geometry.make_point
 
 
+def Sphere(x1, y1, z1, placeholder, radius):
+    assert placeholder is Ellipsis
+    center = Point(x1, y1, z1)
+    return geometry.Sphere(center, radius)
+
+
 def Ray(x1, y1, z1, placeholder, x2, y2, z2):
     assert placeholder is Ellipsis
     a = Point(x1, y1, z1)
