@@ -116,11 +116,7 @@ class Sphere(Figure):
         a = line.direction @ line.direction
         b = 2 * (v @ line.direction)
         c = (v @ v) - self.radius ** 2
-        return [
-            line.point_at(k)
-            for k in algebra.solve_quadratic(a, b, c)
-            if line.is_mine(k)
-        ]
+        return _get_line_points_at_ks(line, algebra.solve_quadratic(a, b, c))
 
     def perpendicular(self, point: Point) -> Line:
         return make_line(self.center, point)
@@ -128,3 +124,7 @@ class Sphere(Figure):
 
 def _normalize(point: Point) -> Point:
     return point / np.linalg.norm(point)
+
+
+def _get_line_points_at_ks(line: Line, ks: List[float]) -> List[Point]:
+    return [line.point_at(k) for k in ks if line.is_mine(k)]
