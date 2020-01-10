@@ -52,11 +52,14 @@ class Line(metaclass=abc.ABCMeta):
     @property
     @abc.abstractmethod
     def direction(self) -> Point:
-        pass
+        raise NotImplementedError
 
     @abc.abstractmethod
     def is_mine(self, k: float) -> bool:
         raise NotImplementedError
+
+    def __post_init__(self):
+        assert not np.array_equal(self.direction, make_point(0, 0, 0))
 
 
 @dataclass(frozen=True)
@@ -108,9 +111,6 @@ class Ray(Line):
     @property
     def direction(self) -> Point:
         return self._direction
-
-    def __post_init__(self):
-        assert not np.array_equal(self.direction, make_point(0, 0, 0))
 
     def perpendicular(self, other: Ray) -> Ray:
         k = (other.direction @ (self.point - other.point)) / (
