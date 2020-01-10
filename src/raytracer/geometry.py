@@ -112,12 +112,12 @@ class Ray(Line):
     def direction(self) -> Point:
         return self._direction
 
-    def perpendicular(self, other: Ray) -> Ray:
+    def perpendicular(self, other: InfiniteLine) -> Ray:
         other_direction_squared = other.direction @ other.direction
         k = (other.direction @ (self.point - other.point)) / other_direction_squared
         return make_ray(self.point, _point_at(other, k))
 
-    def mirror(self, axis: Ray) -> Ray:
+    def mirror(self, axis: InfiniteLine) -> Ray:
         perpendicular = self.perpendicular(axis)
         return make_ray(axis.point, _point_at(perpendicular, 2))
 
