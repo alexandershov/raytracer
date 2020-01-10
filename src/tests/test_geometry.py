@@ -104,14 +104,14 @@ def test_line_intersections(line, figure, expected):
     "line, other, expected",
     [
         (
-            geometry.make_ray(Point(1, 0, 0), Point(1, 1, 0)),
+            Ray(1, 0, 0, ..., 1, 1, 0),
             geometry.make_infinite_line(Point(0, 0, 0), Point(0, 1, 0)),
-            geometry.make_ray(Point(1, 0, 0), Point(0, 0, 0)),
+            Ray(1, 0, 0, ..., 0, 0, 0),
         ),
         (
-            geometry.make_ray(Point(1, 0, 0), Point(1, 1, 0)),
+            Ray(1, 0, 0, ..., 1, 1, 0),
             geometry.make_infinite_line(Point(0, 1, 0), Point(0, 2, 0)),
-            geometry.make_ray(Point(1, 0, 0), Point(0, 0, 0)),
+            Ray(1, 0, 0, ..., 0, 0, 0),
         ),
     ],
 )
