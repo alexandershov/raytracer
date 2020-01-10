@@ -83,6 +83,23 @@ class LineSegment(Straight):
 
 
 @dataclass(frozen=True)
+class Line(Straight):
+    _point: Point
+    _direction: Point
+
+    @property
+    def point(self) -> Point:
+        return self._point
+
+    @property
+    def direction(self) -> Point:
+        return self._direction
+
+    def is_mine(self, k: float) -> bool:
+        return True
+
+
+@dataclass(frozen=True)
 class Ray:
     point: Point
     direction: Point
