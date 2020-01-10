@@ -131,7 +131,7 @@ class Figure(metaclass=abc.ABCMeta):
         raise NotImplemented
 
     @abc.abstractmethod
-    def perpendicular(self, point: Point) -> Ray:
+    def perpendicular(self, point: Point) -> InfiniteLine:
         raise NotImplementedError
 
 
