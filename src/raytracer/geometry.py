@@ -87,9 +87,9 @@ class Plane(Figure):
         if denominator == 0:
             return []
         k = -((self.coeffs @ line.point) + self.d) / denominator
-        if not line.is_mine(k):
-            return []
-        return [line.point_at(k)]
+        if line.is_mine(k):
+            return [line.point_at(k)]
+        return []
 
     def perpendicular(self, point: Point) -> Line:
         assert self._get_num_zero_coeffs() == 2, "only simple planes are supported"
