@@ -157,6 +157,9 @@ Questions
 * ~~Should Figure.perpendicular return a line or ray?~~
     1. [winner]line - I like it more since it has no direction
     2. ray
+* Is there any physical sense for having mirror for line & segment?
+    1. yes
+    2. no
 * What there's a need for camera & screen in raytracing?
   Is there a camera & screen in real life?
 * How do mirrors work in real life?
