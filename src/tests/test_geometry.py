@@ -152,7 +152,7 @@ def test_figure_perpendicular(figure, point, expected):
     "ray, axis, expected",
     [
         (
-            geometry.make_ray(Point(2, 1, 0), Point(1, 0, 0)),
+            Ray(2, 1, 0, ..., 1, 0, 0),
             geometry.make_infinite_line(Point(1, 0, 0), Point(1, 1, 0)),
             geometry.make_infinite_line(Point(1, 0, 0), Point(0, 1, 0)),
         )
