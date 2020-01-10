@@ -154,7 +154,7 @@ Questions
     1. [winner]Line with optional restrictions (we can have restrictions from both sides)
     2. Line with optional restriction
     3. Separate Segment class (which is basically a Line with restriction)
-* Should Figure.perpendicular return a line or ray?
+* ~~Should Figure.perpendicular return a line or ray?~~
     1. [winner]line - I like it more since it has no direction
     2. ray
 * What there's a need for camera & screen in raytracing?
