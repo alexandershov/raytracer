@@ -156,7 +156,7 @@ class Plane(Figure):
             return []
         return _get_line_points_at_ks(line, [-s / t])
 
-    def perpendicular(self, point: Point) -> Ray:
+    def perpendicular(self, point: Point) -> Line:
         assert self._get_num_zero_coeffs() == 2, "only simple planes are supported"
         delta = _normalize(self.coeffs)
         return make_line(point, point + make_point(*delta))
@@ -177,7 +177,7 @@ class Sphere(Figure):
         c = (v @ v) - self.radius ** 2
         return _get_line_points_at_ks(line, algebra.solve_quadratic(a, b, c))
 
-    def perpendicular(self, point: Point) -> Ray:
+    def perpendicular(self, point: Point) -> Line:
         return make_line(self.center, point)
 
 
