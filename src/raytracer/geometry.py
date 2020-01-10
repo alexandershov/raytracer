@@ -28,8 +28,8 @@ def get_z(point: Point) -> float:
     return point[2]
 
 
-def make_segment(start: Point, to: Point) -> Line:
-    return Line(start, to - start, Interval(min=0, max=1))
+def make_segment(start: Point, to: Point) -> LineSegment:
+    return LineSegment(_point=start, _direction=to - start, min_k=0, max_k=1)
 
 
 def make_ray(start: Point, to: Point) -> Line:
@@ -55,13 +55,31 @@ class Straight(metaclass=abc.ABCMeta):
     def direction(self) -> Point:
         pass
 
-    @abc.abstractmethod
     def point_at(self, k: float) -> Point:
-        raise NotImplementedError
+        return self.point + self.direction * k
 
     @abc.abstractmethod
     def is_mine(self, k: float) -> bool:
         raise NotImplementedError
+
+
+@dataclass(frozen=True)
+class LineSegment(Straight):
+    _point: Point
+    _direction: Point
+    min_k: float
+    max_k: float
+
+    @property
+    def point(self) -> Point:
+        return self._point
+
+    @property
+    def direction(self) -> Point:
+        return self._direction
+
+    def is_mine(self, k: float) -> bool:
+        return self.min_k <= k <= self.max_k
 
 
 @dataclass(frozen=True)
