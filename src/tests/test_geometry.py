@@ -100,7 +100,7 @@ def test_line_intersections(line, figure, expected):
             geometry.make_ray(
                 geometry.make_point(1, 0, 0), geometry.make_point(1, 1, 0)
             ),
-            geometry.make_ray(
+            geometry.make_infinite_line(
                 geometry.make_point(0, 0, 0), geometry.make_point(0, 1, 0)
             ),
             geometry.make_ray(
@@ -111,7 +111,7 @@ def test_line_intersections(line, figure, expected):
             geometry.make_ray(
                 geometry.make_point(1, 0, 0), geometry.make_point(1, 1, 0)
             ),
-            geometry.make_ray(
+            geometry.make_infinite_line(
                 geometry.make_point(0, 1, 0), geometry.make_point(0, 2, 0)
             ),
             geometry.make_ray(
