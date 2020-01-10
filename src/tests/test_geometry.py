@@ -9,8 +9,7 @@ Point = geometry.make_point
 Plane = geometry.make_plane
 
 
-def Sphere(x1, y1, z1, placeholder, radius):
-    assert placeholder is Ellipsis
+def Sphere(x1, y1, z1, radius):
     center = Point(x1, y1, z1)
     return geometry.Sphere(center, radius)
 
@@ -89,11 +88,11 @@ def test_sphere():
         (RAY, Plane(0, 0, 1, 0), []),
         (
             RAY,
-            Sphere(0, 0, 0, ..., 0.5),
+            Sphere(0, 0, 0, radius=0.5),
             [Point(0.5, 0, 0), Point(-0.5, 0, 0)],
         ),
-        (RAY, Sphere(10, 0, 0, ..., 0.5), []),
-        (RAY, Sphere(0, 0, 0, ..., 2), [Point(-2, 0, 0)],),
+        (RAY, Sphere(10, 0, 0, radius=0.5), []),
+        (RAY, Sphere(0, 0, 0, radius=2), [Point(-2, 0, 0)],),
     ],
 )
 def test_line_intersections(line, figure, expected):
