@@ -181,7 +181,7 @@ def test_mirror(ray, axis, expected):
     assert same_lines(ray.mirror(axis), expected)
 
 
-def same_lines(x: geometry.Straight, y: geometry.Straight) -> bool:
+def same_lines(x: geometry.LineBase, y: geometry.LineBase) -> bool:
     # TODO: should compare instance types
     same_starts = are_close(x.point, y.point)
     same_directions = are_close(normalize(x.direction), normalize(y.direction))
