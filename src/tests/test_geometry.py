@@ -21,6 +21,13 @@ def Ray(x1, y1, z1, placeholder, x2, y2, z2):
     return geometry.make_ray(a, b)
 
 
+def Line(x1, y1, z1, placeholder, x2, y2, z2):
+    assert placeholder is Ellipsis
+    a = Point(x1, y1, z1)
+    b = Point(x2, y2, z2)
+    return geometry.make_infinite_line(a, b)
+
+
 START = Point(3, 2, 1)
 AFTER_START = Point(9, 6, 3)
 DIRECTION = Point(6, 4, 2)
@@ -86,11 +93,7 @@ def test_sphere():
         (RAY, Plane(1, 0, 0, -2), []),
         (RAY, Plane(0, 0, 1, -1), []),
         (RAY, Plane(0, 0, 1, 0), []),
-        (
-            RAY,
-            Sphere(0, 0, 0, radius=0.5),
-            [Point(0.5, 0, 0), Point(-0.5, 0, 0)],
-        ),
+        (RAY, Sphere(0, 0, 0, radius=0.5), [Point(0.5, 0, 0), Point(-0.5, 0, 0)],),
         (RAY, Sphere(10, 0, 0, radius=0.5), []),
         (RAY, Sphere(0, 0, 0, radius=2), [Point(-2, 0, 0)],),
     ],
@@ -104,12 +107,12 @@ def test_line_intersections(line, figure, expected):
     [
         (
             Ray(1, 0, 0, ..., 1, 1, 0),
-            geometry.make_infinite_line(Point(0, 0, 0), Point(0, 1, 0)),
+            Line(0, 0, 0, ..., 0, 1, 0),
             Ray(1, 0, 0, ..., 0, 0, 0),
         ),
         (
             Ray(1, 0, 0, ..., 1, 1, 0),
-            geometry.make_infinite_line(Point(0, 1, 0), Point(0, 2, 0)),
+            Line(0, 1, 0, ..., 0, 2, 0),
             Ray(1, 0, 0, ..., 0, 0, 0),
         ),
     ],
@@ -124,23 +127,11 @@ def test_line_perpendicular(line, other, expected):
         (
             geometry.Sphere(Point(0, 0, 0), 10),
             Point(10, 0, 0),
-            geometry.make_infinite_line(Point(0, 0, 0), Point(10, 0, 0)),
+            Line(0, 0, 0, ..., 10, 0, 0),
         ),
-        (
-            Plane(1, 0, 0, -10),
-            Point(10, 0, 0),
-            geometry.make_infinite_line(Point(10, 0, 0), Point(11, 0, 0)),
-        ),
-        (
-            Plane(0, 1, 0, -10),
-            Point(0, 10, 0),
-            geometry.make_infinite_line(Point(0, 10, 0), Point(0, 11, 0)),
-        ),
-        (
-            Plane(0, 0, 1, -10),
-            Point(0, 0, 10),
-            geometry.make_infinite_line(Point(0, 0, 10), Point(0, 0, 11)),
-        ),
+        (Plane(1, 0, 0, -10), Point(10, 0, 0), Line(10, 0, 0, ..., 11, 0, 0),),
+        (Plane(0, 1, 0, -10), Point(0, 10, 0), Line(0, 10, 0, ..., 0, 11, 0),),
+        (Plane(0, 0, 1, -10), Point(0, 0, 10), Line(0, 0, 10, ..., 0, 0, 11),),
     ],
 )
 def test_figure_perpendicular(figure, point, expected):
@@ -152,8 +143,8 @@ def test_figure_perpendicular(figure, point, expected):
     [
         (
             Ray(2, 1, 0, ..., 1, 0, 0),
-            geometry.make_infinite_line(Point(1, 0, 0), Point(1, 1, 0)),
-            geometry.make_infinite_line(Point(1, 0, 0), Point(0, 1, 0)),
+            Line(1, 0, 0, ..., 1, 1, 0),
+            Line(1, 0, 0, ..., 0, 1, 0),
         )
     ],
 )
