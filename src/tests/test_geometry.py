@@ -89,11 +89,11 @@ def test_sphere():
         (RAY, Plane(0, 0, 1, 0), []),
         (
             RAY,
-            geometry.Sphere(Point(0, 0, 0), 0.5),
+            Sphere(0, 0, 0, ..., 0.5),
             [Point(0.5, 0, 0), Point(-0.5, 0, 0)],
         ),
-        (RAY, geometry.Sphere(Point(10, 0, 0), 0.5), []),
-        (RAY, geometry.Sphere(Point(0, 0, 0), 2), [Point(-2, 0, 0)],),
+        (RAY, Sphere(10, 0, 0, ..., 0.5), []),
+        (RAY, Sphere(0, 0, 0, ..., 2), [Point(-2, 0, 0)],),
     ],
 )
 def test_line_intersections(line, figure, expected):
