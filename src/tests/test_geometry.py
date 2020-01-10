@@ -168,10 +168,10 @@ def test_figure_perpendicular(figure, point, expected):
             geometry.make_ray(
                 geometry.make_point(2, 1, 0), geometry.make_point(1, 0, 0)
             ),
-            geometry.make_ray(
+            geometry.make_infinite_line(
                 geometry.make_point(1, 0, 0), geometry.make_point(1, 1, 0)
             ),
-            geometry.make_ray(
+            geometry.make_infinite_line(
                 geometry.make_point(1, 0, 0), geometry.make_point(0, 1, 0)
             ),
         )
