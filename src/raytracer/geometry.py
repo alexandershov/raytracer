@@ -44,6 +44,26 @@ def make_plane(a: float, b: float, c: float, d: float) -> Plane:
     return Plane(make_point(a, b, c), d)
 
 
+class Straight(metaclass=abc.ABCMeta):
+    @property
+    @abc.abstractmethod
+    def point(self) -> Point:
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def direction(self) -> Point:
+        pass
+
+    @abc.abstractmethod
+    def point_at(self, k: float) -> Point:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def is_mine(self, k: float) -> bool:
+        raise NotImplementedError
+
+
 @dataclass(frozen=True)
 class Line:
     point: Point
