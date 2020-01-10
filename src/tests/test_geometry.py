@@ -64,8 +64,7 @@ def test_sphere():
         (RAY, geometry.make_plane(1, 0, 0, 0), [geometry.make_point(0, 0, 0)]),
         (
             geometry.make_ray(
-                geometry.make_point(8, 9, 10),
-                geometry.make_point(3, 3, 3),
+                geometry.make_point(8, 9, 10), geometry.make_point(3, 3, 3),
             ),
             geometry.make_plane(1, 2, 3, 4),
             [

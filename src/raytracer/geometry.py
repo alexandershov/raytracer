@@ -117,7 +117,7 @@ class Ray(Straight):
 
     def perpendicular(self, other: Ray) -> Ray:
         k = (other.direction @ (self.point - other.point)) / (
-                other.direction @ other.direction
+            other.direction @ other.direction
         )
         p = other.point_at(k)
         return make_ray(self.point, p)
@@ -135,7 +135,7 @@ class Ray(Straight):
 
 class Figure(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def intersections(self, line: Straight) -> List[Point]:
+    def intersections(self, straight: Straight) -> List[Point]:
         raise NotImplemented
 
     @abc.abstractmethod
@@ -148,13 +148,13 @@ class Plane(Figure):
     coeffs: Point
     d: float
 
-    def intersections(self, line: Straight) -> List[Point]:
+    def intersections(self, straight: Straight) -> List[Point]:
         # solving equation tk + s = 0
-        s = (self.coeffs @ line.point) + self.d
-        t = self.coeffs @ line.direction
+        s = (self.coeffs @ straight.point) + self.d
+        t = self.coeffs @ straight.direction
         if t == 0:
             return []
-        return _get_line_points_at_ks(line, [-s / t])
+        return _get_line_points_at_ks(straight, [-s / t])
 
     def perpendicular(self, point: Point) -> Line:
         assert self._get_num_zero_coeffs() == 2, "only simple planes are supported"
@@ -170,12 +170,12 @@ class Sphere(Figure):
     center: Point
     radius: float
 
-    def intersections(self, line: Straight) -> List[Point]:
-        v = line.point - self.center
-        a = line.direction @ line.direction
-        b = 2 * (v @ line.direction)
+    def intersections(self, straight: Straight) -> List[Point]:
+        v = straight.point - self.center
+        a = straight.direction @ straight.direction
+        b = 2 * (v @ straight.direction)
         c = (v @ v) - self.radius ** 2
-        return _get_line_points_at_ks(line, algebra.solve_quadratic(a, b, c))
+        return _get_line_points_at_ks(straight, algebra.solve_quadratic(a, b, c))
 
     def perpendicular(self, point: Point) -> Line:
         return make_line(self.center, point)
@@ -185,5 +185,5 @@ def _normalize(point: Point) -> Point:
     return point / np.linalg.norm(point)
 
 
-def _get_line_points_at_ks(line: Straight, ks: List[float]) -> List[Point]:
-    return [line.point_at(k) for k in ks if line.is_mine(k)]
+def _get_line_points_at_ks(straight: Straight, ks: List[float]) -> List[Point]:
+    return [straight.point_at(k) for k in ks if straight.is_mine(k)]
