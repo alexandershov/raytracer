@@ -6,7 +6,6 @@ from typing import List
 
 import numpy as np
 
-from raytracer.interval import Interval
 from . import algebra
 
 Point = np.ndarray
@@ -33,7 +32,7 @@ def make_segment(start: Point, to: Point) -> LineSegment:
 
 
 def make_ray(start: Point, to: Point) -> Ray:
-    return Ray(start, to - start, Interval(min=0))
+    return Ray(_point=start, _direction=to - start, min_k=0)
 
 
 def make_line(a: Point, b: Point) -> Line:
@@ -100,17 +99,25 @@ class Line(Straight):
 
 
 @dataclass(frozen=True)
-class Ray:
-    point: Point
-    direction: Point
-    ks: Interval
+class Ray(Straight):
+    _point: Point
+    _direction: Point
+    min_k: float
+
+    @property
+    def point(self) -> Point:
+        return self._point
+
+    @property
+    def direction(self) -> Point:
+        return self._direction
 
     def __post_init__(self):
         assert not np.array_equal(self.direction, make_point(0, 0, 0))
 
     def perpendicular(self, other: Ray) -> Ray:
         k = (other.direction @ (self.point - other.point)) / (
-            other.direction @ other.direction
+                other.direction @ other.direction
         )
         p = other.point_at(k)
         return make_ray(self.point, p)
@@ -123,7 +130,7 @@ class Ray:
         return self.point + self.direction * k
 
     def is_mine(self, k: float) -> bool:
-        return k in self.ks
+        return k >= self.min_k
 
 
 class Figure(metaclass=abc.ABCMeta):
