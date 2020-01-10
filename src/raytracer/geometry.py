@@ -113,11 +113,9 @@ class Ray(Line):
         return self._direction
 
     def perpendicular(self, other: Ray) -> Ray:
-        k = (other.direction @ (self.point - other.point)) / (
-            other.direction @ other.direction
-        )
-        p = _point_at(other, k)
-        return make_ray(self.point, p)
+        other_direction_squared = other.direction @ other.direction
+        k = (other.direction @ (self.point - other.point)) / other_direction_squared
+        return make_ray(self.point, _point_at(other, k))
 
     def mirror(self, axis: Ray) -> Ray:
         perpendicular = self.perpendicular(axis)
