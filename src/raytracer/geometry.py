@@ -54,9 +54,6 @@ class Line(metaclass=abc.ABCMeta):
     def direction(self) -> Point:
         pass
 
-    def point_at(self, k: float) -> Point:
-        return self.point + self.direction * k
-
     @abc.abstractmethod
     def is_mine(self, k: float) -> bool:
         raise NotImplementedError
@@ -119,15 +116,12 @@ class Ray(Line):
         k = (other.direction @ (self.point - other.point)) / (
             other.direction @ other.direction
         )
-        p = other.point_at(k)
+        p = _point_at(other, k)
         return make_ray(self.point, p)
 
     def mirror(self, axis: Ray) -> Ray:
         perpendicular = self.perpendicular(axis)
-        return make_ray(axis.point, perpendicular.point_at(2))
-
-    def point_at(self, k: float) -> Point:
-        return self.point + self.direction * k
+        return make_ray(axis.point, _point_at(perpendicular, 2))
 
     def is_mine(self, k: float) -> bool:
         return k >= self.min_k
@@ -186,4 +180,8 @@ def _normalize(point: Point) -> Point:
 
 
 def _get_line_points_at_ks(line: Line, ks: List[float]) -> List[Point]:
-    return [line.point_at(k) for k in ks if line.is_mine(k)]
+    return [_point_at(line, k) for k in ks if line.is_mine(k)]
+
+
+def _point_at(line: Line, k: float):
+    return line.point + line.direction * k
