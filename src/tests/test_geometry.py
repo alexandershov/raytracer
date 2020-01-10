@@ -124,7 +124,7 @@ def test_line_intersections(line, figure, expected):
     ],
 )
 def test_line_perpendicular(line, other, expected):
-    assert same_rays(line.perpendicular(other), expected)
+    assert same_lines(line.perpendicular(other), expected)
 
 
 @pytest.mark.parametrize(
@@ -161,7 +161,7 @@ def test_line_perpendicular(line, other, expected):
     ],
 )
 def test_figure_perpendicular(figure, point, expected):
-    assert same_rays(figure.perpendicular(point), expected)
+    assert same_lines(figure.perpendicular(point), expected)
 
 
 @pytest.mark.parametrize(
@@ -181,10 +181,10 @@ def test_figure_perpendicular(figure, point, expected):
     ],
 )
 def test_mirror(ray, axis, expected):
-    assert same_rays(ray.mirror(axis), expected)
+    assert same_lines(ray.mirror(axis), expected)
 
 
-def same_rays(x: geometry.Line, y: geometry.Line) -> bool:
+def same_lines(x: geometry.Line, y: geometry.Line) -> bool:
     same_starts = are_close(x.point, y.point)
     same_directions = are_close(normalize(x.direction), normalize(y.direction))
     same_ks = x.ks == y.ks
