@@ -6,6 +6,7 @@ import numpy as np
 from raytracer import geometry
 
 Point = geometry.make_point
+Plane = geometry.make_plane
 
 
 def Sphere(x1, y1, z1, placeholder, radius):
@@ -63,7 +64,7 @@ def test_make_ray():
 
 
 def test_plane():
-    plane = geometry.make_plane(1, 2, 3, 4)
+    plane = Plane(1, 2, 3, 4)
     assert np.array_equal(plane.coeffs, Point(1, 2, 3))
     assert plane.d == 4
 
@@ -77,15 +78,15 @@ def test_sphere():
 @pytest.mark.parametrize(
     "line, figure, expected",
     [
-        (RAY, geometry.make_plane(1, 0, 0, 0), [Point(0, 0, 0)]),
+        (RAY, Plane(1, 0, 0, 0), [Point(0, 0, 0)]),
         (
             Ray(8, 9, 10, ..., 3, 3, 3),
-            geometry.make_plane(1, 2, 3, 4),
+            Plane(1, 2, 3, 4),
             [Point(0.10526315789473628, -0.47368421052631504, -1.0526315789473681)],
         ),
-        (RAY, geometry.make_plane(1, 0, 0, -2), []),
-        (RAY, geometry.make_plane(0, 0, 1, -1), []),
-        (RAY, geometry.make_plane(0, 0, 1, 0), []),
+        (RAY, Plane(1, 0, 0, -2), []),
+        (RAY, Plane(0, 0, 1, -1), []),
+        (RAY, Plane(0, 0, 1, 0), []),
         (
             RAY,
             geometry.Sphere(Point(0, 0, 0), 0.5),
@@ -127,17 +128,17 @@ def test_line_perpendicular(line, other, expected):
             geometry.make_infinite_line(Point(0, 0, 0), Point(10, 0, 0)),
         ),
         (
-            geometry.make_plane(1, 0, 0, -10),
+            Plane(1, 0, 0, -10),
             Point(10, 0, 0),
             geometry.make_infinite_line(Point(10, 0, 0), Point(11, 0, 0)),
         ),
         (
-            geometry.make_plane(0, 1, 0, -10),
+            Plane(0, 1, 0, -10),
             Point(0, 10, 0),
             geometry.make_infinite_line(Point(0, 10, 0), Point(0, 11, 0)),
         ),
         (
-            geometry.make_plane(0, 0, 1, -10),
+            Plane(0, 0, 1, -10),
             Point(0, 0, 10),
             geometry.make_infinite_line(Point(0, 0, 10), Point(0, 0, 11)),
         ),
