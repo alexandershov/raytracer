@@ -4,7 +4,6 @@ from typing import List
 import pytest
 import numpy as np
 from raytracer import geometry
-from raytracer.interval import Interval
 
 START = geometry.make_point(3, 2, 1)
 AFTER_START = geometry.make_point(9, 6, 3)
