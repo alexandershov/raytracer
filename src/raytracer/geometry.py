@@ -88,10 +88,10 @@ class Plane(Figure):
 
     def intersections(self, line: Line) -> List[Point]:
         # solving equation tk + s = 0
+        s = (self.coeffs @ line.point) + self.d
         t = self.coeffs @ line.direction
         if t == 0:
             return []
-        s = (self.coeffs @ line.point) + self.d
         k = -s / t
         if line.is_mine(k):
             return [line.point_at(k)]
