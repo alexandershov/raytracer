@@ -92,10 +92,7 @@ class Plane(Figure):
         t = self.coeffs @ line.direction
         if t == 0:
             return []
-        k = -s / t
-        if line.is_mine(k):
-            return [line.point_at(k)]
-        return []
+        return _get_line_points_at_ks(line, [-s / t])
 
     def perpendicular(self, point: Point) -> Line:
         assert self._get_num_zero_coeffs() == 2, "only simple planes are supported"
