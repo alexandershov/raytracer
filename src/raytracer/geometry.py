@@ -43,7 +43,7 @@ def make_plane(a: float, b: float, c: float, d: float) -> Plane:
     return Plane(make_point(a, b, c), d)
 
 
-class LineBase(metaclass=abc.ABCMeta):
+class Line(metaclass=abc.ABCMeta):
     @property
     @abc.abstractmethod
     def point(self) -> Point:
@@ -63,7 +63,7 @@ class LineBase(metaclass=abc.ABCMeta):
 
 
 @dataclass(frozen=True)
-class LineSegment(LineBase):
+class LineSegment(Line):
     _point: Point
     _direction: Point
     min_k: float
@@ -82,7 +82,7 @@ class LineSegment(LineBase):
 
 
 @dataclass(frozen=True)
-class InfiniteLine(LineBase):
+class InfiniteLine(Line):
     _point: Point
     _direction: Point
 
@@ -99,7 +99,7 @@ class InfiniteLine(LineBase):
 
 
 @dataclass(frozen=True)
-class Ray(LineBase):
+class Ray(Line):
     _point: Point
     _direction: Point
     min_k: float
@@ -135,7 +135,7 @@ class Ray(LineBase):
 
 class Figure(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def intersections(self, straight: LineBase) -> List[Point]:
+    def intersections(self, straight: Line) -> List[Point]:
         raise NotImplemented
 
     @abc.abstractmethod
@@ -148,7 +148,7 @@ class Plane(Figure):
     coeffs: Point
     d: float
 
-    def intersections(self, straight: LineBase) -> List[Point]:
+    def intersections(self, straight: Line) -> List[Point]:
         # solving equation tk + s = 0
         s = (self.coeffs @ straight.point) + self.d
         t = self.coeffs @ straight.direction
@@ -170,7 +170,7 @@ class Sphere(Figure):
     center: Point
     radius: float
 
-    def intersections(self, straight: LineBase) -> List[Point]:
+    def intersections(self, straight: Line) -> List[Point]:
         v = straight.point - self.center
         a = straight.direction @ straight.direction
         b = 2 * (v @ straight.direction)
@@ -185,5 +185,5 @@ def _normalize(point: Point) -> Point:
     return point / np.linalg.norm(point)
 
 
-def _get_line_points_at_ks(straight: LineBase, ks: List[float]) -> List[Point]:
+def _get_line_points_at_ks(straight: Line, ks: List[float]) -> List[Point]:
     return [straight.point_at(k) for k in ks if straight.is_mine(k)]
