@@ -135,7 +135,7 @@ class Ray(Straight):
 
 class Figure(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def intersections(self, line: Ray) -> List[Point]:
+    def intersections(self, line: Straight) -> List[Point]:
         raise NotImplemented
 
     @abc.abstractmethod
@@ -148,7 +148,7 @@ class Plane(Figure):
     coeffs: Point
     d: float
 
-    def intersections(self, line: Ray) -> List[Point]:
+    def intersections(self, line: Straight) -> List[Point]:
         # solving equation tk + s = 0
         s = (self.coeffs @ line.point) + self.d
         t = self.coeffs @ line.direction
@@ -170,7 +170,7 @@ class Sphere(Figure):
     center: Point
     radius: float
 
-    def intersections(self, line: Ray) -> List[Point]:
+    def intersections(self, line: Straight) -> List[Point]:
         v = line.point - self.center
         a = line.direction @ line.direction
         b = 2 * (v @ line.direction)
@@ -185,5 +185,5 @@ def _normalize(point: Point) -> Point:
     return point / np.linalg.norm(point)
 
 
-def _get_line_points_at_ks(line: Ray, ks: List[float]) -> List[Point]:
+def _get_line_points_at_ks(line: Straight, ks: List[float]) -> List[Point]:
     return [line.point_at(k) for k in ks if line.is_mine(k)]
