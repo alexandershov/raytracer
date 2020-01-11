@@ -5,7 +5,7 @@ from raytracer.color import Color
 from raytracer.color import Palette
 
 
-def main():
+def render():
     floor = scene.Body(
         shape=geometry.make_plane(0, 1, 0, -200),
         material=raytracer.material.Monochrome(Color(170, 170, 170)),
@@ -55,7 +55,11 @@ def main():
         height=200,
     )
     image = s.render()
-    image.show()
+    return image
+
+
+def main():
+    render().show()
 
 
 if __name__ == "__main__":
