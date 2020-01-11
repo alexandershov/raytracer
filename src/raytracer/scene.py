@@ -81,7 +81,7 @@ class Scene:
         coeffs = []
         for light in self.lights:
             if self._in_the_shadow(point, light):
-                coeffs.append(0.5)
+                coeffs.append(self._get_shadow_lightning_coeff())
             else:
                 coeffs.append(self._get_exposed_lightning_coeff(point, light))
 
@@ -99,11 +99,14 @@ class Scene:
         self, point: geometry.Point, light: geometry.Point
     ) -> float:
         d = np.linalg.norm(light - point)
-        cutoff = 800
-        if d > cutoff:
-            return cutoff / d
+        min_distance_to_dim = 800
+        if d > min_distance_to_dim:
+            return min_distance_to_dim / d
         else:
             return 1
+
+    def _get_shadow_lightning_coeff(self) -> float:
+        return 0.5
 
     def _points_on_screen(self) -> List[geometry.Point]:
         return [
