@@ -3,6 +3,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 from typing import List
+from typing import Set
 from typing import Tuple
 
 import numpy as np
@@ -58,28 +59,31 @@ class Scene:
         return result
 
     def _get_color(self, point: geometry.Point) -> Color:
-        color = self._sky_color
         ray = geometry.make_ray(self.camera, point)
-        excluded_ids = set()
-        for _ in range(5):
-            points_on_bodies = []
-            for body in self:
-                if id(body) in excluded_ids:
-                    continue
-                for p in body.shape.intersections(ray):
-                    points_on_bodies.append(PointOnBody(p, body))
-            if points_on_bodies:
-                point_on_body = _closest(points_on_bodies, ray.point)
-                p = point_on_body.point
-                body = point_on_body.body
-                if isinstance(body.material, Mirror):
-                    # TODO: catch exception here
-                    ray = ray.mirror(body.shape.perpendicular(p))
-                    excluded_ids = {id(body)}
-                    continue
-                color = body.material.get_color(p) * self._lightning_coeff(p)
-            break
-        return color
+        return self._get_color_from_ray(ray, set(), 0)
+
+    def _get_color_from_ray(
+        self, ray: geometry.Ray, excluded_body_ids: Set[int], depth: int
+    ) -> Color:
+        if depth == 5:
+            return self._sky_color
+        points_on_bodies = []
+        for body in self:
+            if id(body) in excluded_body_ids:
+                continue
+            for p in body.shape.intersections(ray):
+                points_on_bodies.append(PointOnBody(p, body))
+        if points_on_bodies:
+            point_on_body = _closest(points_on_bodies, ray.point)
+            p = point_on_body.point
+            body = point_on_body.body
+            if isinstance(body.material, Mirror):
+                # TODO: catch exception from ray.mirror here
+                return self._get_color_from_ray(
+                    ray.mirror(body.shape.perpendicular(p)), {id(body)}, depth + 1
+                )
+            return body.material.get_color(p) * self._lightning_coeff(p)
+        return self._sky_color
 
     @property
     def _sky_color(self):
