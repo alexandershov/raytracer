@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import multiprocessing
-import time
 from dataclasses import dataclass
 from typing import List
 from typing import Tuple
@@ -13,6 +12,7 @@ from raytracer.color import Color
 from raytracer.image import Image
 from raytracer.material import Material
 from raytracer.material import Mirror
+from raytracer import performance
 
 
 @dataclass(frozen=True)
@@ -34,8 +34,8 @@ class Scene:
     def __iter__(self):
         return iter(self.bodies)
 
+    @performance.timed
     def render(self):
-        started_at = time.time()
         image = Image(self.width, self.height)
         points = self._points_on_screen()
         num_processes = 6
@@ -46,12 +46,10 @@ class Scene:
                     image.set_pixel(
                         int(geometry.get_x(point)), int(geometry.get_y(point)), color
                     )
-        duration = time.time() - started_at
         image.show()
-        print(f"rendering took {duration:.3f} seconds")
 
     def _get_colors(
-            self, points: List[geometry.Point]
+        self, points: List[geometry.Point]
     ) -> List[Tuple[geometry.Point, Color]]:
         result = []
         for point in points:

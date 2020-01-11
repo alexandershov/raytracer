@@ -18,8 +18,7 @@ def test_scene():
     lights = [geometry.make_point(1, 1, 1), geometry.make_point(50, 50, 50)]
     camera = geometry.make_point(300, 200, -600)
     s = scene.Scene(
-        bodies=[floor, sphere], camera=camera, lights=lights,
-        width=600, height=400,
+        bodies=[floor, sphere], camera=camera, lights=lights, width=600, height=400,
     )
     assert s.width == 600
     assert s.height == 400
