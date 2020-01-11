@@ -43,8 +43,7 @@ class Checkered(Material):
         local = self.projection(point)
         x = geometry.get_x(local)
         y = geometry.get_y(local)
-        score = self._get_square_index(x) + self._get_square_index(y)
-        if score % 2:
+        if (self._get_square_index(x) + self._get_square_index(y)) % 2:
             return self.darker
         return self.lighter
 
