@@ -73,9 +73,9 @@ class Scene:
             p = point_on_body.point
             body = point_on_body.body
             if isinstance(body.material, Mirror):
-                # TODO: catch exception from ray.mirror here
+                # TODO: catch ImpossibleReflection
                 return self._get_color_from_ray(
-                    ray.mirror(body.shape.perpendicular(p)), {id(body)}, depth + 1
+                    geometry.reflect(ray, p, body.shape), {id(body)}, depth + 1
                 )
             return body.material.get_color(p) * self._lightning_coeff(p)
         return self._sky_color

@@ -21,6 +21,10 @@ class InvalidLineError(BaseError):
     pass
 
 
+class ImpossibleReflection(BaseError):
+    pass
+
+
 def make_point(x: float, y: float, z: float) -> Point:
     return np.array((x, y, z))
 
@@ -199,6 +203,13 @@ class Sphere(Shape):
 
     def perpendicular(self, point: Point) -> InfiniteLine:
         return make_infinite_line(self.center, point)
+
+
+def reflect(ray: Ray, point: Point, shape: Shape) -> Ray:
+    try:
+        return ray.mirror(shape.perpendicular(point))
+    except InvalidLineError as exc:
+        raise ImpossibleReflection from exc
 
 
 def _normalize(point: Point) -> Point:
