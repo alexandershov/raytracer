@@ -39,39 +39,42 @@ class Scene:
     def render(self):
         image = Image(self.width, self.height)
         points = self._points_on_screen()
-        for point, color in parallel(self._get_colors, points, num_processes=6):
+        for point, color in parallel(self._get_colored_points, points, num_processes=6):
             _draw(color, image, point)
         image.show()
 
-    def _get_colors(
+    def _get_colored_points(
         self, points: List[geometry.Point]
     ) -> List[Tuple[geometry.Point, Color]]:
         result = []
         for point in points:
-            color = self._sky_color
-            ray = geometry.make_ray(self.camera, point)
-            excluded_ids = set()
-            for _ in range(5):
-                intersections = []
-                for body in self:
-                    if id(body) in excluded_ids:
-                        continue
-                    for p in body.shape.intersections(ray):
-                        intersections.append((p, body))
-                if intersections:
-                    p, body = min(
-                        intersections,
-                        key=lambda p_body: np.linalg.norm(p_body[0] - ray.point),
-                    )
-                    if isinstance(body.material, Mirror):
-                        # TODO: catch exception here
-                        ray = ray.mirror(body.shape.perpendicular(p))
-                        excluded_ids = {id(body)}
-                        continue
-                    color = body.material.get_color(p) * self._lightning_coeff(p)
-                break
-            result.append((point, color))
+            result.append((point, self._get_color(point)))
         return result
+
+    def _get_color(self, point: geometry.Point) -> Color:
+        color = self._sky_color
+        ray = geometry.make_ray(self.camera, point)
+        excluded_ids = set()
+        for _ in range(5):
+            intersections = []
+            for body in self:
+                if id(body) in excluded_ids:
+                    continue
+                for p in body.shape.intersections(ray):
+                    intersections.append((p, body))
+            if intersections:
+                p, body = min(
+                    intersections,
+                    key=lambda p_body: np.linalg.norm(p_body[0] - ray.point),
+                )
+                if isinstance(body.material, Mirror):
+                    # TODO: catch exception here
+                    ray = ray.mirror(body.shape.perpendicular(p))
+                    excluded_ids = {id(body)}
+                    continue
+                color = body.material.get_color(p) * self._lightning_coeff(p)
+            break
+        return color
 
     @property
     def _sky_color(self):
