@@ -81,9 +81,9 @@ class Scene:
         coeffs = []
         for light in self.lights:
             if self._in_the_shadow(point, light):
-                coeffs.append(self._get_shadow_lightning_coeff())
+                coeffs.append(_get_shadow_lightning_coeff())
             else:
-                coeffs.append(self._get_exposed_lightning_coeff(point, light))
+                coeffs.append(_get_exposed_lightning_coeff(point, light))
 
         return max(coeffs, default=1)
 
@@ -94,18 +94,6 @@ class Scene:
                 if not _close_points(intersection, point):
                     return True
         return False
-
-    def _get_exposed_lightning_coeff(
-        self, point: geometry.Point, light: geometry.Point
-    ) -> float:
-        d = np.linalg.norm(light - point)
-        min_distance_to_dim = 800
-        if d >= min_distance_to_dim:
-            return min_distance_to_dim / d
-        return 1
-
-    def _get_shadow_lightning_coeff(self) -> float:
-        return 0.5
 
     def _points_on_screen(self) -> List[geometry.Point]:
         return [
@@ -123,3 +111,15 @@ def _draw(color: Color, image: Image, point: geometry.Point) -> None:
 
 def _close_points(a: geometry.Point, b: geometry.Point):
     return math.isclose(np.linalg.norm(b - a), 0, abs_tol=1e-3)
+
+
+def _get_exposed_lightning_coeff(point: geometry.Point, light: geometry.Point) -> float:
+    d = np.linalg.norm(light - point)
+    min_distance_to_dim = 800
+    if d >= min_distance_to_dim:
+        return min_distance_to_dim / d
+    return 1
+
+
+def _get_shadow_lightning_coeff() -> float:
+    return 0.5
