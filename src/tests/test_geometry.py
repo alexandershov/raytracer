@@ -136,7 +136,7 @@ def test_figure_perpendicular(figure, point, expected):
         (
             Ray(2, 1, 0, ..., 1, 0, 0),
             Line(1, 0, 0, ..., 1, 1, 0),
-            Line(1, 0, 0, ..., 0, 1, 0),
+            Ray(1, 0, 0, ..., 0, 1, 0),
         )
     ],
 )
