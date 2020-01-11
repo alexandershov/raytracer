@@ -95,7 +95,7 @@ def test_sphere():
     ],
 )
 def test_line_intersections(line, figure, expected):
-    assert same_points(figure.intersections(line), expected)
+    assert close_points(figure.intersections(line), expected)
 
 
 @pytest.mark.parametrize(
@@ -159,7 +159,7 @@ def normalize(x: geometry.Point) -> geometry.Point:
     return x / np.linalg.norm(x)
 
 
-def same_points(xs: List[geometry.Point], ys: List[geometry.Point]) -> bool:
+def close_points(xs: List[geometry.Point], ys: List[geometry.Point]) -> bool:
     if len(xs) != len(ys):
         return False
     xs_sorted = sort_by_distance_to_origin(xs)
