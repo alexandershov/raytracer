@@ -28,7 +28,6 @@ def Line(x1, y1, z1, placeholder, x2, y2, z2):
     return geometry.make_infinite_line(a, b)
 
 
-DIRECTION = Point(6, 4, 2)
 RAY = Ray(1, 0, 0, ..., 0, 0, 0)
 CENTER = Point(5, 10, 9)
 
@@ -41,7 +40,7 @@ def test_make_point():
 
 
 def test_sub_points():
-    assert np.array_equal((Point(9, 6, 3) - Point(3, 2, 1)), DIRECTION)
+    assert np.array_equal((Point(9, 6, 3) - Point(3, 2, 1)), Point(6, 4, 2))
 
 
 def test_mul_point():
@@ -64,7 +63,7 @@ def test_vector_length():
 def test_make_ray():
     ray = geometry.make_ray(Point(3, 2, 1), Point(9, 6, 3))
     assert np.array_equal(ray.point, Point(3, 2, 1))
-    assert np.array_equal(ray.direction, DIRECTION)
+    assert np.array_equal(ray.direction, Point(6, 4, 2))
 
 
 def test_plane():
