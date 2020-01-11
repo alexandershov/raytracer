@@ -22,7 +22,7 @@ class Monochrome(Material):
 
 @dataclass(frozen=True)
 class Checkered(Material):
-    width: float
+    square_width: float
     lighter: Color
     darker: Color
     projection: Callable
@@ -41,8 +41,8 @@ class Checkered(Material):
 
     def get_color(self, point: geometry.Point) -> Color:
         local = self.projection(point)
-        score = int(geometry.get_x(local) // self.width) + int(
-            geometry.get_y(local) // self.width
+        score = int(geometry.get_x(local) // self.square_width) + int(
+            geometry.get_y(local) // self.square_width
         )
         if not score % 2:
             return self.lighter

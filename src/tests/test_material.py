@@ -35,7 +35,7 @@ def test_checkered_project_to_local_xz():
 )
 def test_checkered_material(point, expected):
     material = Checkered(
-        width=20,
+        square_width=20,
         lighter=Palette.WHITE,
         darker=Palette.BLACK,
         projection=Checkered.project_to_local_xy,
