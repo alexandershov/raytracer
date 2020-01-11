@@ -120,11 +120,7 @@ def test_line_perpendicular(line, other, expected):
 @pytest.mark.parametrize(
     "figure, point, expected",
     [
-        (
-            geometry.Sphere(Point(0, 0, 0), 10),
-            Point(10, 0, 0),
-            Line(0, 0, 0, ..., 10, 0, 0),
-        ),
+        (Sphere(0, 0, 0, radius=10), Point(10, 0, 0), Line(0, 0, 0, ..., 10, 0, 0),),
         (Plane(1, 0, 0, -10), Point(10, 0, 0), Line(10, 0, 0, ..., 11, 0, 0),),
         (Plane(0, 1, 0, -10), Point(0, 10, 0), Line(0, 10, 0, ..., 0, 11, 0),),
         (Plane(0, 0, 1, -10), Point(0, 0, 10), Line(0, 0, 10, ..., 0, 0, 11),),
