@@ -41,12 +41,15 @@ class Checkered(Material):
 
     def get_color(self, point: geometry.Point) -> Color:
         local = self.projection(point)
-        score = int(geometry.get_x(local) // self.square_width) + int(
-            geometry.get_y(local) // self.square_width
-        )
-        if not score % 2:
-            return self.lighter
-        return self.darker
+        x = geometry.get_x(local)
+        y = geometry.get_y(local)
+        score = self._get_square_index(x) + self._get_square_index(y)
+        if score % 2:
+            return self.darker
+        return self.lighter
+
+    def _get_square_index(self, coordinate: float) -> int:
+        return int(coordinate // self.square_width)
 
 
 class Mirror(Material):
