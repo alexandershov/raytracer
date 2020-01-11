@@ -99,7 +99,7 @@ def test_line_intersections(line, figure, expected):
 
 
 @pytest.mark.parametrize(
-    "line, other, expected",
+    "ray, other, expected",
     [
         (
             Ray(1, 0, 0, ..., 1, 1, 0),
@@ -113,8 +113,8 @@ def test_line_intersections(line, figure, expected):
         ),
     ],
 )
-def test_line_perpendicular(line, other, expected):
-    assert close_lines(line.perpendicular(other), expected)
+def test_ray_perpendicular(ray, other, expected):
+    assert close_lines(ray.perpendicular(other), expected)
 
 
 @pytest.mark.parametrize(
