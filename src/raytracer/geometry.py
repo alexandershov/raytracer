@@ -11,6 +11,14 @@ from . import algebra
 Point = np.ndarray
 
 
+class BaseError(Exception):
+    pass
+
+
+class InvalidLine(BaseError):
+    pass
+
+
 def make_point(x: float, y: float, z: float) -> Point:
     return np.array((x, y, z))
 
@@ -64,7 +72,8 @@ class Line(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     def __post_init__(self):
-        assert not np.array_equal(self.direction, make_point(0, 0, 0))
+        if np.array_equal(self.direction, make_point(0, 0, 0)):
+            raise InvalidLine(self)
 
 
 @dataclass(frozen=True)
