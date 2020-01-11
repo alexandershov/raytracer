@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import multiprocessing
 from dataclasses import dataclass
 from typing import List
 from typing import Tuple
@@ -8,11 +7,11 @@ from typing import Tuple
 import numpy as np
 
 from raytracer import geometry
+from raytracer import performance
 from raytracer.color import Color
 from raytracer.image import Image
 from raytracer.material import Material
 from raytracer.material import Mirror
-from raytracer import performance
 
 
 @dataclass(frozen=True)
