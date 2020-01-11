@@ -114,7 +114,7 @@ def test_line_intersections(line, figure, expected):
     ],
 )
 def test_line_perpendicular(line, other, expected):
-    assert same_lines(line.perpendicular(other), expected)
+    assert close_lines(line.perpendicular(other), expected)
 
 
 @pytest.mark.parametrize(
@@ -127,7 +127,7 @@ def test_line_perpendicular(line, other, expected):
     ],
 )
 def test_figure_perpendicular(figure, point, expected):
-    assert same_lines(figure.perpendicular(point), expected)
+    assert close_lines(figure.perpendicular(point), expected)
 
 
 @pytest.mark.parametrize(
@@ -141,10 +141,10 @@ def test_figure_perpendicular(figure, point, expected):
     ],
 )
 def test_mirror(ray, axis, expected):
-    assert same_lines(ray.mirror(axis), expected)
+    assert close_lines(ray.mirror(axis), expected)
 
 
-def same_lines(x: geometry.Line, y: geometry.Line) -> bool:
+def close_lines(x: geometry.Line, y: geometry.Line) -> bool:
     # TODO: should compare instance types
     same_starts = are_close(x.point, y.point)
     same_directions = are_close(normalize(x.direction), normalize(y.direction))
