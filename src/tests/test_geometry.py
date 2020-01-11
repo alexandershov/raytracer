@@ -29,7 +29,6 @@ def Line(x1, y1, z1, placeholder, x2, y2, z2):
 
 
 RAY = Ray(1, 0, 0, ..., 0, 0, 0)
-CENTER = Point(5, 10, 9)
 
 
 def test_make_point():
@@ -73,8 +72,8 @@ def test_plane():
 
 
 def test_sphere():
-    sphere = geometry.Sphere(CENTER, 10)
-    assert np.array_equal(sphere.center, CENTER)
+    sphere = geometry.Sphere(Point(5, 10, 9), 10)
+    assert np.array_equal(sphere.center, Point(5, 10, 9))
     assert sphere.radius == 10
 
 
