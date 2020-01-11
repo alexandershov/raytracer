@@ -38,14 +38,12 @@ class Scene:
     def render(self):
         image = Image(self.width, self.height)
         points = self._points_on_screen()
-        num_processes = 6
-        with multiprocessing.Pool(processes=num_processes) as pool:
-            chunks = _get_chunks(points, num_processes)
-            for colored in pool.map(self._get_colors, chunks):
-                for point, color in colored:
-                    image.set_pixel(
-                        int(geometry.get_x(point)), int(geometry.get_y(point)), color
-                    )
+        for point, color in performance.parallel(
+            process_chunk=self._get_colors, args=points, num_processes=6
+        ):
+            image.set_pixel(
+                int(geometry.get_x(point)), int(geometry.get_y(point)), color
+            )
         image.show()
 
     def _get_colors(
@@ -106,10 +104,3 @@ class Scene:
             for x in range(0, self.width)
             for y in range(0, self.height)
         ]
-
-
-def _get_chunks(seq: list, n: int) -> List[list]:
-    chunks = []
-    for i in range(n):
-        chunks.append(seq[i::n])
-    return chunks
