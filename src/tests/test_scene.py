@@ -60,8 +60,8 @@ def test_squared_project_to_local_xz():
 def test_squared_material(point, expected):
     material = scene.Checkered(
         width=20,
-        white=Palette.WHITE,
-        black=Palette.BLACK,
+        lighter=Palette.WHITE,
+        darker=Palette.BLACK,
         projection=scene.Checkered.project_to_local_xy,
     )
     assert material.get_color(point) == expected

@@ -28,8 +28,8 @@ class Monochrome(Material):
 @dataclass(frozen=True)
 class Checkered(Material):
     width: float
-    white: Color
-    black: Color
+    lighter: Color
+    darker: Color
     projection: Callable
 
     @staticmethod
@@ -50,8 +50,8 @@ class Checkered(Material):
             geometry.get_y(local) // self.width
         )
         if not score % 2:
-            return self.white
-        return self.black
+            return self.lighter
+        return self.darker
 
 
 class Mirror(Material):
