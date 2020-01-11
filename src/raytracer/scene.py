@@ -71,6 +71,7 @@ class Scene:
                         key=lambda p_body: np.linalg.norm(p_body[0] - ray.point),
                     )
                     if isinstance(body.material, Mirror):
+                        # TODO: catch exception here
                         ray = ray.mirror(body.figure.perpendicular(p))
                         excluded_ids = {id(body)}
                         continue
