@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from typing import List
 from typing import Tuple
@@ -82,8 +83,8 @@ class Scene:
             in_the_shadow = False
             segment = geometry.make_line_segment(p, light)
             for body in self:
-                for intersections in body.shape.intersections(segment):
-                    if np.linalg.norm(intersections - p) > 1:
+                for intersection in body.shape.intersections(segment):
+                    if not _close_points(intersection, p):
                         in_the_shadow = True
             if in_the_shadow:
                 coeffs.append(0.5)
@@ -109,3 +110,7 @@ class Scene:
         x = int(geometry.get_x(point))
         y = int(geometry.get_y(point))
         image.set_pixel(x, y, color)
+
+
+def _close_points(a: geometry.Point, b: geometry.Point):
+    return math.isclose(np.linalg.norm(b - a), 0, abs_tol=1e-3)
