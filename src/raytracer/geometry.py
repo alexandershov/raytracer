@@ -58,6 +58,7 @@ class Line(metaclass=abc.ABCMeta):
     def is_mine(self, k: float) -> bool:
         raise NotImplementedError
 
+    @property
     @abc.abstractmethod
     def ks(self) -> Tuple[Optional[float], Optional[float]]:
         raise NotImplementedError
@@ -84,6 +85,7 @@ class LineSegment(Line):
     def is_mine(self, k: float) -> bool:
         return self.min_k <= k <= self.max_k
 
+    @property
     def ks(self) -> Tuple[Optional[float], Optional[float]]:
         return self.min_k, self.max_k
 
@@ -104,6 +106,7 @@ class InfiniteLine(Line):
     def is_mine(self, k: float) -> bool:
         return True
 
+    @property
     def ks(self) -> Tuple[Optional[float], Optional[float]]:
         return None, None
 
@@ -134,6 +137,7 @@ class Ray(Line):
     def is_mine(self, k: float) -> bool:
         return k >= self.min_k
 
+    @property
     def ks(self) -> Tuple[Optional[float], Optional[float]]:
         return self.min_k, None
 

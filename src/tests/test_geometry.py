@@ -145,10 +145,10 @@ def test_mirror(ray, axis, expected):
 
 
 def close_lines(x: geometry.Line, y: geometry.Line) -> bool:
-    # TODO: should compare instance types
     same_starts = close_points(x.point, y.point)
     same_directions = close_points(normalize(x.direction), normalize(y.direction))
-    return same_starts and same_directions
+    same_ks = x.ks == y.ks
+    return same_starts and same_directions and same_ks
 
 
 def normalize(x: geometry.Point) -> geometry.Point:
