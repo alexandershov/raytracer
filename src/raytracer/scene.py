@@ -13,7 +13,7 @@ from raytracer import performance
 from raytracer.color import Color
 from raytracer.image import Image
 from raytracer.material import Material
-from raytracer.material import Mirror
+from raytracer import material
 from raytracer.performance import parallel
 
 
@@ -69,13 +69,15 @@ class Scene:
             return self._sky_color
         points_on_bodies = self._get_points_on_bodies(ray, excluded_body_ids)
         if points_on_bodies:
-            point_on_body = _closest(points_on_bodies, ray.point)
-            if isinstance(point_on_body.body.material, Mirror):
-                # TODO: catch ImpossibleReflection
-                return self._get_color_from_ray(
-                    _reflect(ray, point_on_body), {id(point_on_body.body)}, depth + 1
-                )
-            return self._get_point_on_body_color(point_on_body)
+            pob = _closest(points_on_bodies, ray.point)
+            if isinstance(pob.body.material, material.Mirror):
+                try:
+                    return self._get_color_from_ray(
+                        _reflect(ray, pob), {id(pob.body)}, depth + 1
+                    )
+                except geometry.ImpossibleReflection:
+                    return self._sky_color
+            return self._get_point_on_body_color(pob)
 
         return self._sky_color
 
