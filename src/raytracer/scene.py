@@ -80,13 +80,7 @@ class Scene:
     def _lightning_coeff(self, p: geometry.Point) -> float:
         coeffs = []
         for light in self.lights:
-            in_the_shadow = False
-            segment = geometry.make_line_segment(p, light)
-            for body in self:
-                for intersection in body.shape.intersections(segment):
-                    if not _close_points(intersection, p):
-                        in_the_shadow = True
-            if in_the_shadow:
+            if self._in_the_shadow(p, light):
                 coeffs.append(0.5)
                 continue
             d = np.linalg.norm(light - p)
@@ -98,6 +92,14 @@ class Scene:
         if not coeffs:
             return 1
         return max(coeffs)
+
+    def _in_the_shadow(self, p: geometry.Point, light: geometry.Point) -> bool:
+        segment = geometry.make_line_segment(p, light)
+        for body in self:
+            for intersection in body.shape.intersections(segment):
+                if not _close_points(intersection, p):
+                    return True
+        return False
 
     def _points_on_screen(self) -> List[geometry.Point]:
         return [
