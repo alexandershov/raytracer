@@ -77,8 +77,14 @@ class Scene:
                 return self._get_color_from_ray(
                     geometry.reflect(ray, p, body.shape), {id(body)}, depth + 1
                 )
-            return body.material.get_color(p) * self._lightning_coeff(p)
+            return self._get_point_on_body_color(point_on_body)
+
         return self._sky_color
+
+    def _get_point_on_body_color(self, point_on_body: PointOnBody) -> Color:
+        body = point_on_body.body
+        point = point_on_body.point
+        return body.material.get_color(point) * self._lightning_coeff(point)
 
     def _get_points_on_bodies(self, ray, excluded_body_ids):
         points_on_bodies = []
