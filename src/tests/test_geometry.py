@@ -29,7 +29,6 @@ def Line(x1, y1, z1, placeholder, x2, y2, z2):
 
 
 START = Point(3, 2, 1)
-AFTER_START = Point(9, 6, 3)
 DIRECTION = Point(6, 4, 2)
 RAY = Ray(1, 0, 0, ..., 0, 0, 0)
 CENTER = Point(5, 10, 9)
@@ -43,11 +42,11 @@ def test_make_point():
 
 
 def test_sub_points():
-    assert np.array_equal((AFTER_START - START), DIRECTION)
+    assert np.array_equal((Point(9, 6, 3) - START), DIRECTION)
 
 
 def test_mul_point():
-    assert np.array_equal(START * 2, Point(6, 4, 2))
+    assert np.array_equal(Point(3, 2, 1) * 2, Point(6, 4, 2))
 
 
 def test_div_point():
@@ -55,7 +54,7 @@ def test_div_point():
 
 
 def test_mat_mul_points():
-    assert START @ AFTER_START == 42
+    assert START @ Point(9, 6, 3) == 42
 
 
 def test_vector_length():
@@ -64,7 +63,7 @@ def test_vector_length():
 
 
 def test_make_ray():
-    ray = geometry.make_ray(START, AFTER_START)
+    ray = geometry.make_ray(START, Point(9, 6, 3))
     assert np.array_equal(ray.point, START)
     assert np.array_equal(ray.direction, DIRECTION)
 
