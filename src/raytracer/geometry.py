@@ -153,7 +153,7 @@ class Ray(Line):
         return self.min_k, None
 
 
-class Figure(metaclass=abc.ABCMeta):
+class Shape(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def intersections(self, line: Line) -> List[Point]:
         raise NotImplemented
@@ -164,7 +164,7 @@ class Figure(metaclass=abc.ABCMeta):
 
 
 @dataclass
-class Plane(Figure):
+class Plane(Shape):
     coeffs: Point
     d: float
 
@@ -186,7 +186,7 @@ class Plane(Figure):
 
 
 @dataclass(frozen=True)
-class Sphere(Figure):
+class Sphere(Shape):
     center: Point
     radius: float
 

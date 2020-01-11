@@ -17,7 +17,7 @@ from raytracer.material import Mirror
 
 @dataclass(frozen=True)
 class Body:
-    figure: geometry.Figure
+    shape: geometry.Shape
     material: Material
 
 
@@ -63,7 +63,7 @@ class Scene:
                 for body in self:
                     if id(body) in excluded_ids:
                         continue
-                    for p in body.figure.intersections(ray):
+                    for p in body.shape.intersections(ray):
                         intersections.append((p, body))
                 if intersections:
                     p, body = min(
@@ -72,7 +72,7 @@ class Scene:
                     )
                     if isinstance(body.material, Mirror):
                         # TODO: catch exception here
-                        ray = ray.mirror(body.figure.perpendicular(p))
+                        ray = ray.mirror(body.shape.perpendicular(p))
                         excluded_ids = {id(body)}
                         continue
                     color = body.material.get_color(p) * self._lightning_coeff(p)
@@ -86,7 +86,7 @@ class Scene:
             in_the_shadow = False
             segment = geometry.make_line_segment(p, light)
             for body in self:
-                for intersections in body.figure.intersections(segment):
+                for intersections in body.shape.intersections(segment):
                     if np.linalg.norm(intersections - p) > 1:
                         in_the_shadow = True
             if in_the_shadow:

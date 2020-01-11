@@ -8,7 +8,7 @@ from raytracer.material import Monochrome
 
 def test_scene():
     floor = scene.Body(
-        figure=geometry.make_plane(0, 1, 0, 200), material=Monochrome(Palette.BLACK)
+        shape=geometry.make_plane(0, 1, 0, 200), material=Monochrome(Palette.BLACK)
     )
 
     sphere = scene.Body(

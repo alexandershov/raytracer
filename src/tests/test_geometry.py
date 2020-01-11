@@ -78,7 +78,7 @@ def test_sphere():
 
 
 @pytest.mark.parametrize(
-    "line, figure, expected",
+    "line, shape, expected",
     [
         (RAY, Plane(1, 0, 0, 0), [Point(0, 0, 0)]),
         (
@@ -94,8 +94,8 @@ def test_sphere():
         (RAY, Sphere(0, 0, 0, radius=2), [Point(-2, 0, 0)],),
     ],
 )
-def test_line_intersections(line, figure, expected):
-    assert close_intersections(figure.intersections(line), expected)
+def test_line_intersections(line, shape, expected):
+    assert close_intersections(shape.intersections(line), expected)
 
 
 @pytest.mark.parametrize(
@@ -125,7 +125,7 @@ def test_ray_perpendicular_failure():
 
 
 @pytest.mark.parametrize(
-    "figure, point, expected",
+    "shape, point, expected",
     [
         (Sphere(0, 0, 0, radius=10), Point(10, 0, 0), Line(0, 0, 0, ..., 10, 0, 0),),
         (Plane(1, 0, 0, -10), Point(10, 0, 0), Line(10, 0, 0, ..., 11, 0, 0),),
@@ -133,8 +133,8 @@ def test_ray_perpendicular_failure():
         (Plane(0, 0, 1, -10), Point(0, 0, 10), Line(0, 0, 10, ..., 0, 0, 11),),
     ],
 )
-def test_figure_perpendicular(figure, point, expected):
-    assert close_lines(figure.perpendicular(point), expected)
+def test_shape_perpendicular(shape, point, expected):
+    assert close_lines(shape.perpendicular(point), expected)
 
 
 def test_sphere_perpendicular_failure():

@@ -154,7 +154,7 @@ Questions
     1. [winner]Ray with optional restrictions (we can have restrictions from both sides)
     2. Ray with optional restriction
     3. Separate Segment class (which is basically a Ray with restriction)
-* ~~Should Figure.perpendicular return a line or ray?~~
+* ~~Should Shape.perpendicular return a line or ray?~~
     1. [winner]line - I like it more since it has no direction
     2. ray
 * Is there any physical sense for having .mirror|.perpendicular 
