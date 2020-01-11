@@ -37,7 +37,7 @@ class Scene:
     def render(self):
         started_at = time.time()
         image = Image(self.width, self.height)
-        points = self._screen_points()
+        points = self._points_on_screen()
         num_processes = 6
         with multiprocessing.Pool(processes=num_processes) as pool:
             chunks = _get_chunks(points, num_processes)
@@ -102,7 +102,7 @@ class Scene:
             return 1
         return max(coeffs)
 
-    def _screen_points(self) -> List[geometry.Point]:
+    def _points_on_screen(self) -> List[geometry.Point]:
         return [
             geometry.make_point(x, y, 0)
             for x in range(0, self.width)
