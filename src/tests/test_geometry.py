@@ -130,6 +130,12 @@ def test_figure_perpendicular(figure, point, expected):
     assert close_lines(figure.perpendicular(point), expected)
 
 
+def test_sphere_perpendicular_failure():
+    sphere = Sphere(0, 0, 0, radius=10)
+    with pytest.raises(geometry.InvalidLineError):
+        sphere.perpendicular(sphere.center)
+
+
 @pytest.mark.parametrize(
     "ray, axis, expected",
     [
