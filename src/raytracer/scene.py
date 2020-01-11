@@ -23,7 +23,7 @@ class Body:
 
 
 @dataclass(frozen=True)
-class PointAtBody:
+class PointOnBody:
     point: geometry.Point
     body: Body
 
@@ -62,17 +62,19 @@ class Scene:
         ray = geometry.make_ray(self.camera, point)
         excluded_ids = set()
         for _ in range(5):
-            intersections = []
+            points_on_bodies = []
             for body in self:
                 if id(body) in excluded_ids:
                     continue
                 for p in body.shape.intersections(ray):
-                    intersections.append((p, body))
-            if intersections:
-                p, body = min(
-                    intersections,
-                    key=lambda p_body: np.linalg.norm(p_body[0] - ray.point),
+                    points_on_bodies.append(PointOnBody(p, body))
+            if points_on_bodies:
+                point_on_body = min(
+                    points_on_bodies,
+                    key=lambda pb: np.linalg.norm(pb.point - ray.point),
                 )
+                p = point_on_body.point
+                body = point_on_body.body
                 if isinstance(body.material, Mirror):
                     # TODO: catch exception here
                     ray = ray.mirror(body.shape.perpendicular(p))
