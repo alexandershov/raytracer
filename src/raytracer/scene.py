@@ -69,7 +69,7 @@ class Scene:
                 for p in body.shape.intersections(ray):
                     points_on_bodies.append(PointOnBody(p, body))
             if points_on_bodies:
-                point_on_body = self._closest(points_on_bodies, ray.point)
+                point_on_body = _closest(points_on_bodies, ray.point)
                 p = point_on_body.point
                 body = point_on_body.body
                 if isinstance(body.material, Mirror):
@@ -80,12 +80,6 @@ class Scene:
                 color = body.material.get_color(p) * self._lightning_coeff(p)
             break
         return color
-
-    def _closest(
-        self, points_on_bodies: List[PointOnBody], point: geometry.Point
-    ) -> PointOnBody:
-        assert points_on_bodies
-        return min(points_on_bodies, key=lambda pb: np.linalg.norm(pb.point - point),)
 
     @property
     def _sky_color(self):
@@ -137,3 +131,8 @@ def _get_exposed_lightning_coeff(point: geometry.Point, light: geometry.Point) -
 
 def _get_shadow_lightning_coeff() -> float:
     return 0.5
+
+
+def _closest(points_on_bodies: List[PointOnBody], point: geometry.Point) -> PointOnBody:
+    assert points_on_bodies
+    return min(points_on_bodies, key=lambda pb: np.linalg.norm(pb.point - point),)
