@@ -77,27 +77,33 @@ class Scene:
     def _sky_color(self):
         return Color(26, 108, 171)
 
-    def _lightning_coeff(self, p: geometry.Point) -> float:
+    def _lightning_coeff(self, point: geometry.Point) -> float:
         coeffs = []
         for light in self.lights:
-            if self._in_the_shadow(p, light):
+            if self._in_the_shadow(point, light):
                 coeffs.append(0.5)
-                continue
-            d = np.linalg.norm(light - p)
-            cutoff = 800
-            if d > cutoff:
-                coeffs.append(cutoff / d)
             else:
-                coeffs.append(1)
+                coeffs.append(self._get_exposed_lightning_coeff(point, light))
+
         return max(coeffs, default=1)
 
-    def _in_the_shadow(self, p: geometry.Point, light: geometry.Point) -> bool:
-        segment = geometry.make_line_segment(p, light)
+    def _in_the_shadow(self, point: geometry.Point, light: geometry.Point) -> bool:
+        segment = geometry.make_line_segment(point, light)
         for body in self:
             for intersection in body.shape.intersections(segment):
-                if not _close_points(intersection, p):
+                if not _close_points(intersection, point):
                     return True
         return False
+
+    def _get_exposed_lightning_coeff(
+        self, point: geometry.Point, light: geometry.Point
+    ) -> float:
+        d = np.linalg.norm(light - point)
+        cutoff = 800
+        if d > cutoff:
+            return cutoff / d
+        else:
+            return 1
 
     def _points_on_screen(self) -> List[geometry.Point]:
         return [
