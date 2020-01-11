@@ -100,7 +100,7 @@ class Scene:
     ) -> float:
         d = np.linalg.norm(light - point)
         min_distance_to_dim = 800
-        if d > min_distance_to_dim:
+        if d >= min_distance_to_dim:
             return min_distance_to_dim / d
         else:
             return 1
