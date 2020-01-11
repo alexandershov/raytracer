@@ -15,7 +15,7 @@ class BaseError(Exception):
     pass
 
 
-class InvalidLine(BaseError):
+class InvalidLineError(BaseError):
     pass
 
 
@@ -73,7 +73,7 @@ class Line(metaclass=abc.ABCMeta):
 
     def __post_init__(self):
         if np.array_equal(self.direction, make_point(0, 0, 0)):
-            raise InvalidLine(self)
+            raise InvalidLineError(self)
 
 
 @dataclass(frozen=True)
