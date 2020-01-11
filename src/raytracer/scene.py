@@ -3,60 +3,15 @@ from __future__ import annotations
 import multiprocessing
 import time
 from dataclasses import dataclass
-from typing import List, Callable, Tuple
+from typing import List, Tuple
 
 import numpy as np
 
 from raytracer.image import Image
+from raytracer.material import Material
+from raytracer.material import Mirror
 from . import geometry
 from .color import Color
-
-
-class Material:
-    def get_color(self, point: geometry.Point) -> Color:
-        raise NotImplementedError
-
-
-@dataclass(frozen=True)
-class Monochrome(Material):
-    color: Color
-
-    def get_color(self, point: geometry.Point) -> Color:
-        return self.color
-
-
-@dataclass(frozen=True)
-class Checkered(Material):
-    width: float
-    lighter: Color
-    darker: Color
-    projection: Callable
-
-    @staticmethod
-    def project_to_local_xy(point: geometry.Point) -> geometry.Point:
-        return geometry.make_point(geometry.get_x(point), geometry.get_y(point), 0)
-
-    @staticmethod
-    def project_to_local_xz(point: geometry.Point) -> geometry.Point:
-        return geometry.make_point(geometry.get_x(point), geometry.get_z(point), 0)
-
-    @staticmethod
-    def project_to_local_yz(point: geometry.Point) -> geometry.Point:
-        return geometry.make_point(geometry.get_y(point), geometry.get_z(point), 0)
-
-    def get_color(self, point: geometry.Point) -> Color:
-        local = self.projection(point)
-        score = int(geometry.get_x(local) // self.width) + int(
-            geometry.get_y(local) // self.width
-        )
-        if not score % 2:
-            return self.lighter
-        return self.darker
-
-
-class Mirror(Material):
-    def get_color(self, point: geometry.Point) -> Color:
-        raise NotImplemented("should never be called")
 
 
 @dataclass(frozen=True)
