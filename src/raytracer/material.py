@@ -1,3 +1,4 @@
+import abc
 from dataclasses import dataclass
 from typing import Callable
 
@@ -5,7 +6,8 @@ from raytracer import geometry
 from raytracer.color import Color
 
 
-class Material:
+class Material(metaclass=abc.ABCMeta):
+    @abc.abstractmethod
     def get_color(self, point: geometry.Point) -> Color:
         raise NotImplementedError
 
