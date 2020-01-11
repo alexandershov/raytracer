@@ -176,4 +176,4 @@ def sort_by_distance_to_origin(points: List[geometry.Point]) -> List[geometry.Po
 
 
 def distance_to_origin(point: geometry.Point) -> float:
-    return np.linalg.norm(point - Point(0, 0, 0))
+    return np.linalg.norm(point)
