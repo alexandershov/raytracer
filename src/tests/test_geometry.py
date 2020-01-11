@@ -47,7 +47,7 @@ def test_mul_point():
 
 
 def test_div_point():
-    assert are_close(Point(3, 2, 1) / 2, Point(1.5, 1, 0.5))
+    assert close_points(Point(3, 2, 1) / 2, Point(1.5, 1, 0.5))
 
 
 def test_mat_mul_points():
@@ -95,7 +95,7 @@ def test_sphere():
     ],
 )
 def test_line_intersections(line, figure, expected):
-    assert close_points(figure.intersections(line), expected)
+    assert close_intersections(figure.intersections(line), expected)
 
 
 @pytest.mark.parametrize(
@@ -146,8 +146,8 @@ def test_mirror(ray, axis, expected):
 
 def close_lines(x: geometry.Line, y: geometry.Line) -> bool:
     # TODO: should compare instance types
-    same_starts = are_close(x.point, y.point)
-    same_directions = are_close(normalize(x.direction), normalize(y.direction))
+    same_starts = close_points(x.point, y.point)
+    same_directions = close_points(normalize(x.direction), normalize(y.direction))
     return same_starts and same_directions
 
 
@@ -159,15 +159,15 @@ def same_points(x: geometry.Point, y: geometry.Point) -> bool:
     return np.array_equal(x, y)
 
 
-def close_points(xs: List[geometry.Point], ys: List[geometry.Point]) -> bool:
+def close_intersections(xs: List[geometry.Point], ys: List[geometry.Point]) -> bool:
     if len(xs) != len(ys):
         return False
     xs_sorted = sort_by_distance_to_origin(xs)
     ys_sorted = sort_by_distance_to_origin(ys)
-    return all(are_close(a, b) for a, b in zip(xs_sorted, ys_sorted))
+    return all(close_points(a, b) for a, b in zip(xs_sorted, ys_sorted))
 
 
-def are_close(a: geometry.Point, b: geometry.Point) -> bool:
+def close_points(a: geometry.Point, b: geometry.Point) -> bool:
     return np.linalg.norm(b - a) == pytest.approx(0)
 
 
