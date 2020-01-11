@@ -39,11 +39,11 @@ def test_make_point():
 
 
 def test_sub_points():
-    assert np.array_equal((Point(9, 6, 3) - Point(3, 2, 1)), Point(6, 4, 2))
+    assert same_points((Point(9, 6, 3) - Point(3, 2, 1)), Point(6, 4, 2))
 
 
 def test_mul_point():
-    assert np.array_equal(Point(3, 2, 1) * 2, Point(6, 4, 2))
+    assert same_points(Point(3, 2, 1) * 2, Point(6, 4, 2))
 
 
 def test_div_point():
@@ -61,19 +61,19 @@ def test_vector_length():
 
 def test_make_ray():
     ray = geometry.make_ray(Point(3, 2, 1), Point(9, 6, 3))
-    assert np.array_equal(ray.point, Point(3, 2, 1))
-    assert np.array_equal(ray.direction, Point(6, 4, 2))
+    assert same_points(ray.point, Point(3, 2, 1))
+    assert same_points(ray.direction, Point(6, 4, 2))
 
 
 def test_plane():
     plane = Plane(1, 2, 3, 4)
-    assert np.array_equal(plane.coeffs, Point(1, 2, 3))
+    assert same_points(plane.coeffs, Point(1, 2, 3))
     assert plane.d == 4
 
 
 def test_sphere():
     sphere = geometry.Sphere(Point(5, 10, 9), 10)
-    assert np.array_equal(sphere.center, Point(5, 10, 9))
+    assert same_points(sphere.center, Point(5, 10, 9))
     assert sphere.radius == 10
 
 
@@ -153,6 +153,10 @@ def close_lines(x: geometry.Line, y: geometry.Line) -> bool:
 
 def normalize(x: geometry.Point) -> geometry.Point:
     return x / np.linalg.norm(x)
+
+
+def same_points(x: geometry.Point, y: geometry.Point) -> bool:
+    return np.array_equal(x, y)
 
 
 def close_points(xs: List[geometry.Point], ys: List[geometry.Point]) -> bool:
