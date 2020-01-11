@@ -16,7 +16,7 @@ from raytracer.material import Mirror
 
 
 @dataclass(frozen=True)
-class Thing:
+class Body:
     figure: geometry.Figure
     material: Material
 
@@ -27,10 +27,10 @@ class Scene:
     height: int
     camera: geometry.Point
     lights: List[geometry.Point]
-    things: List[Thing]
+    bodies: List[Body]
 
     def __iter__(self):
-        return iter(self.things)
+        return iter(self.bodies)
 
     def render(self):
         started_at = time.time()
@@ -58,21 +58,21 @@ class Scene:
             excluded_ids = set()
             for _ in range(5):
                 intersections = []
-                for thing in self:
-                    if id(thing) in excluded_ids:
+                for body in self:
+                    if id(body) in excluded_ids:
                         continue
-                    for p in thing.figure.intersections(ray):
-                        intersections.append((p, thing))
+                    for p in body.figure.intersections(ray):
+                        intersections.append((p, body))
                 if intersections:
-                    p, thing = min(
+                    p, body = min(
                         intersections,
-                        key=lambda p_thing: np.linalg.norm(p_thing[0] - ray.point),
+                        key=lambda p_body: np.linalg.norm(p_body[0] - ray.point),
                     )
-                    if isinstance(thing.material, Mirror):
-                        ray = ray.mirror(thing.figure.perpendicular(p))
-                        excluded_ids = {id(thing)}
+                    if isinstance(body.material, Mirror):
+                        ray = ray.mirror(body.figure.perpendicular(p))
+                        excluded_ids = {id(body)}
                         continue
-                    color = thing.material.get_color(p) * self._lightning_coeff(p)
+                    color = body.material.get_color(p) * self._lightning_coeff(p)
                 break
             result.append((point, color))
         return result
@@ -82,8 +82,8 @@ class Scene:
         for light in self.lights:
             in_the_shadow = False
             segment = geometry.make_line_segment(p, light)
-            for thing in self:
-                for intersections in thing.figure.intersections(segment):
+            for body in self:
+                for intersections in body.figure.intersections(segment):
                     if np.linalg.norm(intersections - p) > 1:
                         in_the_shadow = True
             if in_the_shadow:

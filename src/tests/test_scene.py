@@ -7,18 +7,18 @@ from raytracer.material import Monochrome
 
 
 def test_scene():
-    floor = scene.Thing(
+    floor = scene.Body(
         figure=geometry.make_plane(0, 1, 0, 200), material=Monochrome(Palette.BLACK)
     )
 
-    sphere = scene.Thing(
+    sphere = scene.Body(
         geometry.Sphere(center=geometry.make_point(150, -150, 150), radius=30),
         material=Monochrome(Palette.GRAY),
     )
     lights = [geometry.make_point(1, 1, 1), geometry.make_point(50, 50, 50)]
     camera = geometry.make_point(300, 200, -600)
     s = scene.Scene(
-        width=600, height=400, camera=camera, lights=lights, things=[floor, sphere]
+        width=600, height=400, camera=camera, lights=lights, bodies=[floor, sphere]
     )
     assert s.width == 600
     assert s.height == 400

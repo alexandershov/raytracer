@@ -70,7 +70,7 @@ Questions
   Just put x = x0 + k(x1 - x0) into sphere equation and you'll get 
   quadratic equation with k 
 * ~~How to implement colors?~~
-  Thing{figure, material}, thing can return Colorable which have get_color()
+  Body{figure, material}, thing can return Colorable which have get_color()
 * ~~How to implement checkers on floor/walls?~~
   Idea 1: set local x & y for a plane and project point to local coordinates
     I don't like it, but it seems like the most realistic solution to get without
