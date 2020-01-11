@@ -71,19 +71,24 @@ class Scene:
         if points_on_bodies:
             pob = _closest(points_on_bodies, ray.point)
             if isinstance(pob.body.material, material.Mirror):
-                try:
-                    return self._get_color_from_ray(
-                        _reflect(ray, pob), {id(pob.body)}, depth + 1
-                    )
-                except geometry.ImpossibleReflection:
-                    return self._sky_color
+                return self._get_mirror_color(ray, pob, depth)
             return self._get_point_on_body_color(pob)
 
         return self._sky_color
 
-    def _get_point_on_body_color(self, point_on_body: PointOnBody) -> Color:
-        body = point_on_body.body
-        point = point_on_body.point
+    def _get_mirror_color(
+        self, ray: geometry.Ray, pob: PointOnBody, depth: int
+    ) -> Color:
+        try:
+            return self._get_color_from_ray(
+                _reflect(ray, pob), {id(pob.body)}, depth + 1
+            )
+        except geometry.ImpossibleReflection:
+            return self._sky_color
+
+    def _get_point_on_body_color(self, pob: PointOnBody) -> Color:
+        body = pob.body
+        point = pob.point
         return body.material.get_color(point) * self._lightning_coeff(point)
 
     def _get_points_on_bodies(self, ray, excluded_body_ids):
