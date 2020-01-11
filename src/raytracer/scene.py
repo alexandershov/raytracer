@@ -70,12 +70,10 @@ class Scene:
         points_on_bodies = self._get_points_on_bodies(ray, excluded_body_ids)
         if points_on_bodies:
             point_on_body = _closest(points_on_bodies, ray.point)
-            p = point_on_body.point
-            body = point_on_body.body
-            if isinstance(body.material, Mirror):
+            if isinstance(point_on_body.body.material, Mirror):
                 # TODO: catch ImpossibleReflection
                 return self._get_color_from_ray(
-                    geometry.reflect(ray, p, body.shape), {id(body)}, depth + 1
+                    _reflect(ray, point_on_body), {id(point_on_body.body)}, depth + 1
                 )
             return self._get_point_on_body_color(point_on_body)
 
@@ -151,3 +149,7 @@ def _get_shadow_lightning_coeff() -> float:
 def _closest(points_on_bodies: List[PointOnBody], point: geometry.Point) -> PointOnBody:
     assert points_on_bodies
     return min(points_on_bodies, key=lambda pb: np.linalg.norm(pb.point - point),)
+
+
+def _reflect(ray: geometry.Ray, point_on_body: PointOnBody) -> geometry.Ray:
+    return geometry.reflect(ray, point_on_body.point, point_on_body.body.shape)
