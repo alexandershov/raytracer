@@ -7,11 +7,11 @@ from typing import List, Tuple
 
 import numpy as np
 
+from raytracer import geometry
+from raytracer.color import Color
 from raytracer.image import Image
 from raytracer.material import Material
 from raytracer.material import Mirror
-from . import geometry
-from .color import Color
 
 
 @dataclass(frozen=True)
