@@ -23,6 +23,12 @@ class Body:
 
 
 @dataclass(frozen=True)
+class PointAtBody:
+    point: geometry.Point
+    body: Body
+
+
+@dataclass(frozen=True)
 class Scene:
     bodies: List[Body]
 
