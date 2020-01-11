@@ -40,7 +40,7 @@ class Scene:
         image = Image(self.width, self.height)
         points = self._points_on_screen()
         for point, color in parallel(self._get_colors, points, num_processes=6):
-            self._draw(color, image, point)
+            _draw(color, image, point)
         image.show()
 
     def _get_colors(
@@ -114,10 +114,11 @@ class Scene:
             for y in range(0, self.height)
         ]
 
-    def _draw(self, color, image, point):
-        x = int(geometry.get_x(point))
-        y = int(geometry.get_y(point))
-        image.set_pixel(x, y, color)
+
+def _draw(color: Color, image: Image, point: geometry.Point) -> None:
+    x = int(geometry.get_x(point))
+    y = int(geometry.get_y(point))
+    image.set_pixel(x, y, color)
 
 
 def _close_points(a: geometry.Point, b: geometry.Point):
