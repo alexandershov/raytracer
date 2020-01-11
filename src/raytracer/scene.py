@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
-from typing import List
+from typing import List, Iterable
 from typing import Set
 from typing import Tuple
 
@@ -68,9 +68,7 @@ class Scene:
         if depth == 5:
             return self._sky_color
         points_on_bodies = []
-        for body in self:
-            if id(body) in excluded_body_ids:
-                continue
+        for body in self._iter_bodies(excluded_body_ids):
             for p in body.shape.intersections(ray):
                 points_on_bodies.append(PointOnBody(p, body))
         if points_on_bodies:
@@ -84,6 +82,9 @@ class Scene:
                 )
             return body.material.get_color(p) * self._lightning_coeff(p)
         return self._sky_color
+
+    def _iter_bodies(self, excluded_ids: Set[int]) -> Iterable[Body]:
+        return (body for body in self if id(body) not in excluded_ids)
 
     @property
     def _sky_color(self):
