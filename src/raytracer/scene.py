@@ -36,19 +36,19 @@ class Scene:
 
     def render(self):
         started_at = time.time()
-        img = Image(self.width, self.height)
+        image = Image(self.width, self.height)
         points = self._screen_points()
         num_processes = 6
         with multiprocessing.Pool(processes=num_processes) as pool:
             chunks = _get_chunks(points, num_processes)
             for colored in pool.map(self._get_colors, chunks):
                 for point, color in colored:
-                    img.set_pixel(
+                    image.set_pixel(
                         int(geometry.get_x(point)), int(geometry.get_y(point)), color
                     )
         duration = time.time() - started_at
         print(f"rendering took {duration:.3f} seconds")
-        img.show()
+        image.show()
 
     def _get_colors(
             self, points: List[geometry.Point]
