@@ -12,6 +12,7 @@ from raytracer.color import Color
 from raytracer.image import Image
 from raytracer.material import Material
 from raytracer.material import Mirror
+from raytracer.performance import parallel
 
 
 @dataclass(frozen=True)
@@ -37,12 +38,10 @@ class Scene:
     def render(self):
         image = Image(self.width, self.height)
         points = self._points_on_screen()
-        for point, color in performance.parallel(
-            process_chunk=self._get_colors, args=points, num_processes=6
-        ):
-            image.set_pixel(
-                int(geometry.get_x(point)), int(geometry.get_y(point)), color
-            )
+        for point, color in parallel(self._get_colors, points, num_processes=6):
+            x = int(geometry.get_x(point))
+            y = int(geometry.get_y(point))
+            image.set_pixel(x, y, color)
         image.show()
 
     def _get_colors(
