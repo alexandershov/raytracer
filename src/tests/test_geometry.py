@@ -117,6 +117,13 @@ def test_ray_perpendicular(ray, other, expected):
     assert close_lines(ray.perpendicular(other), expected)
 
 
+def test_ray_perpendicular_failure():
+    ray = Ray(1, 0, 0, ..., 1, 1, 0)
+    line = Line(1, 0, 0, ..., 1, 1, 0)
+    with pytest.raises(geometry.InvalidLineError):
+        ray.perpendicular(line)
+
+
 @pytest.mark.parametrize(
     "figure, point, expected",
     [
