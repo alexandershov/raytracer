@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import abc
 from dataclasses import dataclass
-from typing import List, Tuple, Optional
+from typing import List
+from typing import Tuple
+from typing import Optional
 
 import numpy as np
 
