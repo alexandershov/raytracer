@@ -23,11 +23,13 @@ class Body:
 
 @dataclass(frozen=True)
 class Scene:
-    width: int
-    height: int
+    bodies: List[Body]
+
     camera: geometry.Point
     lights: List[geometry.Point]
-    bodies: List[Body]
+
+    width: int
+    height: int
 
     def __iter__(self):
         return iter(self.bodies)
@@ -49,7 +51,7 @@ class Scene:
         img.show()
 
     def _get_colors(
-        self, points: List[geometry.Point]
+            self, points: List[geometry.Point]
     ) -> List[Tuple[geometry.Point, Color]]:
         result = []
         for point in points:
