@@ -47,8 +47,8 @@ class Scene:
                         int(geometry.get_x(point)), int(geometry.get_y(point)), color
                     )
         duration = time.time() - started_at
-        print(f"rendering took {duration:.3f} seconds")
         image.show()
+        print(f"rendering took {duration:.3f} seconds")
 
     def _get_colors(
             self, points: List[geometry.Point]
