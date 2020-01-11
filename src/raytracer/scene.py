@@ -67,7 +67,7 @@ class Scene:
     ) -> Color:
         if depth == 5:
             return self._sky_color
-        points_on_bodies = self._get_points_on_bodies(excluded_body_ids, ray)
+        points_on_bodies = self._get_points_on_bodies(ray, excluded_body_ids)
         if points_on_bodies:
             point_on_body = _closest(points_on_bodies, ray.point)
             p = point_on_body.point
@@ -80,7 +80,7 @@ class Scene:
             return body.material.get_color(p) * self._lightning_coeff(p)
         return self._sky_color
 
-    def _get_points_on_bodies(self, excluded_body_ids, ray):
+    def _get_points_on_bodies(self, ray, excluded_body_ids):
         points_on_bodies = []
         for body in self._iter_bodies(excluded_body_ids):
             for p in body.shape.intersections(ray):
