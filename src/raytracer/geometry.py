@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import abc
 from dataclasses import dataclass
-from typing import List
+from typing import List, Tuple, Optional
 
 import numpy as np
 
@@ -58,6 +58,10 @@ class Line(metaclass=abc.ABCMeta):
     def is_mine(self, k: float) -> bool:
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def ks(self) -> Tuple[Optional[float], Optional[float]]:
+        raise NotImplementedError
+
     def __post_init__(self):
         assert not np.array_equal(self.direction, make_point(0, 0, 0))
 
@@ -80,6 +84,9 @@ class LineSegment(Line):
     def is_mine(self, k: float) -> bool:
         return self.min_k <= k <= self.max_k
 
+    def ks(self) -> Tuple[Optional[float], Optional[float]]:
+        return self.min_k, self.max_k
+
 
 @dataclass(frozen=True)
 class InfiniteLine(Line):
@@ -96,6 +103,9 @@ class InfiniteLine(Line):
 
     def is_mine(self, k: float) -> bool:
         return True
+
+    def ks(self) -> Tuple[Optional[float], Optional[float]]:
+        return None, None
 
 
 @dataclass(frozen=True)
@@ -123,6 +133,9 @@ class Ray(Line):
 
     def is_mine(self, k: float) -> bool:
         return k >= self.min_k
+
+    def ks(self) -> Tuple[Optional[float], Optional[float]]:
+        return self.min_k, None
 
 
 class Figure(metaclass=abc.ABCMeta):
