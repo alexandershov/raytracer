@@ -18,7 +18,7 @@ class Material:
 
 
 @dataclass(frozen=True)
-class Solid(Material):
+class Monochrome(Material):
     color: Color
 
     def get_color(self, point: geometry.Point) -> Color:
@@ -26,7 +26,7 @@ class Solid(Material):
 
 
 @dataclass(frozen=True)
-class Squared(Material):
+class Checkered(Material):
     width: float
     white: Color
     black: Color

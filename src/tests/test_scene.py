@@ -8,12 +8,12 @@ from raytracer.color import Palette
 
 def test_scene():
     floor = scene.Thing(
-        figure=geometry.make_plane(0, 1, 0, 200), material=scene.Solid(Palette.BLACK)
+        figure=geometry.make_plane(0, 1, 0, 200), material=scene.Monochrome(Palette.BLACK)
     )
 
     sphere = scene.Thing(
         geometry.Sphere(center=geometry.make_point(150, -150, 150), radius=30),
-        material=scene.Solid(Palette.GRAY),
+        material=scene.Monochrome(Palette.GRAY),
     )
     lights = [geometry.make_point(1, 1, 1), geometry.make_point(50, 50, 50)]
     camera = geometry.make_point(300, 200, -600)
@@ -32,20 +32,20 @@ def test_scene():
 
 
 def test_solid_material():
-    material = scene.Solid(color=Palette.BLACK)
+    material = scene.Monochrome(color=Palette.BLACK)
     assert material.get_color(geometry.make_point(0, 0, 0)) == Palette.BLACK
 
 
 def test_squared_project_to_local_xy():
     point = geometry.make_point(3, 4, 5)
     expected = geometry.make_point(3, 4, 0)
-    assert np.array_equal(scene.Squared.project_to_local_xy(point), expected)
+    assert np.array_equal(scene.Checkered.project_to_local_xy(point), expected)
 
 
 def test_squared_project_to_local_xz():
     point = geometry.make_point(3, 4, 5)
     expected = geometry.make_point(3, 5, 0)
-    assert np.array_equal(scene.Squared.project_to_local_xz(point), expected)
+    assert np.array_equal(scene.Checkered.project_to_local_xz(point), expected)
 
 
 @pytest.mark.parametrize(
@@ -58,10 +58,10 @@ def test_squared_project_to_local_xz():
     ],
 )
 def test_squared_material(point, expected):
-    material = scene.Squared(
+    material = scene.Checkered(
         width=20,
         white=Palette.WHITE,
         black=Palette.BLACK,
-        projection=scene.Squared.project_to_local_xy,
+        projection=scene.Checkered.project_to_local_xy,
     )
     assert material.get_color(point) == expected
