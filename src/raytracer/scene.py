@@ -89,9 +89,7 @@ class Scene:
                 coeffs.append(cutoff / d)
             else:
                 coeffs.append(1)
-        if not coeffs:
-            return 1
-        return max(coeffs)
+        return max(coeffs, default=1)
 
     def _in_the_shadow(self, p: geometry.Point, light: geometry.Point) -> bool:
         segment = geometry.make_line_segment(p, light)
