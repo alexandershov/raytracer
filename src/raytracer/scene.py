@@ -102,8 +102,7 @@ class Scene:
         min_distance_to_dim = 800
         if d >= min_distance_to_dim:
             return min_distance_to_dim / d
-        else:
-            return 1
+        return 1
 
     def _get_shadow_lightning_coeff(self) -> float:
         return 0.5
