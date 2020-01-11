@@ -43,12 +43,12 @@ class Scene:
         return iter(self.bodies)
 
     @performance.timed
-    def render(self):
+    def render(self) -> Image:
         image = Image(self.width, self.height)
         points = self._points_on_screen()
         for point, color in parallel(self._get_colored_points, points, num_processes=6):
             _draw(color, image, point)
-        image.show()
+        return image
 
     def _get_colored_points(
         self, points: List[geometry.Point]

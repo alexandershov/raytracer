@@ -54,7 +54,8 @@ def main():
         width=300,
         height=200,
     )
-    s.render()
+    image = s.render()
+    image.show()
 
 
 if __name__ == "__main__":
