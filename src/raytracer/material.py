@@ -53,4 +53,4 @@ class Checkered(Material):
 
 class Mirror(Material):
     def get_color(self, point: geometry.Point) -> Color:
-        raise NotImplemented("should never be called")
+        raise NotImplemented("Mirror have no color")
