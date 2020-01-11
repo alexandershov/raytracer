@@ -47,7 +47,7 @@ class Scene:
     ) -> List[Tuple[geometry.Point, Color]]:
         result = []
         for point in points:
-            color = Color(26, 108, 171)
+            color = self._sky_color
             ray = geometry.make_ray(self.camera, point)
             excluded_ids = set()
             for _ in range(5):
@@ -71,6 +71,10 @@ class Scene:
                 break
             result.append((point, color))
         return result
+
+    @property
+    def _sky_color(self):
+        return Color(26, 108, 171)
 
     def _lightning_coeff(self, p: geometry.Point) -> float:
         coeffs = []
